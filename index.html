@@ -67,17 +67,6 @@
       text-decoration: underline;
     }
 
-    .contact {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 1.1em;
-    }
-
-    .contact a {
-      display: block;
-      margin: 8px 0;
-    }
-
     .highlight {
       background: #f0f8ff;
       border-left: 4px solid #007acc;
@@ -86,6 +75,25 @@
       margin: 20px 0;
     }
 
+    .contact {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      background: #f4faff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-width: 500px;
+      text-align: left;
+    }
+
+    .contact-card p {
+      margin: 10px 0;
+      font-size: 1.05em;
+    }
   </style>
 </head>
 <body>
@@ -123,14 +131,17 @@
     <img src="metabase.PNG" alt="metabase dashboard" />
 
     <div class="highlight">
-      I'm confident working with almost any RESTful API beyond Make, Zapier, and n8n.<br>
+      I am confident working with almost any RESTful API beyond Make, Zapier, and n8n.<br>
       If you have a unique integration challenge — I can build it from scratch.
     </div>
 
     <h2>📬 Contact</h2>
     <div class="contact">
-      <a href="mailto:tan012261@gmail.com">📧 tan012261@gmail.com</a>
-      <a href="#">📱 +84 776114333 (Zalo / WhatsApp)</a>
+      <div class="contact-card">
+        <p><strong>📧 Email:</strong> <a href="mailto:tan012261@gmail.com">tan012261@gmail.com</a></p>
+        <p><strong>📱 Phone / Zalo / WhatsApp:</strong> <a href="tel:+84776114333">+84 776114333</a></p>
+        <p><strong>🌐 GitHub:</strong> <a href="https://github.com/teefsteefsteefsteeg" target="_blank">teefsteefsteefsteeg</a></p>
+      </div>
     </div>
   </div>
 </body>
