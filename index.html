@@ -2,174 +2,865 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ngoc Tan – n8n Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ngoc Tan – AI Automation Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --surface-hover: #1a2332;
+      --card: #151d2e;
+      --border: rgba(255,255,255,0.06);
+      --text: #e2e8f0;
+      --text-muted: #8892a4;
+      --accent: #22d3ee;
+      --accent-glow: rgba(34,211,238,0.15);
+      --accent2: #a78bfa;
+      --accent2-glow: rgba(167,139,250,0.12);
+      --accent3: #34d399;
+      --gradient: linear-gradient(135deg, #22d3ee, #a78bfa);
+      --gradient2: linear-gradient(135deg, #a78bfa, #f472b6);
+      --gradient3: linear-gradient(135deg, #34d399, #22d3ee);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #eef1f5;
-      margin: 0;
-      padding: 0;
-      color: #333;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 960px;
-      margin: auto;
-      padding: 60px 30px;
-      background: #fff;
+    /* ========== NOISE OVERLAY ========== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 60px 24px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(167,139,250,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(34,211,238,0.2);
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8em;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      margin-bottom: 32px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8em, 7vw, 5.5em);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      animation: fadeInUp 0.8s ease 0.1s both;
+    }
+
+    .hero h1 .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.2em;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: #0a0e17;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34,211,238,0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* ========== SECTIONS ========== */
+    section {
+      padding: 100px 24px;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75em;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2em, 4vw, 3em);
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.15;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.1em;
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ========== ABOUT ========== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      padding: 32px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    h1 {
-      color: #2c3e50;
-      font-size: 2.4em;
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .about-card:hover {
+      border-color: rgba(34,211,238,0.15);
+      transform: translateY(-4px);
+    }
+
+    .about-card:hover::before { opacity: 1; }
+
+    .about-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      margin-bottom: 16px;
+    }
+
+    .about-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15em;
       margin-bottom: 10px;
     }
 
-    h2 {
-      color: #007acc;
-      font-size: 1.6em;
-      margin-top: 40px;
-      border-left: 5px solid #007acc;
-      padding-left: 10px;
+    .about-card p {
+      color: var(--text-muted);
+      font-size: 0.95em;
+      line-height: 1.6;
     }
 
-    h3 {
-      margin-top: 30px;
-      color: #444;
+    /* ========== HOSTING ========== */
+    .hosting-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    p, li {
-      line-height: 1.7;
-      font-size: 1.05em;
+    .hosting-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 32px;
     }
 
-    img {
-      width: 100%;
-      max-width: 800px;
-      border-radius: 12px;
-      margin: 16px 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    ul {
-      margin-left: 20px;
-    }
-
-    a {
-      color: #007acc;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .highlight {
-      background: #f0f8ff;
-      border-left: 4px solid #007acc;
-      padding: 10px 15px;
-      border-radius: 8px;
-      margin: 20px 0;
-    }
-
-    .contact {
+    .hosting-feature {
       display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 20px;
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .hosting-feature:hover {
+      border-color: rgba(52,211,153,0.2);
+      background: rgba(52,211,153,0.03);
+    }
+
+    .hosting-feature .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(52,211,153,0.1);
+      display: flex;
+      align-items: center;
       justify-content: center;
+      font-size: 1em;
+      flex-shrink: 0;
+    }
+
+    .hosting-feature h4 {
+      font-size: 0.95em;
+      margin-bottom: 4px;
+    }
+
+    .hosting-feature p {
+      color: var(--text-muted);
+      font-size: 0.85em;
+      line-height: 1.5;
+    }
+
+    /* ========== FLOWS / PROJECTS ========== */
+    .flows-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .flow-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .flow-card:hover {
+      border-color: rgba(34,211,238,0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .flow-card-header {
+      padding: 28px 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .flow-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75em;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    .flow-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7em;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .flow-card-body {
+      padding: 16px 28px 24px;
+    }
+
+    .flow-card-body h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25em;
+      margin-bottom: 8px;
+    }
+
+    .flow-card-body p {
+      color: var(--text-muted);
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .flow-image-wrap {
+      padding: 0 28px 28px;
+    }
+
+    .flow-image-wrap img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .flow-image-wrap iframe {
+      width: 100%;
+      height: 420px;
+      border: none;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    /* ========== CALLOUT ========== */
+    .callout {
+      background: linear-gradient(135deg, rgba(34,211,238,0.06), rgba(167,139,250,0.06));
+      border: 1px solid rgba(34,211,238,0.12);
+      border-radius: 16px;
+      padding: 32px;
       margin-top: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .callout::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient);
+    }
+
+    .callout p {
+      font-size: 1.05em;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .callout strong {
+      color: var(--text);
+    }
+
+    /* ========== CONTACT ========== */
+    .contact-section {
+      text-align: center;
     }
 
     .contact-card {
-      background: #f4faff;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      max-width: 500px;
-      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
     }
 
-    .contact-card p {
-      margin: 10px 0;
-      font-size: 1.05em;
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:last-child { margin-bottom: 0; }
+
+    .contact-item:hover {
+      border-color: rgba(34,211,238,0.2);
+      background: var(--accent-glow);
+    }
+
+    .contact-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1em;
+      flex-shrink: 0;
+    }
+
+    .contact-item a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover { color: var(--accent); }
+
+    .contact-label {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-muted);
+      font-size: 0.85em;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hosting-features { grid-template-columns: 1fr; }
+      .contact-card { padding: 32px 24px; }
+      section { padding: 60px 20px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>👋 Hello, I'm Ngoc Tan</h1>
-    <p>🚀 <strong>AI Automation Developer</strong> – I specialize in creating smart automation flows using n8n, Zapier, REST APIs, and Python, with a focus on scalable and self-hosted systems.</p>
 
-    <h2>💼 About Me</h2>
-    <div class="highlight">
-      Dear Partner,<br><br>
-      I'm excited to bring over 4 years of hands-on experience with <strong>n8n</strong>, <strong>Make.com</strong>, and <strong>Zapier</strong> to your business. My focus is on building automations that are reliable, scalable, and user-friendly.
-    </div>
-
-    <ul>
-      <li>Platform integration: Airtable, Facebook API, CRM, email & more</li>
-      <li>Secure self-hosted setups using Docker, Redis, PostgreSQL</li>
-      <li>Consulting and team onboarding for long-term success</li>
-    </ul>
-
-    <h2>🏗️ n8n Self-hosting for SMBs</h2>
-    <div class="highlight">
-      I also offer full deployment and scaling services for <strong>n8n self-hosted environments</strong>, ideal for small and medium-sized businesses (SMBs) looking for cost-effective, private automation solutions.<br><br>
-      I’ve successfully deployed <strong>n8n in worker/queue mode</strong> using Docker, Redis, PostgreSQL, and reverse proxies like Traefik and Caddy. These setups allow for:
-      <ul>
-        <li>Horizontal scaling with background workers</li>
-        <li>Separate webhooks, executions, and queue processing</li>
-        <li>Secure API key management & environment separation</li>
-        <li>Cost-saving compared to SaaS platforms</li>
-      </ul>
-      If you're a business seeking full control and performance at scale — I can help.
-    </div>
-
-    <h2>📸 Featured n8n Flows</h2>
-
-    <h3>1. Facebook AI Chatbot – Customer Support via Zalo OA</h3>
-    <img src="Capture.PNG" alt="Zalo OA AI Agent Flow" />
-
-    <h3>2. ClickUp to Airtable Sync – Auto Task and Data Update</h3>
-    <img src="Caspture.PNG" alt="ClickUp to Airtable Flow" />
-
-    <h3>3. Video Generator – Automated Video Creation from Ideas</h3>
-    <img src="video.PNG" alt="Video Automation Flow" />
-
-    <h3>4. Handling Airtable Data with Webhook</h3>
-    <img src="airtable.png" alt="airtable flow" />
-
-    <h3>5. Custom Reporting Dashboard using Metabase (Self-hosted)</h3>
-    <img src="metabase.PNG" alt="metabase dashboard" />
-    <h3>6.Accountant Onboarding Agent</h3>
-    <img src="onboardagent.png" alt="onboarding" />
-    <div class="highlight">
-      I am confident working with almost any RESTful API beyond Make, Zapier, and n8n.<br>
-      If you have a unique integration challenge — I can build it from scratch.
-    </div>
-<h3>7. Demo n8n Workflow</h3>
-<iframe 
-  src="https://drive.google.com/file/d/1kkfx3XYvq_3XozFfDe67DnKMAtEYLgt9/preview" 
-  width="800" 
-  height="480" 
-  allow="autoplay"
-  style="border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 16px 0;">
-</iframe>
-    <h2>📬 Contact</h2>
-    <div class="contact">
-      <div class="contact-card">
-        <p><strong>📧 Email:</strong> <a href="mailto:tan012261@gmail.com">tan012261@gmail.com</a></p>
-        <p><strong>📱 Phone / Zalo / WhatsApp:</strong> <a href="tel:+84776114333">+84 776114333</a></p>
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Available for projects</div>
+      <h1>
+        Hi, I'm <span class="gradient-text">Ngoc Tan</span>
+      </h1>
+      <p class="hero-desc">
+        AI Automation Developer specializing in smart automation flows using <strong>n8n</strong>, <strong>Zapier</strong>, <strong>REST APIs</strong>, and <strong>Python</strong> — with a focus on scalable, self-hosted systems.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">📬 Get in touch</a>
+        <a href="#flows" class="btn btn-outline">🔧 View my work</a>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section id="about">
+    <div class="section-inner fade-in">
+      <div class="section-tag">// About me</div>
+      <div class="section-title">4+ years building<br>automation that scales</div>
+      <p class="section-desc">
+        I bring hands-on experience with n8n, Make.com, and Zapier to help businesses automate reliably. My focus: systems that are robust, scalable, and user-friendly.
+      </p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon" style="background: var(--accent-glow);">🔗</div>
+          <h3>Platform Integration</h3>
+          <p>Airtable, Facebook API, CRM systems, email platforms, and virtually any RESTful API you need connected.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon" style="background: var(--accent2-glow);">🐳</div>
+          <h3>Self-hosted Infrastructure</h3>
+          <p>Secure deployments using Docker, Redis, PostgreSQL — full control over your automation stack.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon" style="background: rgba(52,211,153,0.1);">📊</div>
+          <h3>Consulting & Onboarding</h3>
+          <p>Team training, documentation, and long-term strategy to ensure your automation investment pays off.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon" style="background: rgba(244,114,182,0.1);">🤖</div>
+          <h3>AI-Powered Solutions</h3>
+          <p>From AI chatbots to voice agents — I integrate cutting-edge AI into your existing business workflows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SELF-HOSTING ==================== -->
+  <section class="hosting-section">
+    <div class="section-inner fade-in">
+      <div class="section-tag">// Infrastructure</div>
+      <div class="section-title">n8n Self-hosting<br>for SMBs</div>
+      <p class="section-desc">
+        Full deployment and scaling services for n8n self-hosted environments — ideal for businesses seeking cost-effective, private automation.
+      </p>
+      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 8px;">
+        I've deployed <strong style="color:var(--text)">n8n in worker/queue mode</strong> using Docker, Redis, PostgreSQL, and reverse proxies like Traefik and Caddy.
+      </p>
+
+      <div class="hosting-features">
+        <div class="hosting-feature">
+          <div class="icon">⚡</div>
+          <div>
+            <h4>Horizontal Scaling</h4>
+            <p>Background workers for high-throughput processing</p>
+          </div>
+        </div>
+        <div class="hosting-feature">
+          <div class="icon">🔀</div>
+          <div>
+            <h4>Separated Architecture</h4>
+            <p>Webhooks, executions, and queue processing isolated</p>
+          </div>
+        </div>
+        <div class="hosting-feature">
+          <div class="icon">🔐</div>
+          <div>
+            <h4>Secure API Management</h4>
+            <p>API key management & environment separation</p>
+          </div>
+        </div>
+        <div class="hosting-feature">
+          <div class="icon">💰</div>
+          <div>
+            <h4>Cost-Efficient</h4>
+            <p>Significant savings compared to SaaS platforms</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURED FLOWS ==================== -->
+  <section id="flows">
+    <div class="section-inner fade-in">
+      <div class="section-tag">// Portfolio</div>
+      <div class="section-title">Featured n8n Flows</div>
+      <p class="section-desc">
+        A selection of automation projects I've built — from AI chatbots to data pipelines and beyond.
+      </p>
+
+      <div class="flows-grid">
+
+        <!-- Flow 1 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">01</span>
+            <span class="flow-tag">AI · Chatbot</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Facebook AI Chatbot – Zalo OA</h3>
+            <p>Customer support automation via Zalo Official Account with AI-powered responses.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="Capture.PNG" alt="Zalo OA AI Agent Flow" />
+          </div>
+        </div>
+
+        <!-- Flow 2 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">02</span>
+            <span class="flow-tag">Sync · Data</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>ClickUp → Airtable Sync</h3>
+            <p>Automated task and data synchronization between ClickUp and Airtable.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="Caspture.PNG" alt="ClickUp to Airtable Flow" />
+          </div>
+        </div>
+
+        <!-- Flow 3 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">03</span>
+            <span class="flow-tag">AI · Video</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Video Generator</h3>
+            <p>Automated video creation pipeline — from idea input to rendered output.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="video.PNG" alt="Video Automation Flow" />
+          </div>
+        </div>
+
+        <!-- Flow 4 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">04</span>
+            <span class="flow-tag">Webhook · Data</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Airtable Data Handler</h3>
+            <p>Webhook-triggered data processing and transformation with Airtable.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="airtable.png" alt="Airtable Flow" />
+          </div>
+        </div>
+
+        <!-- Flow 5 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">05</span>
+            <span class="flow-tag">Dashboard · Analytics</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Custom Reporting Dashboard</h3>
+            <p>Self-hosted Metabase reporting dashboard for real-time business analytics.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="metabase.PNG" alt="Metabase Dashboard" />
+          </div>
+        </div>
+
+        <!-- Flow 6 -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">06</span>
+            <span class="flow-tag">AI · Agent</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Accountant Onboarding Agent</h3>
+            <p>AI-powered agent that automates the accountant onboarding process end-to-end.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <img src="onboardagent.png" alt="Onboarding Agent" />
+          </div>
+        </div>
+
+        <!-- Flow 7 - Voice Agent -->
+        <div class="flow-card" style="border-color: rgba(167,139,250,0.2);">
+          <div class="flow-card-header">
+            <span class="flow-number" style="background: var(--accent2-glow); color: var(--accent2);">07</span>
+            <span class="flow-tag">Voice · AI Agent</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Voice Agent with Vapi</h3>
+            <p>AI-powered voice agent built with <strong>Vapi</strong> — enabling natural phone/voice conversations for customer support, lead qualification, appointment booking, and more. Integrated with n8n for real-time data processing and CRM updates during calls.</p>
+          </div>
+          <div class="flow-image-wrap" style="text-align:center;">
+            <div style="background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(244,114,182,0.06)); border: 1px solid rgba(167,139,250,0.15); border-radius: 16px; padding: 48px 32px;">
+              <div style="font-size: 3em; margin-bottom: 16px;">🎙️</div>
+              <h4 style="font-family: 'Syne', sans-serif; font-size: 1.3em; margin-bottom: 12px; background: var(--gradient2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Vapi Voice AI Integration</h4>
+              <p style="color: var(--text-muted); font-size: 0.9em; line-height: 1.7; max-width: 460px; margin: 0 auto;">
+                Natural language voice calls • Real-time intent detection<br>
+                CRM auto-updates • Appointment scheduling<br>
+                Lead qualification • Multilingual support
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow 8 - Demo -->
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-number">08</span>
+            <span class="flow-tag">Demo · Workflow</span>
+          </div>
+          <div class="flow-card-body">
+            <h3>Demo n8n Workflow</h3>
+            <p>A walkthrough of a real n8n automation workflow in action.</p>
+          </div>
+          <div class="flow-image-wrap">
+            <iframe
+              src="https://drive.google.com/file/d/1kkfx3XYvq_3XozFfDe67DnKMAtEYLgt9/preview"
+              allow="autoplay"
+            ></iframe>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Callout -->
+      <div class="callout">
+        <p>
+          💡 I am confident working with <strong>almost any RESTful API</strong> beyond Make, Zapier, and n8n.
+          If you have a unique integration challenge — <strong>I can build it from scratch.</strong>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contact" class="contact-section">
+    <div class="section-inner fade-in">
+      <div class="section-tag">// Let's talk</div>
+      <div class="section-title" style="text-align:center;">Get in touch</div>
+      <p class="section-desc" style="text-align:center; margin: 0 auto 48px;">
+        Have a project in mind? Let's discuss how automation can transform your workflow.
+      </p>
+
+      <div class="contact-card">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <a href="mailto:tan012261@gmail.com">tan012261@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-label">Phone / Zalo / WhatsApp</div>
+            <a href="tel:+84776114333">+84 776 114 333</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    Built with ☕ by <span>Ngoc Tan</span> · AI Automation Developer
+  </footer>
+
+  <!-- ==================== SCROLL REVEAL ==================== -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
