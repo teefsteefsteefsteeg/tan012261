@@ -181,6 +181,31 @@ html{overflow-x:clip}
   .bk-row .c{display:none}
   .bk-hint{font-size:11px;text-align:center}
 }
+/* ---------- hanging logos that fall into the sentence ---------- */
+.hang-band{height:clamp(250px,36vh,360px);margin:-40px 0 -24px}
+#dropLayer{position:absolute;left:0;top:0;width:100%;height:0;z-index:20;pointer-events:none}
+.d-str{position:absolute;width:2px;margin-left:-1px;transform-origin:50% 0;
+  background:linear-gradient(180deg,rgba(21,23,28,0),rgba(21,23,28,.35) 18%,rgba(21,23,28,.45));border-radius:2px}
+.d-tile{position:absolute;left:0;top:0;width:var(--S,88px);height:var(--S,88px);border-radius:26%;
+  background:var(--c);transform-origin:50% 50%;will-change:transform;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -6px 12px rgba(0,0,0,.18),0 10px 22px -8px rgba(21,23,28,.45),0 3px 6px rgba(21,23,28,.18)}
+.d-tile:before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(160deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.08) 38%,rgba(255,255,255,0) 60%,rgba(0,0,0,.12) 100%)}
+.d-tile i{position:absolute;inset:22%;background:#fff;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}
+.d-tile.light{background:#fff}
+.d-tile.light i{background:var(--c)}
+.d-tile:after{content:"";position:absolute;left:50%;top:-5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;
+  border:2px solid rgba(21,23,28,.45);background:#F5F4EF;opacity:var(--ring,1)}
+
+.connect{max-width:1080px;margin:0 auto;padding:clamp(40px,8vh,96px) 24px clamp(64px,12vh,140px);text-align:center}
+.connect p{margin:0;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,56px);line-height:1.32;letter-spacing:-.02em;color:#15171C;text-wrap:balance}
+.connect .mute{color:#8A8E97}
+.slot{display:inline-block;width:1.12em;height:1.12em;vertical-align:-.2em;margin:0 .08em;border-radius:26%;
+  outline:2px dashed rgba(21,23,28,.12);outline-offset:-2px;transition:outline-color .3s}
+.slot.filled{outline-color:transparent}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:640px){.hang-band{height:170px}}
 </style>
 </head>
 <body>
@@ -1187,6 +1212,111 @@ html{overflow-x:clip}
       }, { threshold: 0.45 }).observe(stage);
     } else inView = true;
   });
+})();
+/* Logos hang on strings in the hero and, as the page scrolls, fall into the
+   gaps of the sentence below. Scroll-scrubbed, so scrolling back hangs them up. */
+(function () {
+  var hero = document.getElementById('top');
+  if (!hero) return;
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LOGOS = [
+    ['whatsapp', 'WhatsApp', '#25D366'], ['telegram', 'Telegram', '#26A5E4'], ['zalo', 'Zalo', '#0068FF'],
+    ['claude', 'Claude', '#D97757'], ['gmail', 'Gmail', '#EA4335', 1], ['airtable', 'Airtable', '#18BFFF'],
+    ['postgresql', 'PostgreSQL', '#4169E1'], ['docker', 'Docker', '#2496ED']
+  ];
+  /* where each tile hangs: x as a fraction of the hero width, string length in px */
+  var HANG = [[0.12, 120], [0.24, 210], [0.37, 90], [0.5, 170], [0.62, 110], [0.74, 200], [0.86, 130], [0.95, 80]];
+
+  /* --- the sentence with its empty slots --- */
+  function slot(k) { return '<span class="slot" data-k="' + k + '"><span class="sr">' + LOGOS[k][1] + '</span></span>'; }
+  var sec = document.createElement('section');
+  sec.id = 'connect'; sec.className = 'connect';
+  sec.innerHTML = '<p>I connect ' + slot(0) + slot(1) + slot(2) + ' chat apps to AI agents ' + slot(3) +
+    ' that answer customers, send ' + slot(4) + ' emails and update ' + slot(5) + slot(6) +
+    ' your data <span class="mute">— on servers ' + slot(7) + ' you own.</span></p>';
+  hero.parentNode.insertBefore(sec, hero.nextSibling);
+  var slots = sec.querySelectorAll('.slot');
+
+  /* --- the band the logos hang in, at the top of the hero --- */
+  var band = null;
+  if (!REDUCED) { band = document.createElement('div'); band.className = 'hang-band'; band.setAttribute('aria-hidden', 'true'); hero.insertBefore(band, hero.firstChild); }
+
+  var layer = document.createElement('div'); layer.id = 'dropLayer'; layer.setAttribute('aria-hidden', 'true');
+  (document.body.firstElementChild || document.body).appendChild(layer);
+  var tiles = LOGOS.map(function (l, k) {
+    var s = document.createElement('div'); s.className = 'd-str';
+    var t = document.createElement('div'); t.className = 'd-tile' + (l[3] ? ' light' : '');
+    t.style.setProperty('--c', l[2]); t.style.setProperty('--m', 'url(logos/' + l[0] + '.svg)');
+    t.appendChild(document.createElement('i'));
+    layer.appendChild(s); layer.appendChild(t);
+    return { s: s, t: t, th: (k % 2 ? 1 : -1) * 0.12, w: 0, ax: 0, ay: 0, L: 0, sx: 0, sy: 0, ss: 0, spin: (k % 2 ? 1 : -1) * (14 + k * 3) };
+  });
+
+  var S = 88, layerTop = 0, endScroll = 1;
+  function docRect(el) { var r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height }; }
+  function measure() {
+    S = innerWidth < 640 ? 54 : innerWidth < 1000 ? 70 : 88;
+    layer.style.setProperty('--S', S + 'px');
+    var lr = docRect(layer); layerTop = lr.y;
+    var hr = docRect(hero), small = innerWidth < 640;
+    tiles.forEach(function (t, k) {
+      t.ax = hr.x + hr.w * HANG[k][0] - lr.x;
+      t.ay = hr.y - lr.y;
+      t.L = HANG[k][1] * (small ? 0.55 : innerWidth < 1000 ? 0.75 : 1);
+      var sr = docRect(slots[k]);
+      t.sx = sr.x - lr.x + sr.w / 2; t.sy = sr.y - lr.y + sr.h / 2; t.ss = sr.w / S;
+    });
+    var cr = docRect(sec);
+    endScroll = Math.max(1, cr.y + cr.h * 0.5 - innerHeight * 0.55);
+    if (REDUCED) frame(performance.now());         /* static layout: place them now */
+  }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function easeIO(q) { return q < 0.5 ? 4 * q * q * q : 1 - Math.pow(-2 * q + 2, 3) / 2; }
+  var mx = -1e4, my = -1e4, mvx = 0, lastT = performance.now(), pt = 0;
+  addEventListener('pointermove', function (e) {
+    if (e.pointerType === 'touch') return;
+    var nx = e.pageX - (layer.getBoundingClientRect().left + scrollX), ny = e.pageY - layerTop;
+    mvx = mvx * 0.5 + (nx - mx) * 0.5; mx = nx; my = ny;
+  }, { passive: true });
+
+  function frame(now) {
+    var dt = Math.min(0.033, (now - lastT) / 1000); lastT = now; pt += dt;
+    var p = REDUCED ? 1 : clamp(scrollY / endScroll, 0, 1);
+    var active = false;
+    tiles.forEach(function (t, k) {
+      var q = REDUCED ? 1 : clamp((p - 0.06 - k * 0.055) / 0.42, 0, 1);
+      /* the pendulum: gravity, damping, a slow breeze, and a push from the cursor */
+      if (q < 1) {
+        var bx = t.ax + Math.sin(t.th) * t.L, by = t.ay + Math.cos(t.th) * t.L + S / 2;
+        var near = Math.hypot(mx - bx, my - by) < S * 1.4;
+        var acc = -(9.8 * 60 / Math.max(60, t.L)) * Math.sin(t.th) - 1.6 * t.w + Math.sin(pt * 0.9 + k * 1.7) * 0.35 + (near ? mvx * 0.9 : 0);
+        t.w += acc * dt; t.th = clamp(t.th + t.w * dt, -1.1, 1.1);
+        active = true;
+      }
+      var hx = t.ax + Math.sin(t.th) * t.L, hy = t.ay + Math.cos(t.th) * t.L + S / 2;
+      var e = easeIO(q), fy = q < 0.82 ? Math.pow(q / 0.82, 2) : 1;
+      var bounce = q >= 0.82 && q < 1 ? Math.sin((q - 0.82) / 0.18 * Math.PI) * 0.06 * Math.abs(t.sy - hy) * 0.12 : 0;
+      var x = hx + (t.sx - hx) * e, y = hy + (t.sy - hy) * fy - bounce;
+      var sc = 1 + (t.ss - 1) * e;
+      var rot = (t.th * 57.3) * (1 - q) + t.spin * Math.sin(Math.PI * q);
+      t.t.style.transform = 'translate(' + (x - S / 2).toFixed(1) + 'px,' + (y - S / 2).toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg) scale(' + sc.toFixed(3) + ')';
+      t.t.style.setProperty('--ring', String(clamp(1 - q * 5, 0, 1)));
+      /* the string runs from the anchor to the tile's ring and lets go as it falls */
+      var len = Math.hypot(hx - t.ax, hy - S / 2 - t.ay);
+      t.s.style.cssText = 'left:' + t.ax.toFixed(1) + 'px;top:' + t.ay.toFixed(1) + 'px;height:' + len.toFixed(1) + 'px;transform:rotate(' + (-t.th * 57.3).toFixed(2) + 'deg);opacity:' + clamp(1 - q * 6, 0, 1).toFixed(3);
+      slots[k].classList.toggle('filled', q > 0.95);
+      if (q > 0 && q < 1) active = true;
+    });
+    mvx *= 0.85;
+    if (active || !REDUCED) requestAnimationFrame(frame);
+  }
+
+  function start() { measure(); requestAnimationFrame(frame); }
+  addEventListener('resize', measure);
+  addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+  setTimeout(measure, 1500);
 })();
 </script>
 </body>
