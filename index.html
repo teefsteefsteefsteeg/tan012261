@@ -1250,7 +1250,7 @@ html{overflow-x:clip}
     t.style.setProperty('--c', l[2]); t.style.setProperty('--m', 'url(logos/' + l[0] + '.svg)');
     t.appendChild(document.createElement('i'));
     layer.appendChild(s); layer.appendChild(t);
-    return { s: s, t: t, th: (k % 2 ? 1 : -1) * 0.12, w: 0, ax: 0, ay: 0, L: 0, sx: 0, sy: 0, ss: 0, spin: (k % 2 ? 1 : -1) * (14 + k * 3) };
+    return { s: s, t: t, qs: 0, th: (k % 2 ? 1 : -1) * 0.12, w: 0, ax: 0, ay: 0, L: 0, sx: 0, sy: 0, ss: 0, spin: (k % 2 ? 1 : -1) * (14 + k * 3) };
   });
 
   var S = 88, layerTop = 0, endScroll = 1;
@@ -1286,7 +1286,12 @@ html{overflow-x:clip}
     var p = REDUCED ? 1 : clamp(scrollY / endScroll, 0, 1);
     var active = false;
     tiles.forEach(function (t, k) {
-      var q = REDUCED ? 1 : clamp((p - 0.06 - k * 0.055) / 0.42, 0, 1);
+      /* the scroll sets where the tile should be; the tile eases there, so a
+         wheel notch becomes a glide instead of a jump */
+      var qT = REDUCED ? 1 : clamp((p - 0.06 - k * 0.055) / 0.42, 0, 1);
+      t.qs += (qT - t.qs) * (1 - Math.exp(-dt * 4.5));
+      if (Math.abs(qT - t.qs) < 0.0004) t.qs = qT;
+      var q = t.qs;
       /* the pendulum: gravity, damping, a slow breeze, and a push from the cursor */
       if (q < 1) {
         var bx = t.ax + Math.sin(t.th) * t.L, by = t.ay + Math.cos(t.th) * t.L + S / 2;
