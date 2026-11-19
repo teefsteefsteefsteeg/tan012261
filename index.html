@@ -678,7 +678,21 @@ html{overflow-x:clip}
   var root = document.getElementById('book');
   var FL = window.__FLOWS;
   if (!root || !FL) return;
-  var M = FL.length;
+  var COVER = { cover: true, num: '00', title: 'The toolkit', cat: 'Platforms I connect', desc: 'Every line is a workflow I built.' };
+  var PAGES = [COVER].concat(FL);
+  var M = PAGES.length, NPROJ = String(FL.length).padStart(2, '0');
+  /* platforms on the opening spread, and which projects each one feeds */
+  var BRANDS = [
+    ['whatsapp', 'WhatsApp', '#25D366'], ['telegram', 'Telegram', '#26A5E4'], ['zalo', 'Zalo', '#0068FF'], ['facebook', 'Facebook', '#0866FF'],
+    ['gmail', 'Gmail', '#EA4335'], ['dropbox', 'Dropbox', '#0061FF'], ['airtable', 'Airtable', '#18BFFF'], ['clickup', 'ClickUp', '#7B68EE'],
+    ['claude', 'Claude', '#D97757'], ['vapi', 'Vapi', '#15171C'], ['metabase', 'Metabase', '#509EE3'], ['postgresql', 'PostgreSQL', '#4169E1'],
+    ['redis', 'Redis', '#FF4438'], ['docker', 'Docker', '#2496ED']
+  ];
+  var USES = {
+    '01': ['facebook', 'zalo', 'claude'], '02': ['clickup', 'airtable'], '03': ['telegram', 'claude'],
+    '04': ['airtable'], '05': ['metabase', 'postgresql', 'docker'], '06': ['gmail', 'dropbox', 'claude'],
+    '07': ['vapi', 'postgresql'], '08': ['vapi'], '09': ['whatsapp', 'postgresql', 'redis']
+  };
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ACC = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '').trim() || '#2F5BFF';
   var W = 2000, H = 1250;               /* spread bitmap size, aspect 1.6 */
@@ -768,7 +782,7 @@ html{overflow-x:clip}
   function leftPage(c, f, img) {
     var bx = 110, by = 150, bw = W / 2 - 220, bh = H - 330;
     c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#8A8E97';
-    c.fillText('PLATE ' + f.num + ' / ' + String(M).padStart(2, '0'), bx, 96);
+    c.fillText('PLATE ' + f.num + ' / ' + NPROJ, bx, 96);
     if (img) {
       var s = Math.min((bw - 40) / img.width, (bh - 40) / img.height);
       var iw = img.width * s, ih = img.height * s, mx = 22;
@@ -818,6 +832,73 @@ html{overflow-x:clip}
   function loadImg(src) {
     return new Promise(function (res) { if (!src) return res(null); var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src; });
   }
+  function loadLogo(id, color) {
+    if (id === 'vapi') return Promise.resolve(null);
+    return fetch('logos/' + id + '.svg').then(function (r) { return r.ok ? r.text() : null; }).then(function (svg) {
+      if (!svg) return null;
+      var url = URL.createObjectURL(new Blob([svg.replace('<svg ', '<svg fill="' + color + '" ')], { type: 'image/svg+xml' }));
+      return loadImg(url);
+    }).catch(function () { return null; });
+  }
+  function drawCover() {
+    return Promise.all(BRANDS.map(function (b) { return loadLogo(b[0], b[2]); })).then(function (imgs) {
+      var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+      var c = cv.getContext('2d'); paper(c);
+      var bx = 110, cols = 4, colW = (W / 2 - 220) / cols, tile = 138, gy = 360, rowH = 182, pos = {};
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#8A8E97';
+      c.fillText('PLATE 00 · THE TOOLKIT', bx, 96);
+      c.font = '600 76px "Space Grotesk", sans-serif'; c.fillStyle = '#15171C';
+      c.fillText('Platforms I connect', bx, 210);
+      c.font = '400 30px Inter, sans-serif'; c.fillStyle = '#4A4F5A';
+      c.fillText('Every line is a workflow I built.', bx, 266);
+      BRANDS.forEach(function (b, k) {
+        var x = bx + (k % cols) * colW + (colW - tile) / 2, y = gy + Math.floor(k / cols) * rowH;
+        pos[b[0]] = { x: x + tile / 2, y: y + tile / 2, color: b[2] };
+      });
+      /* the projects, down the right page */
+      var px = W / 2 + 330, py0 = 200, step = 100, pill = {};
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#8A8E97';
+      c.fillText('WHAT I BUILT WITH THEM', W / 2 + 120, 96);
+      FL.forEach(function (f, k) { pill[f.num] = { x: px, y: py0 + k * step + 32 }; });
+      /* lines first, so the tiles and pills sit on top of them */
+      c.lineCap = 'round';
+      FL.forEach(function (f) {
+        (USES[f.num] || []).forEach(function (id) {
+          var a = pos[id], p = pill[f.num]; if (!a) return;
+          c.strokeStyle = a.color; c.globalAlpha = 0.5; c.lineWidth = 3.5;
+          c.beginPath(); c.moveTo(a.x, a.y);
+          c.bezierCurveTo(a.x + 360, a.y, p.x - 300, p.y, p.x, p.y); c.stroke();
+          c.globalAlpha = 1; c.fillStyle = a.color; c.beginPath(); c.arc(p.x, p.y, 7, 0, Math.PI * 2); c.fill();
+        });
+      });
+      BRANDS.forEach(function (b, k) {
+        var a = pos[b[0]], x = a.x - tile / 2, y = a.y - tile / 2;
+        c.save(); c.shadowColor = 'rgba(40,30,15,.16)'; c.shadowBlur = 18; c.shadowOffsetY = 6;
+        rr(c, x, y, tile, tile, 28); c.fillStyle = '#FFFFFF'; c.fill(); c.restore();
+        rr(c, x, y, tile, tile, 28); c.strokeStyle = 'rgba(21,23,28,.08)'; c.lineWidth = 2; c.stroke();
+        if (imgs[k]) c.drawImage(imgs[k], a.x - 30, y + 24, 60, 60);
+        else {
+          c.fillStyle = b[2]; c.beginPath(); c.arc(a.x, y + 54, 30, 0, Math.PI * 2); c.fill();
+          c.fillStyle = '#FFFFFF'; c.font = '700 30px "Space Grotesk", sans-serif'; c.textAlign = 'center'; c.fillText('V', a.x, y + 65); c.textAlign = 'left';
+        }
+        c.font = '500 19px "JetBrains Mono", monospace'; c.fillStyle = '#4A4F5A'; c.textAlign = 'center';
+        c.fillText(b[1], a.x, y + 116); c.textAlign = 'left';
+      });
+      FL.forEach(function (f) {
+        var p = pill[f.num];
+        c.font = '600 30px "Space Grotesk", sans-serif';
+        var label = f.title.length > 30 ? f.title.slice(0, 29) + '…' : f.title;
+        var w = c.measureText(label).width + 110;
+        rr(c, p.x + 16, p.y - 32, w, 64, 32); c.fillStyle = '#FFFFFF'; c.fill();
+        c.strokeStyle = '#D6D3CA'; c.lineWidth = 2; c.stroke();
+        c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = ACC; c.fillText(f.num, p.x + 40, p.y + 8);
+        c.font = '600 30px "Space Grotesk", sans-serif'; c.fillStyle = '#15171C'; c.fillText(label, p.x + 90, p.y + 10);
+      });
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#8A8E97'; c.textAlign = 'right';
+      c.fillText('TURN THE PAGE →', W - 120, H - 70); c.textAlign = 'left';
+      return new Promise(function (res) { cv.toBlob(function (b) { res(URL.createObjectURL(b)); }, 'image/jpeg', 0.92); });
+    });
+  }
   function drawSpread(f) {
     return loadImg(f.img).then(function (img) {
       var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
@@ -866,7 +947,7 @@ html{overflow-x:clip}
     book.textContent = '';
     if (!turn) {
       var im = new Image(); im.className = 'bk-full'; im.src = urls[idx]; im.draggable = false;
-      im.alt = FL[idx].title + '. ' + FL[idx].desc; book.appendChild(im);
+      im.alt = PAGES[idx].title + '. ' + PAGES[idx].desc; book.appendChild(im);
       b3d.style.setProperty('--shade', '0');
     } else {
       var nx = turn.dir === 'next';
@@ -881,9 +962,9 @@ html{overflow-x:clip}
     layout(); caption(); marks(); syncZoomLayer(); placeLoupe();
   }
   function caption() {
-    var i = turn ? turn.to : idx, f = FL[i];
-    capEl.innerHTML = '<strong>' + f.num + '</strong> / ' + String(M).padStart(2, '0') + ' · ' + f.title +
-      (!f.img && !f.nodes && window.__DEMO_VIDEO ? ' · <a href="' + window.__DEMO_VIDEO + '" target="_blank" rel="noopener" style="color:var(--accent)">Watch the demo ↗</a>' : '');
+    var i = turn ? turn.to : idx, f = PAGES[i];
+    capEl.innerHTML = '<strong>' + f.num + '</strong> / ' + NPROJ + ' · ' + f.title + (f.cover ? ' — ' + f.cat : '') +
+      (!f.cover && !f.img && !f.nodes && window.__DEMO_VIDEO ? ' · <a href="' + window.__DEMO_VIDEO + '" target="_blank" rel="noopener" style="color:var(--accent)">Watch the demo ↗</a>' : '');
   }
   addEventListener('resize', function () { layout(); restLoupe(); });
 
@@ -1071,7 +1152,7 @@ html{overflow-x:clip}
   };
 
   /* --------------------------------------------------------- the index */
-  FL.forEach(function (f, i) {
+  PAGES.forEach(function (f, i) {
     var li = h('li'), b = h('button', 'bk-row');
     b.type = 'button';
     b.innerHTML = '<span class="n"></span><span class="t"></span><span class="c"></span>';
@@ -1088,7 +1169,7 @@ html{overflow-x:clip}
   var fontsReady = document.fonts ? Promise.all([
     document.fonts.load('600 84px "Space Grotesk"'), document.fonts.load('400 32px Inter'), document.fonts.load('500 24px "JetBrains Mono"')
   ]).catch(function () {}) : Promise.resolve();
-  fontsReady.then(function () { return Promise.all(FL.map(drawSpread)); }).then(function (list) {
+  fontsReady.then(function () { return Promise.all(PAGES.map(function (p) { return p.cover ? drawCover() : drawSpread(p); })); }).then(function (list) {
     urls = list; ready = true; book.style.background = '';
     paint(); setView(0, 0, 1); restLoupe();
     if ('IntersectionObserver' in window) {
