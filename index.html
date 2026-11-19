@@ -1218,7 +1218,8 @@ html{overflow-x:clip}
 (function () {
   var hero = document.getElementById('top');
   if (!hero) return;
-  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* the owner chose to always play this, regardless of prefers-reduced-motion */
+  var REDUCED = false;
   var LOGOS = [
     ['whatsapp', 'WhatsApp', '#25D366'], ['telegram', 'Telegram', '#26A5E4'], ['zalo', 'Zalo', '#0068FF'],
     ['claude', 'Claude', '#D97757'], ['gmail', 'Gmail', '#EA4335', 1], ['airtable', 'Airtable', '#18BFFF'],
