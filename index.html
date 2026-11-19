@@ -959,7 +959,8 @@ html{overflow-x:clip}
   }
   function commit() {
     if (!turn) return;
-    if (REDUCED) { idx = turn.to; turn = null; paint(); return; }
+    /* a turn is always one the reader asked for, so it animates even under
+       reduced motion; only the ambient tilt and the arrival peek are skipped */
     springTo(1, function () { idx = turn.to; turn = null; paint(); }, 170, 26);
   }
   function cancel() { if (!turn) return; springTo(0, function () { turn = null; paint(); }, 150, 24); }
