@@ -1,884 +1,436 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ngoc Tan – AI Automation Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f5f7fa;
-      --surface: #ffffff;
-      --surface-hover: #f0f2f5;
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --text: #1a202c;
-      --text-muted: #64748b;
-      --accent: #0284c7;
-      --accent-glow: rgba(2,132,199,0.08);
-      --accent2: #7c3aed;
-      --accent2-glow: rgba(124,58,237,0.06);
-      --accent3: #059669;
-      --gradient: linear-gradient(135deg, #0284c7, #7c3aed);
-      --gradient2: linear-gradient(135deg, #7c3aed, #db2777);
-      --gradient3: linear-gradient(135deg, #059669, #0284c7);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 6px rgba(0,0,0,0.04);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
-      --shadow-xl: 0 20px 60px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.05);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ========== NOISE OVERLAY ========== */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.015'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ========== HERO ========== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 60px 24px;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px;
-      right: -200px;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(2,132,199,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -100px;
-      left: -200px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      max-width: 900px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-glow);
-      border: 1px solid rgba(2,132,199,0.2);
-      padding: 8px 20px;
-      border-radius: 100px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8em;
-      color: var(--accent);
-      letter-spacing: 0.5px;
-      margin-bottom: 32px;
-      animation: fadeInDown 0.8s ease;
-    }
-
-    .hero-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease infinite;
-    }
-
-    .hero h1 {
-      font-family: 'Lora', serif;
-      font-size: clamp(2.8em, 7vw, 5.5em);
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      animation: fadeInUp 0.8s ease 0.1s both;
-    }
-
-    .hero h1 .gradient-text {
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-desc {
-      font-size: 1.2em;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
-      animation: fadeInUp 0.8s ease 0.2s both;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeInUp 0.8s ease 0.3s both;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
-      border-radius: 12px;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--gradient);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(2,132,199,0.25);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-      transform: translateY(-2px);
-    }
-
-    /* ========== SECTIONS ========== */
-    section {
-      padding: 100px 24px;
-      position: relative;
-    }
-
-    .section-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .section-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75em;
-      color: var(--accent);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: 'Lora', serif;
-      font-size: clamp(2em, 4vw, 3em);
-      font-weight: 700;
-      margin-bottom: 20px;
-      line-height: 1.15;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 1.1em;
-      max-width: 600px;
-      line-height: 1.7;
-      margin-bottom: 48px;
-    }
-
-    /* ========== ABOUT ========== */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .about-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-    }
-
-    .about-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--gradient);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-
-    .about-card:hover {
-      border-color: rgba(2,132,199,0.2);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .about-card:hover::before { opacity: 1; }
-
-    .about-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3em;
-      margin-bottom: 16px;
-    }
-
-    .about-card h3 {
-      font-family: 'Lora', serif;
-      font-size: 1.15em;
-      margin-bottom: 10px;
-    }
-
-    .about-card p {
-      color: var(--text-muted);
-      font-size: 0.95em;
-      line-height: 1.6;
-    }
-
-    /* ========== HOSTING ========== */
-    .hosting-section {
-      background: #edf0f5;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hosting-features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    .hosting-feature {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 20px;
-      background: var(--card);
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .hosting-feature:hover {
-      border-color: rgba(5,150,105,0.25);
-      background: rgba(5,150,105,0.03);
-      box-shadow: var(--shadow-md);
-    }
-
-    .hosting-feature .icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(5,150,105,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1em;
-      flex-shrink: 0;
-    }
-
-    .hosting-feature h4 {
-      font-size: 0.95em;
-      margin-bottom: 4px;
-    }
-
-    .hosting-feature p {
-      color: var(--text-muted);
-      font-size: 0.85em;
-      line-height: 1.5;
-    }
-
-    /* ========== FLOWS / PROJECTS ========== */
-    .flows-grid {
-      display: grid;
-      gap: 24px;
-    }
-
-    .flow-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      position: relative;
-      box-shadow: var(--shadow-md);
-    }
-
-    .flow-card:hover {
-      border-color: rgba(2,132,199,0.2);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .flow-card-header {
-      padding: 28px 28px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .flow-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75em;
-      color: var(--accent);
-      background: var(--accent-glow);
-      padding: 4px 12px;
-      border-radius: 6px;
-    }
-
-    .flow-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7em;
-      color: var(--text-muted);
-      background: rgba(255,255,255,0.04);
-      padding: 4px 10px;
-      border-radius: 6px;
-    }
-
-    .flow-card-body {
-      padding: 16px 28px 24px;
-    }
-
-    .flow-card-body h3 {
-      font-family: 'Lora', serif;
-      font-size: 1.25em;
-      margin-bottom: 8px;
-    }
-
-    .flow-card-body p {
-      color: var(--text-muted);
-      font-size: 0.9em;
-      line-height: 1.5;
-    }
-
-    .flow-image-wrap {
-      padding: 0 28px 28px;
-    }
-
-    .flow-image-wrap img {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.08);
-      display: block;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    .flow-image-wrap iframe {
-      width: 100%;
-      height: 420px;
-      border: none;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    /* ========== CALLOUT ========== */
-    .callout {
-      background: linear-gradient(135deg, rgba(2,132,199,0.04), rgba(124,58,237,0.04));
-      border: 1px solid rgba(2,132,199,0.15);
-      border-radius: 16px;
-      padding: 32px;
-      margin-top: 40px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .callout::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--gradient);
-    }
-
-    .callout p {
-      font-size: 1.05em;
-      line-height: 1.7;
-      color: var(--text-muted);
-    }
-
-    .callout strong {
-      color: var(--text);
-    }
-
-    /* ========== CONTACT ========== */
-    .contact-section {
-      text-align: center;
-    }
-
-    .contact-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 48px;
-      max-width: 560px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .contact-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gradient);
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 24px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .contact-item:last-child { margin-bottom: 0; }
-
-    .contact-item:hover {
-      border-color: rgba(2,132,199,0.25);
-      background: rgba(2,132,199,0.04);
-    }
-
-    .contact-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: var(--accent-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1em;
-      flex-shrink: 0;
-    }
-
-    .contact-item a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    .contact-item a:hover { color: var(--accent); }
-
-    .contact-label {
-      font-size: 0.8em;
-      color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    /* ========== FOOTER ========== */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--text-muted);
-      font-size: 0.85em;
-      border-top: 1px solid var(--border);
-    }
-
-    footer span {
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 600;
-    }
-
-    /* ========== ANIMATIONS ========== */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.5); }
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .hosting-features { grid-template-columns: 1fr; }
-      .contact-card { padding: 32px 24px; }
-      section { padding: 60px 20px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ngoc Tan — AI Automation Developer</title>
+<meta name="description" content="Ngoc Tan builds WhatsApp and voice AI agents, self-hosted n8n automation and vibe-coded web apps.">
+<meta property="og:title" content="Ngoc Tan — AI Automation Developer">
+<meta property="og:description" content="WhatsApp & voice AI agents, self-hosted n8n automation and vibe-coded apps.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F5F4EF}
+a{color:#15171C}a:hover{color:#2F5BFF}
+button{font:inherit}
+@keyframes dcPulse{0%,100%{opacity:.25}50%{opacity:1}}
+</style>
+<style>
+:root{--accent:#2F5BFF}
+html{scroll-behavior:smooth}
+img{max-width:100%}
+</style>
 </head>
 <body>
+<div style="font-family: Inter, system-ui, sans-serif; color: #15171C; background: #F5F4EF; min-height: 100vh">
 
-  <!-- ==================== HERO ==================== -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge">Available for projects</div>
-      <h1>
-        Hi, I'm <span class="gradient-text">Ngoc Tan</span>
-      </h1>
-      <p class="hero-desc">
-        AI Automation Developer specializing in smart automation flows using <strong>n8n</strong>, <strong>Zapier</strong>, <strong>REST APIs</strong>, and <strong>Python</strong> — with a focus on scalable, self-hosted systems.
-      </p>
-      <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">📬 Get in touch</a>
-        <a href="#flows" class="btn btn-outline">🔧 View my work</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== ABOUT ==================== -->
-  <section id="about">
-    <div class="section-inner fade-in">
-      <div class="section-tag">// About me</div>
-      <div class="section-title">4+ years building<br>automation that scales</div>
-      <p class="section-desc">
-        I bring hands-on experience with n8n, Make.com, and Zapier to help businesses automate reliably. My focus: systems that are robust, scalable, and user-friendly.
-      </p>
-
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-icon" style="background: var(--accent-glow);">🔗</div>
-          <h3>Platform Integration</h3>
-          <p>Airtable, Facebook API, CRM systems, email platforms, and virtually any RESTful API you need connected.</p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon" style="background: var(--accent2-glow);">🐳</div>
-          <h3>Self-hosted Infrastructure</h3>
-          <p>Secure deployments using Docker, Redis, PostgreSQL — full control over your automation stack.</p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon" style="background: rgba(5,150,105,0.1);">📊</div>
-          <h3>Consulting & Onboarding</h3>
-          <p>Team training, documentation, and long-term strategy to ensure your automation investment pays off.</p>
-        </div>
-        <div class="about-card">
-          <div class="about-icon" style="background: rgba(244,114,182,0.1);">🤖</div>
-          <h3>AI-Powered Solutions</h3>
-          <p>From AI chatbots to voice agents — I integrate cutting-edge AI into your existing business workflows.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== SELF-HOSTING ==================== -->
-  <section class="hosting-section">
-    <div class="section-inner fade-in">
-      <div class="section-tag">// Infrastructure</div>
-      <div class="section-title">n8n Self-hosting<br>for SMBs</div>
-      <p class="section-desc">
-        Full deployment and scaling services for n8n self-hosted environments — ideal for businesses seeking cost-effective, private automation.
-      </p>
-      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 8px;">
-        I've deployed <strong style="color:var(--text)">n8n in worker/queue mode</strong> using Docker, Redis, PostgreSQL, and reverse proxies like Traefik and Caddy.
-      </p>
-
-      <div class="hosting-features">
-        <div class="hosting-feature">
-          <div class="icon">⚡</div>
-          <div>
-            <h4>Horizontal Scaling</h4>
-            <p>Background workers for high-throughput processing</p>
-          </div>
-        </div>
-        <div class="hosting-feature">
-          <div class="icon">🔀</div>
-          <div>
-            <h4>Separated Architecture</h4>
-            <p>Webhooks, executions, and queue processing isolated</p>
-          </div>
-        </div>
-        <div class="hosting-feature">
-          <div class="icon">🔐</div>
-          <div>
-            <h4>Secure API Management</h4>
-            <p>API key management & environment separation</p>
-          </div>
-        </div>
-        <div class="hosting-feature">
-          <div class="icon">💰</div>
-          <div>
-            <h4>Cost-Efficient</h4>
-            <p>Significant savings compared to SaaS platforms</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== FEATURED FLOWS ==================== -->
-  <section id="flows">
-    <div class="section-inner fade-in">
-      <div class="section-tag">// Portfolio</div>
-      <div class="section-title">Featured n8n Flows</div>
-      <p class="section-desc">
-        A selection of automation projects I've built — from AI chatbots to data pipelines and beyond.
-      </p>
-
-      <div class="flows-grid">
-
-        <!-- Flow 1 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">01</span>
-            <span class="flow-tag">AI · Chatbot</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Facebook AI Chatbot – Zalo OA</h3>
-            <p>Customer support automation via Zalo Official Account with AI-powered responses.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="Capture.PNG" alt="Zalo OA AI Agent Flow" />
-          </div>
-        </div>
-
-        <!-- Flow 2 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">02</span>
-            <span class="flow-tag">Sync · Data</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>ClickUp → Airtable Sync</h3>
-            <p>Automated task and data synchronization between ClickUp and Airtable.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="Caspture.PNG" alt="ClickUp to Airtable Flow" />
-          </div>
-        </div>
-
-        <!-- Flow 3 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">03</span>
-            <span class="flow-tag">AI · Video</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Video Generator</h3>
-            <p>Automated video creation pipeline — from idea input to rendered output.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="video.PNG" alt="Video Automation Flow" />
-          </div>
-        </div>
-
-        <!-- Flow 4 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">04</span>
-            <span class="flow-tag">Webhook · Data</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Airtable Data Handler</h3>
-            <p>Webhook-triggered data processing and transformation with Airtable.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="airtable.png" alt="Airtable Flow" />
-          </div>
-        </div>
-
-        <!-- Flow 5 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">05</span>
-            <span class="flow-tag">Dashboard · Analytics</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Custom Reporting Dashboard</h3>
-            <p>Self-hosted Metabase reporting dashboard for real-time business analytics.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="metabase.PNG" alt="Metabase Dashboard" />
-          </div>
-        </div>
-
-        <!-- Flow 6 -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">06</span>
-            <span class="flow-tag">AI · Agent</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Accountant Onboarding Agent</h3>
-            <p>AI-powered agent that automates the accountant onboarding process end-to-end.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="onboardagent.png" alt="Onboarding Agent" />
-          </div>
-        </div>
-
-        <!-- Flow 7 - Voice Agent -->
-        <div class="flow-card" style="border-color: rgba(124,58,237,0.2);">
-          <div class="flow-card-header">
-            <span class="flow-number" style="background: var(--accent2-glow); color: var(--accent2);">07</span>
-            <span class="flow-tag">Voice · AI Agent</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Voice Agent with Vapi</h3>
-            <p>AI-powered voice agent built with <strong>Vapi</strong> — enabling natural phone/voice conversations for customer support, lead qualification, appointment booking, and more. Integrated with n8n for real-time data processing and CRM updates during calls.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <img src="vapi.png" alt="Voice Agent with Vapi" />
-          </div>
-        </div>
-
-        <!-- Flow 8 - Demo -->
-        <div class="flow-card">
-          <div class="flow-card-header">
-            <span class="flow-number">08</span>
-            <span class="flow-tag">Demo · Workflow</span>
-          </div>
-          <div class="flow-card-body">
-            <h3>Demo Voice Agent Workflow</h3>
-            <p>A walkthrough of a real voice automation workflow in action.</p>
-          </div>
-          <div class="flow-image-wrap">
-            <iframe
-              src="https://drive.google.com/file/d/1kkfx3XYvq_3XozFfDe67DnKMAtEYLgt9/preview"
-              allow="autoplay"
-            ></iframe>
-          </div>
-        </div>
-        <!-- Flow 9 - WhatsApp AI Agent -->
-<div class="flow-card" style="border-color: rgba(34,197,94,0.2);">
-  <div class="flow-card-header">
-    <span class="flow-number" style="background: rgba(34,197,94,0.12); color: #22c55e;">09</span>
-    <span class="flow-tag">Messaging · AI Agent</span>
-  </div>
-  <div class="flow-card-body">
-    <h3>WhatsApp AI Agent</h3>
-    <p>AI-powered WhatsApp agent that automates customer conversations, answers questions, qualifies leads, handles bookings, and provides real-time support. Integrated with <strong>n8n</strong> for workflow automation, data processing, CRM updates, and seamless business operations.</p>
-  </div>
-  <div class="flow-image-wrap">
-    <img src="wa.png" alt="WhatsApp AI Agent" />
-  </div>
+<!-- NAV -->
+<header style="border-bottom: 1px solid #DEDCD4; background: #F5F4EF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #15171C; min-height: 44px">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #15171C; color: #F5F4EF; display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px">NT</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px">Ngoc Tan</span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px">
+<a href="#whatsapp" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #4A4F5A">WhatsApp agent</a>
+<a href="#apps" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #4A4F5A">Apps</a>
+<a href="#infrastructure" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #4A4F5A">Infrastructure</a>
+<a href="#flows" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #4A4F5A">Flows</a>
+<a href="#contact" style="margin-left: 8px; padding: 12px 18px; border-radius: 999px; background: #15171C; color: #F5F4EF; font-size: 14px; font-weight: 500; text-decoration: none">Get in touch</a>
+</nav>
 </div>
-      </div>
+</header>
 
-      <!-- Callout -->
-      <div class="callout">
-        <p>
-          💡 I am confident working with <strong>almost any RESTful API</strong> beyond Make, Zapier, and n8n.
-          If you have a unique integration challenge — <strong>I can build it from scratch.</strong>
-        </p>
-      </div>
+<!-- HERO -->
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 80px; display: flex; flex-direction: column; gap: 56px">
+<div style="display: flex; flex-direction: column; gap: 28px; max-width: 980px">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid #DEDCD4; border-radius: 999px; background: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #2C6E3F">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #2C9A55"></span>Available for projects</span>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(46px, 7.4vw, 104px); line-height: 0.98; letter-spacing: -0.04em">AI agents, automations &amp; <span style="color: var(--accent)">apps that actually ship.</span></h1>
+<p style="margin: 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #4A4F5A">I'm Ngoc Tan, an AI Automation Developer. I build WhatsApp and voice agents, self-hosted <strong style="color: #15171C; font-weight: 600">n8n</strong> systems and vibe-coded web apps — with <strong style="color: #15171C; font-weight: 600">Zapier</strong>, <strong style="color: #15171C; font-weight: 600">REST APIs</strong> and <strong style="color: #15171C; font-weight: 600">Python</strong> wherever they fit.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#whatsapp" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none">Try the live WhatsApp agent
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a>
+<a href="#flows" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; border: 1px solid #C9C6BC; background: #FFFFFF; color: #15171C; font-weight: 600; font-size: 15px; text-decoration: none">View my work</a>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: #DEDCD4; border: 1px solid #DEDCD4; border-radius: 16px; overflow: hidden">
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">experience</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">4+ years</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">platforms</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">n8n · Make · Zapier</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">agents</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">WhatsApp · Voice · Chat</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">hosting</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">Self-hosted first</span></div>
+</div>
+</section>
 
-    </div>
-  </section>
+<!-- WHATSAPP AGENT (interactive) -->
+<section id="whatsapp" style="background: #15171C; color: #F5F4EF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8FA6FF">// whatsapp ai agent · live demo</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.02em">A concierge that answers, books and follows up — 24/7.</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B9BBC2">Pick a message below and watch the agent handle it. On the right, the n8n nodes it runs light up step by step — the same five flows I deploy for real businesses.</p>
+</div>
 
-  <!-- ==================== CONTACT ==================== -->
-  <section id="contact" class="contact-section">
-    <div class="section-inner fade-in">
-      <div class="section-tag">// Let's talk</div>
-      <div class="section-title" style="text-align:center;">Get in touch</div>
-      <p class="section-desc" style="text-align:center; margin: 0 auto 48px;">
-        Have a project in mind? Let's discuss how automation can transform your workflow.
-      </p>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
 
-      <div class="contact-card">
-        <div class="contact-item">
-          <div class="contact-icon">📧</div>
-          <div>
-            <div class="contact-label">Email</div>
-            <a href="mailto:tan012261@gmail.com">tan012261@gmail.com</a>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📱</div>
-          <div>
-            <div class="contact-label">Phone / Zalo / WhatsApp</div>
-            <a href="tel:+84776114333">+84 776 114 333</a>
-          </div>
-        </div>
-      </div>
+<!-- phone -->
+<div style="flex: 1 1 380px; min-width: 0; max-width: 460px; border-radius: 28px; background: #0B0D10; border: 1px solid #343944; padding: 12px; display: flex; flex-direction: column">
+<div style="border-radius: 20px; overflow: hidden; background: #ECE5DA; display: flex; flex-direction: column; height: 560px">
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #1F2C34; color: #FFFFFF">
+<span aria-hidden="true" style="width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px">AI</span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Concierge</span><span style="font-size: 12px; color: #B9D7C6">AI agent · replies instantly</span></span>
+</div>
+<div id="chatLog" role="log" aria-live="polite" aria-label="Demo conversation" style="flex: 1 1 auto; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px"></div>
+</div>
+<div id="intents" style="padding: 12px; background: #F0F2F5; display: flex; flex-wrap: wrap; gap: 8px">
+</div>
+</div>
+</div>
 
-    </div>
-  </section>
+<!-- node trace -->
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="flex: 1 1 auto; border: 1px solid #343944; border-radius: 20px; padding: 24px; background-image: radial-gradient(#262A32 1px, transparent 1px); background-size: 18px 18px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A3A6AE; padding-bottom: 6px">
+<span>// n8n execution trace</span><span id="traceLabel">waiting for message</span>
+</div>
+<div id="nodes" style="display: flex; flex-direction: column; gap: 10px"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
+<div style="padding: 16px; border-radius: 14px; background: #1F232B; border: 1px solid #343944; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A3A6AE">CHANNEL</span><span style="font-weight: 600; font-size: 14px">Evolution API / WAHA</span></div>
+<div style="padding: 16px; border-radius: 14px; background: #1F232B; border: 1px solid #343944; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A3A6AE">BRAIN</span><span style="font-weight: 600; font-size: 14px">LLM agent in n8n</span></div>
+<div style="padding: 16px; border-radius: 14px; background: #1F232B; border: 1px solid #343944; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A3A6AE">MEMORY</span><span style="font-weight: 600; font-size: 14px">PostgreSQL + CRM</span></div>
+</div>
+</div>
+</div>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer>
-    Built with ☕ by <span>Ngoc Tan</span> · AI Automation Developer
-  </footer>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: #343944; border: 1px solid #343944; border-radius: 16px; overflow: hidden">
+<div style="padding: 22px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FA6FF">flow 01</span><span style="font-weight: 600; font-size: 16px">FAQ &amp; knowledge base</span><span style="font-size: 14px; line-height: 1.55; color: #B9BBC2">Answers about services, staff and documents.</span></div>
+<div style="padding: 22px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FA6FF">flow 02</span><span style="font-weight: 600; font-size: 16px">Booking</span><span style="font-size: 14px; line-height: 1.55; color: #B9BBC2">Collects details, checks real availability, books.</span></div>
+<div style="padding: 22px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FA6FF">flow 03</span><span style="font-weight: 600; font-size: 16px">Reschedule</span><span style="font-size: 14px; line-height: 1.55; color: #B9BBC2">Finds the booking and moves it to a new slot.</span></div>
+<div style="padding: 22px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FA6FF">flow 04</span><span style="font-weight: 600; font-size: 16px">Cancel</span><span style="font-size: 14px; line-height: 1.55; color: #B9BBC2">Verifies the customer, then cancels cleanly.</span></div>
+<div style="padding: 22px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #8FA6FF">flow 05</span><span style="font-weight: 600; font-size: 16px">Check booking</span><span style="font-size: 14px; line-height: 1.55; color: #B9BBC2">Looks up upcoming appointments by email.</span></div>
+</div>
+</div>
+</section>
 
-  <!-- ==================== SCROLL REVEAL ==================== -->
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+<!-- VIBE-CODED APPS -->
+<section id="apps" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// vibe-coded apps</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.02em">From idea to a live product — fast.</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #4A4F5A">I build with AI pair-programming for speed, then do the real engineering for production: auth, databases, deployment and monitoring on my own servers.</p>
+</div>
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  </script>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DEDCD4">idea</span><span aria-hidden="true" style="color: #8A8E97">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DEDCD4">prompt &amp; prototype</span><span aria-hidden="true" style="color: #8A8E97">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #DEDCD4">harden: auth · db · tests</span><span aria-hidden="true" style="color: #8A8E97">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #15171C; color: #F5F4EF">ship on a VPS</span>
+</div>
 
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+<article style="grid-column: 1 / -1; border: 1px solid #DEDCD4; border-radius: 20px; background: #FFFFFF; overflow: hidden; display: flex; flex-wrap: wrap">
+<div aria-hidden="true" style="flex: 1 1 420px; min-width: 0; min-height: 300px; background: #EEF1FF; padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 50%; background: #C9C6BC"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #C9C6BC"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #C9C6BC"></span></div>
+<div style="flex: 1 1 auto; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6DCF5; display: flex; overflow: hidden">
+<div style="width: 120px; background: #15171C; padding: 14px; display: flex; flex-direction: column; gap: 10px"><span style="height: 8px; border-radius: 4px; background: #4A4F5A"></span><span style="height: 8px; width: 70%; border-radius: 4px; background: var(--accent)"></span><span style="height: 8px; width: 80%; border-radius: 4px; background: #4A4F5A"></span><span style="height: 8px; width: 60%; border-radius: 4px; background: #4A4F5A"></span></div>
+<div style="flex: 1 1 auto; padding: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+<div style="border-radius: 8px; background: #F5F4EF; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #5A5F6B">LEAD</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #DEDCD4"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #DEDCD4"></span></div>
+<div style="border-radius: 8px; background: #F5F4EF; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #5A5F6B">DEAL</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid var(--accent)"></span></div>
+<div style="border-radius: 8px; background: #F5F4EF; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #5A5F6B">WON</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #DEDCD4"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #DEDCD4"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #DEDCD4"></span></div>
+</div>
+</div>
+</div>
+<div style="flex: 1 1 380px; min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"><span style="padding: 4px 10px; border-radius: 999px; background: #E3F5EA; color: #1E6B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px">● live</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">SaaS · AI CRM</span></div>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.01em">Vagent CRM</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4A4F5A">An AI-native CRM for Vietnamese sales teams: customers, pipeline and tasks in one workspace — Airtable-style tables with formulas, filters, groups and kanban, plus an AI that replies to customers 24/7 and updates data from plain-language commands.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4A4F5A"><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">React</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Node.js</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">PostgreSQL</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Meta webhooks</span></div>
+<a href="https://vagentai.me" style="align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border-radius: 999px; background: #15171C; color: #F5F4EF; font-weight: 600; font-size: 14px; text-decoration: none">Open vagentai.me
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
+</div>
+</article>
+
+<article style="border: 1px solid #DEDCD4; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">Telegram bot · AI video</span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Photo-to-Video Bot</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">Send a photo on Telegram, get an AI video back. An OpenClaw agent with a custom plugin that hands images to the Kapend video API.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4A4F5A"><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">OpenClaw</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Telegram</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Kapend API</span></div>
+</article>
+
+<article style="border: 1px solid #DEDCD4; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">Web app · AI video</span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Presenter Studio</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">A web studio for producing videos with an AI presenter, voiced in Vietnamese.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4A4F5A"><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">TTS</span></div>
+</article>
+
+<article style="border: 1px solid #DEDCD4; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">Web app · animation</span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Whiteboard Animation Studio</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">A web app for creating whiteboard-style explainer animations.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4A4F5A"><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F5F4EF">FastAPI</span></div>
+</article>
+</div>
+</section>
+
+<!-- ABOUT / SERVICES -->
+<section id="about" style="border-top: 1px solid #DEDCD4; background: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// what i do</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">4+ years building automation that scales</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #4A4F5A">Reliable business automation with n8n, Make.com and Zapier — robust, scalable and easy for the people who use it every day.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<div style="padding: 28px; border: 1px solid #DEDCD4; border-radius: 16px; background: #F5F4EF; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #15171C; color: #F5F4EF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7zM12 16v5"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Platform Integration</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">Airtable, Facebook API, CRM systems, email platforms and most REST APIs — connected into one flow.</p></div>
+<div style="padding: 28px; border: 1px solid #DEDCD4; border-radius: 16px; background: #F5F4EF; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #15171C; color: #F5F4EF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"></rect><rect x="3" y="13" width="18" height="7" rx="2"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Self-hosted Infrastructure</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">Docker, Redis and PostgreSQL deployments with full control of your stack.</p></div>
+<div style="padding: 28px; border: 1px solid #DEDCD4; border-radius: 16px; background: #F5F4EF; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #15171C; color: #F5F4EF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Consulting &amp; Onboarding</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">Team training, clear documentation and a long-term automation strategy.</p></div>
+<div style="padding: 28px; border: 1px solid #DEDCD4; border-radius: 16px; background: #F5F4EF; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: var(--accent); color: #FFFFFF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9L18 15z"></path></svg></span>
+<h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">AI-Powered Solutions</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">AI chatbots, WhatsApp and voice agents, integrated into the workflows you already run.</p></div>
+</div>
+</div>
+</section>
+
+<!-- INFRASTRUCTURE (interactive) -->
+<section id="infrastructure" style="background: #15171C; color: #F5F4EF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8FA6FF">// infrastructure</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">n8n self-hosting for SMBs</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B9BBC2">Private, cost-effective automation in <strong style="color: #F5F4EF; font-weight: 600">worker/queue mode</strong>. Click a layer to see what it does.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<div id="infra" style="display: contents"></div>
+</div>
+<div style="padding: 24px 28px; border-radius: 16px; border: 1px dashed #4A4F5A; display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8FA6FF; flex: none"><span id="infraTag"></span></span>
+<p style="margin: 0; flex: 1 1 400px; min-width: 0; font-size: 17px; line-height: 1.6; color: #E9E8E3"><span id="infraText"></span></p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: #343944; border: 1px solid #343944; border-radius: 16px; overflow: hidden">
+<div style="padding: 26px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Horizontal scaling</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B9BBC2">Background workers for high-throughput processing.</p></div>
+<div style="padding: 26px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Separated architecture</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B9BBC2">Webhooks, executions and queue processing isolated.</p></div>
+<div style="padding: 26px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Secure API management</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B9BBC2">API key management and clean environment separation.</p></div>
+<div style="padding: 26px; background: #15171C; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Cost-efficient</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B9BBC2">Real savings compared with per-task SaaS platforms.</p></div>
+</div>
+</div>
+</section>
+
+<!-- FLOWS (filterable) -->
+<section id="flows" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// portfolio</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Featured n8n flows</h2>
+</div>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #4A4F5A">From AI chatbots and voice agents to data pipelines and dashboards. Filter by type.</p>
+</div>
+<div role="group" aria-label="Filter flows" style="display: flex; flex-wrap: wrap; gap: 8px">
+<div id="filters" style="display: contents"></div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px">
+<div id="flowGrid" style="display: contents"></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 32px; border: 1px dashed #C9C6BC; border-radius: 16px">
+<p style="flex: 1 1 480px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.6; color: #4A4F5A">Beyond Make, Zapier and n8n, I'm comfortable with <strong style="color: #15171C; font-weight: 600">almost any RESTful API</strong>. Need an integration that doesn't exist yet? <strong style="color: #15171C; font-weight: 600">I can build it from scratch.</strong></p>
+<a href="#contact" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; background: #15171C; color: #F5F4EF; font-weight: 600; font-size: 15px; text-decoration: none">Start a project
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--accent); color: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-end; justify-content: space-between">
+<div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FFFFFF">// get in touch</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(44px, 7vw, 96px); line-height: 0.98; letter-spacing: -0.04em">Let's build yours.</h2>
+<p style="margin: 0; max-width: 520px; font-size: 18px; line-height: 1.6; color: #FFFFFF">An agent, an automation or a whole app — tell me about your workflow and let's find what to take off your team's plate.</p>
+</div>
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
+<a href="mailto:tan012261@gmail.com" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #15171C; text-decoration: none">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #15171C; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">Email</span><span style="font-weight: 600; font-size: 17px">tan012261@gmail.com</span></span></a>
+<a href="https://wa.me/84776114333" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #15171C; text-decoration: none">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #15171C; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #5A5F6B">WhatsApp · Zalo · Phone</span><span style="font-weight: 600; font-size: 17px">+84 776 114 333</span></span></a>
+</div>
+</div>
+</section>
+
+<footer style="background: #15171C; color: #A3A6AE">
+<div style="max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
+<span>Built with care by Ngoc Tan · AI Automation Developer</span>
+<a href="#top" style="color: #E9E8E3; text-decoration: none; padding: 4px 0">Back to top ↑</a>
+</div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var S = { intent: null, revealed: 0, filter: 'all', layer: 'queue' };
+  var timers = [];
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function $(id) { return document.getElementById(id); }
+
+  var SCRIPTS = {
+    book: { label: 'Book an appointment', trace: ['wa', 'ai', 'cal', 'book', 'crm', 'mail'], messages: [
+      'Hi, I want to book an appointment',
+      'Happy to help! Which service do you need, and what day suits you?',
+      'Tax return consultation, next Tuesday',
+      'Tuesday has 10:30 and 14:00 free. Which one works for you?',
+      '10:30 please',
+      'Booked for Tuesday 10:30. A confirmation is on its way to your email.'] },
+    faq: { label: 'Ask a question', trace: ['wa', 'ai', 'kb'], messages: [
+      'What documents should I bring?',
+      'For a tax return: your ID, income statements and last year’s return. Want the full checklist?',
+      'Yes please',
+      'Done. I’ve sent the checklist and a secure upload link for your documents.'] },
+    check: { label: 'Check my booking', trace: ['wa', 'ai', 'crm'], messages: [
+      'Do I have an appointment coming up?',
+      'Let me check. Which email did you book with?',
+      'an.nguyen@example.com',
+      'Found it: Tuesday at 10:30. Anything you’d like to change?'] },
+    move: { label: 'Reschedule', trace: ['wa', 'ai', 'crm', 'cal', 'book', 'mail'], messages: [
+      'I need to move my appointment',
+      'No problem. Which day would you prefer instead?',
+      'Thursday afternoon',
+      'Thursday 15:00 is open. Shall I move it?',
+      'Yes',
+      'Moved to Thursday 15:00 and sent you an updated confirmation.'] }
+  };
+  var NODES = [
+    { id: 'wa', kind: 'TRIGGER', label: 'WhatsApp message received' },
+    { id: 'ai', kind: 'AI AGENT', label: 'Detect intent & reply' },
+    { id: 'kb', kind: 'TOOL', label: 'Knowledge base lookup' },
+    { id: 'cal', kind: 'TOOL', label: 'Check real availability' },
+    { id: 'book', kind: 'TOOL', label: 'Create / update booking' },
+    { id: 'crm', kind: 'DATA', label: 'CRM · PostgreSQL' },
+    { id: 'mail', kind: 'ACTION', label: 'Send email confirmation' }
+  ];
+  var LAYERS = [
+    { id: 'edge', tag: '01 · EDGE', name: 'Traefik / Caddy', text: 'Reverse proxy in front of everything: HTTPS certificates, routing and rate limits, so only the right endpoints are exposed.' },
+    { id: 'main', tag: '02 · INGRESS', name: 'n8n main + webhooks', text: 'The editor and dedicated webhook processes take incoming requests instantly and hand the work off — they never block on long jobs.' },
+    { id: 'queue', tag: '03 · QUEUE', name: 'Redis', text: 'Every execution becomes a job in a Redis queue. Spikes in traffic wait in line instead of crashing the instance.' },
+    { id: 'workers', tag: '04 · WORKERS', name: 'n8n worker × N', text: 'Workers pull jobs from the queue and run them in parallel. Need more throughput? Add workers — horizontal scaling.' },
+    { id: 'db', tag: '05 · STATE', name: 'PostgreSQL', text: 'Workflows, credentials and execution history live in PostgreSQL, backed up and separated per environment. All of it runs in Docker.' }
+  ];
+  var FLOWS = [
+    { num: '01', g: 'ai', img: 'Capture.PNG', cat: 'AI · Chatbot', title: 'Facebook AI Chatbot — Zalo OA', desc: 'Customer support automation through a Zalo Official Account, answered by AI.', chain: 'Zalo OA → AI reply → Customer' },
+    { num: '02', g: 'data', img: 'Caspture.PNG', cat: 'Sync · Data', title: 'ClickUp → Airtable Sync', desc: 'Tasks and data kept in sync between ClickUp and Airtable, automatically.', chain: 'ClickUp → sync → Airtable' },
+    { num: '03', g: 'video', img: 'video.PNG', cat: 'AI · Video', title: 'Video Generator', desc: 'Automated video creation, from an idea typed in to a rendered video out.', chain: 'Idea → Script + assets → Render' },
+    { num: '04', g: 'data', img: 'airtable.png', cat: 'Webhook · Data', title: 'Airtable Data Handler', desc: 'Webhook-triggered processing and transformation of data into Airtable.', chain: 'Webhook → Transform → Airtable' },
+    { num: '05', g: 'data', img: 'metabase.PNG', cat: 'Dashboard · Analytics', title: 'Custom Reporting Dashboard', desc: 'A self-hosted Metabase dashboard for real-time business analytics.', chain: 'Business data → Metabase → Live dashboard' },
+    { num: '06', g: 'ai', img: 'onboardagent.png', cat: 'AI · Agent', title: 'Accountant Onboarding Agent', desc: 'An AI agent that runs accountant onboarding end to end.', chain: 'New client → AI agent → Onboarded' },
+    { num: '07', g: 'voice', img: 'vapi.png', cat: 'Voice · AI Agent', title: 'Voice Agent with Vapi', desc: 'Support, lead qualification and appointment booking by phone — wired to n8n for real-time CRM updates during the call.', chain: 'Phone call → Vapi + n8n → CRM update' },
+    { num: '08', g: 'voice', img: '', cat: 'Demo · Workflow', title: 'Demo Voice Agent Workflow', desc: 'A walkthrough of a real voice automation workflow in action.', chain: 'Caller → Voice workflow → Outcome' },
+    { num: '09', g: 'msg', img: 'wa.png', cat: 'Messaging · AI Agent', title: 'WhatsApp AI Agent', desc: 'Conversations, questions, lead qualification, bookings and support — connected to n8n for data and CRM updates.', chain: 'WhatsApp → AI agent → Booking · CRM' }
+  ];
+  var DEMO_VIDEO = 'https://drive.google.com/file/d/1kkfx3XYvq_3XozFfDe67DnKMAtEYLgt9/view';
+  var GROUPS = [['all', 'All'], ['ai', 'AI agents'], ['voice', 'Voice'], ['msg', 'Messaging'], ['data', 'Data & sync'], ['video', 'Video']];
+
+  function renderChat() {
+    var cur = S.intent ? SCRIPTS[S.intent] : null;
+    var log = $('chatLog');
+    if (!cur) {
+      log.innerHTML = '<div style="align-self: center; margin-top: 140px; max-width: 260px; padding: 12px 16px; border-radius: 10px; background: #FFF6D6; color: #4A3B00; font-size: 13px; line-height: 1.5; text-align: center">Choose a message below to start the conversation.</div>';
+    } else {
+      var h = cur.messages.slice(0, S.revealed).map(function (t, i) {
+        return i % 2 === 0
+          ? '<div style="align-self: flex-end; max-width: 78%; padding: 10px 12px; border-radius: 12px 12px 4px 12px; background: #D9FDD3; color: #111B21; font-size: 14px; line-height: 1.45">' + esc(t) + '</div>'
+          : '<div style="align-self: flex-start; max-width: 78%; padding: 10px 12px; border-radius: 12px 12px 12px 4px; background: #FFFFFF; color: #111B21; font-size: 14px; line-height: 1.45">' + esc(t) + '</div>';
+      }).join('');
+      if (S.revealed < cur.messages.length && S.revealed % 2 === 1) {
+        h += '<div aria-label="Agent is typing" style="align-self: flex-start; padding: 12px 14px; border-radius: 12px 12px 12px 4px; background: #FFFFFF; display: flex; gap: 5px">' +
+          ['0s', '.2s', '.4s'].map(function (d) { return '<span style="width: 7px; height: 7px; border-radius: 50%; background: #667781; animation: dcPulse 1s ' + d + ' infinite"></span>'; }).join('') + '</div>';
+      }
+      log.innerHTML = h;
+      log.scrollTop = log.scrollHeight;
+    }
+    $('intents').innerHTML = ['book', 'faq', 'check', 'move'].map(function (id) {
+      var on = S.intent === id;
+      return '<button type="button" data-intent="' + id + '" aria-pressed="' + on + '" style="min-height: 44px; padding: 10px 14px; border-radius: 999px; border: 1px solid ' + (on ? '#1F2C34' : '#C5CCD1') + '; background: ' + (on ? '#1F2C34' : '#FFFFFF') + '; color: ' + (on ? '#FFFFFF' : '#111B21') + '; font-size: 13px; font-weight: ' + (on ? 600 : 500) + '; cursor: pointer">' + esc(SCRIPTS[id].label) + '</button>';
+    }).join('');
+    var total = cur ? cur.messages.length : 0;
+    var lit = cur ? cur.trace.slice(0, Math.ceil(cur.trace.length * S.revealed / total)) : [];
+    $('nodes').innerHTML = NODES.map(function (n) {
+      return lit.indexOf(n.id) !== -1
+        ? '<div style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--accent); background: #1F2638"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #6FD49A; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #8FA6FF; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 600; font-size: 15px; color: #FFFFFF">' + esc(n.label) + '</span><span style="margin-left: auto; font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #6FD49A">done</span></div>'
+        : '<div style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid #2E323B; background: #1A1D23"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #3A3F4A; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #6B707B; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 500; font-size: 15px; color: #8A8E97">' + esc(n.label) + '</span></div>';
+    }).join('');
+    $('traceLabel').textContent = cur ? (S.revealed >= total ? 'finished' : 'running…') : 'waiting for message';
+  }
+
+  function play(id) {
+    timers.forEach(clearTimeout); timers = [];
+    S.intent = id; S.revealed = 1; renderChat();
+    var n = SCRIPTS[id].messages.length;
+    for (var i = 2; i <= n; i++) (function (k) {
+      timers.push(setTimeout(function () { S.revealed = k; renderChat(); }, (k - 1) * 1100));
+    })(i);
+  }
+
+  function renderInfra() {
+    $('infra').innerHTML = LAYERS.map(function (l) {
+      var on = l.id === S.layer;
+      return '<button type="button" data-layer="' + l.id + '" aria-pressed="' + on + '" style="flex: 1 1 170px; min-height: 44px; text-align: left; padding: 18px; border-radius: 14px; border: 1px solid ' + (on ? 'var(--accent)' : '#343944') + '; background: ' + (on ? '#1F2638' : '#1A1D23') + '; color: ' + (on ? '#FFFFFF' : '#E9E8E3') + '; cursor: pointer; display: flex; flex-direction: column; gap: 6px"><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: ' + (on ? '#8FA6FF' : '#A3A6AE') + '">' + esc(l.tag) + '</span><span style="font-weight: 600; font-size: 16px">' + esc(l.name) + '</span></button>';
+    }).join('');
+    var cur = LAYERS.filter(function (l) { return l.id === S.layer; })[0];
+    $('infraTag').textContent = cur.tag;
+    $('infraText').textContent = cur.text;
+  }
+
+  function renderFlows() {
+    $('filters').innerHTML = GROUPS.map(function (g) {
+      var on = S.filter === g[0];
+      var count = g[0] === 'all' ? FLOWS.length : FLOWS.filter(function (x) { return x.g === g[0]; }).length;
+      return '<button type="button" data-filter="' + g[0] + '" aria-pressed="' + on + '" style="min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1px solid ' + (on ? '#15171C' : '#C9C6BC') + '; background: ' + (on ? '#15171C' : '#FFFFFF') + '; color: ' + (on ? '#F5F4EF' : '#15171C') + '; font-size: 14px; font-weight: ' + (on ? 600 : 500) + '; cursor: pointer">' + esc(g[1]) + ' <span style="font-family: \'JetBrains Mono\', monospace; font-weight: 400; color: ' + (on ? '#A3A6AE' : '#5A5F6B') + '">' + count + '</span></button>';
+    }).join('');
+    var list = S.filter === 'all' ? FLOWS : FLOWS.filter(function (x) { return x.g === S.filter; });
+    $('flowGrid').innerHTML = list.map(function (c) {
+      var media = c.img
+        ? '<div style="aspect-ratio: 16 / 10; background: #E9E7E0; border-bottom: 1px solid #DEDCD4; overflow: hidden"><img src="' + c.img + '" alt="Screenshot of the ' + esc(c.title) + ' workflow" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block"></div>'
+        : '<a href="' + DEMO_VIDEO + '" target="_blank" rel="noopener" style="aspect-ratio: 16 / 10; background: #15171C; background-image: radial-gradient(#2A2E36 1px, transparent 1px); background-size: 16px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #F5F4EF; text-decoration: none"><span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 13px">Watch the demo video ↗</span></a>';
+      return '<article style="border: 1px solid #DEDCD4; border-radius: 16px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column">' + media +
+        '<div style="padding: 24px; display: flex; flex-direction: column; gap: 10px"><div style="display: flex; justify-content: space-between; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #5A5F6B"><span>' + esc(c.cat) + '</span><span>' + c.num + '</span></div>' +
+        '<h3 style="margin: 0; font-family: \'Space Grotesk\', sans-serif; font-size: 20px; font-weight: 600">' + esc(c.title) + '</h3>' +
+        '<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #4A4F5A">' + esc(c.desc) + '</p>' +
+        '<span style="margin-top: 4px; padding-top: 12px; border-top: 1px solid #ECEAE3; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #5A5F6B">' + esc(c.chain) + '</span></div></article>';
+    }).join('');
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-intent],button[data-layer],button[data-filter]');
+    if (!b) return;
+    if (b.dataset.intent) play(b.dataset.intent);
+    else if (b.dataset.layer) { S.layer = b.dataset.layer; renderInfra(); }
+    else if (b.dataset.filter) { S.filter = b.dataset.filter; renderFlows(); }
+  });
+
+  renderChat(); renderInfra(); renderFlows();
+})();
+</script>
 </body>
 </html>
