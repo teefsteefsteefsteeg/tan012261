@@ -390,26 +390,61 @@ html{overflow-x:clip}
 
 <!-- INFRASTRUCTURE (interactive) -->
 <section id="infrastructure" style="background: #172A28; color: #F2F6F4">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
 <div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7DD3C0">// infrastructure</span>
-<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Self-hosted workflow automation for SMBs</h2>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7DD3C0">// self-hosted automation</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Your own automation server.<br>No per-task fees.</h2>
 </div>
-<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B4C6C2">Private, cost-effective automation in <strong style="color: #F2F6F4; font-weight: 600">worker/queue mode</strong>. Click a layer to see what it does.</p>
+<p style="flex: 1 1 380px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B4C6C2">I install and run a private automation system on a server you own. Your workflows, customer data and API keys stay with you — and you pay <strong style="color: #F2F6F4; font-weight: 600">one flat server bill</strong> instead of paying for every task like on Zapier or Make.</p>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 12px">
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #9DB2AE">HOW A CUSTOMER MESSAGE TRAVELS THROUGH IT — TAP A STEP</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
 <div id="infra" style="display: contents"></div>
 </div>
-<div style="padding: 24px 28px; border-radius: 16px; border: 1px dashed #42585A; display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7DD3C0; flex: none"><span id="infraTag"></span></span>
-<p style="margin: 0; flex: 1 1 400px; min-width: 0; font-size: 17px; line-height: 1.6; color: #E6EFEC"><span id="infraText"></span></p>
+<div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 28px; border-radius: 18px; background: #1B302D; border: 1px solid #2C4743">
+<div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">STEP <span id="infraNum"></span> / 05</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em"><span id="infraName"></span></span>
 </div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: #2C4743; border: 1px solid #2C4743; border-radius: 16px; overflow: hidden">
-<div style="padding: 26px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Horizontal scaling</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B4C6C2">Background workers for high-throughput processing.</p></div>
-<div style="padding: 26px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Separated architecture</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B4C6C2">Webhooks, executions and queue processing isolated.</p></div>
-<div style="padding: 26px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Secure API management</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B4C6C2">API key management and clean environment separation.</p></div>
-<div style="padding: 26px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 19px; font-weight: 600">Cost-efficient</h3><p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B4C6C2">Real savings compared with per-task SaaS platforms.</p></div>
+<div style="flex: 2 1 380px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHAT IT DOES</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EFEC"><span id="infraWhat"></span></p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHY IT MATTERS</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EFEC"><span id="infraWhy"></span></p></div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+<div style="flex: 3 1 520px; min-width: 0; border: 1px solid #2C4743; border-radius: 18px; overflow: hidden">
+<div style="display: grid; grid-template-columns: minmax(110px, 0.8fr) 1fr 1fr; font-size: 15px">
+<span style="padding: 16px 18px; background: #1B302D; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE"></span>
+<span style="padding: 16px 18px; background: #1B302D; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">HOSTED TOOLS (ZAPIER, MAKE)</span>
+<span style="padding: 16px 18px; background: #183D38; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #7DD3C0">YOUR OWN SERVER</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Cost</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Pay per task — the bill grows as you grow</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">One flat monthly server bill</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Your data</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Stored on their servers</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Stays on your server</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Limits</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Task and speed limits set by your plan</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Only limited by your server — add capacity when you need it</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Integrations</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">What the platform supports</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Any API, plus custom code and AI agents</span>
+</div>
+</div>
+<div style="flex: 2 1 300px; min-width: 0; padding: 28px; border-radius: 18px; background: #1B302D; border: 1px solid #2C4743; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHAT YOU GET</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 16px; line-height: 1.5; color: #E6EFEC">
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Installed and configured on your own server</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>HTTPS and safe storage for your API keys</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Set up to scale when your volume grows</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Training and documentation for your team</span></li>
+</ul>
+</div>
 </div>
 </div>
 </section>
@@ -461,7 +496,7 @@ html{overflow-x:clip}
 </div>
 <script>
 (function () {
-  var S = { intent: null, revealed: 0, filter: 'all', layer: 'queue' };
+  var S = { intent: null, revealed: 0, filter: 'all', layer: 'edge' };
   var timers = [];
   var prevLit = 0;
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -503,11 +538,11 @@ html{overflow-x:clip}
     { id: 'mail', kind: 'ACTION', label: 'Send email confirmation' }
   ];
   var LAYERS = [
-    { id: 'edge', tag: '01 · EDGE', name: 'Traefik / Caddy', text: 'Reverse proxy in front of everything: HTTPS certificates, routing and rate limits, so only the right endpoints are exposed.' },
-    { id: 'main', tag: '02 · INGRESS', name: 'Workflow engine + webhooks', text: 'The editor and dedicated webhook processes take incoming requests instantly and hand the work off — they never block on long jobs.' },
-    { id: 'queue', tag: '03 · QUEUE', name: 'Redis', text: 'Every execution becomes a job in a Redis queue. Spikes in traffic wait in line instead of crashing the instance.' },
-    { id: 'workers', tag: '04 · WORKERS', name: 'Worker × N', text: 'Workers pull jobs from the queue and run them in parallel. Need more throughput? Add workers — horizontal scaling.' },
-    { id: 'db', tag: '05 · STATE', name: 'PostgreSQL', text: 'Workflows, credentials and execution history live in PostgreSQL, backed up and separated per environment. All of it runs in Docker.' }
+    { id: 'edge', num: '01', name: 'Front door', tag: 'Traefik / Caddy · HTTPS', what: 'Every request from WhatsApp, your website or a form arrives here first over a secure HTTPS connection, and is sent to the right place.', why: 'Only the doors you choose are open to the internet.' },
+    { id: 'main', num: '02', name: 'Reception', tag: 'Workflow engine + webhooks', what: 'Replies to the sender straight away, then hands the real work over to the waiting line.', why: 'Your customer never waits, even when the job behind it takes a while.' },
+    { id: 'queue', num: '03', name: 'Waiting line', tag: 'Redis queue', what: 'When lots of messages arrive at once, jobs wait their turn here instead of overloading the system.', why: 'Busy days don\u2019t break anything \u2014 no message gets dropped.' },
+    { id: 'workers', num: '04', name: 'Workers', tag: 'Worker \u00d7 N', what: 'Several workers take jobs from the line and handle them at the same time.', why: 'Need more speed? Add another worker \u2014 nothing has to be rebuilt.' },
+    { id: 'db', num: '05', name: 'Memory', tag: 'PostgreSQL database', what: 'Your workflows, settings and the history of every run are kept in a database on your server.', why: 'Your data stays with you, and it is easy to back up.' }
   ];
   var FLOWS = [
     { num: '01', g: 'ai', img: 'Capture.PNG', cat: 'AI · Chatbot', title: 'Facebook AI Chatbot — Zalo OA', desc: 'Customer support automation through a Zalo Official Account, answered by AI.', chain: 'Zalo OA → AI reply → Customer' },
@@ -569,11 +604,16 @@ html{overflow-x:clip}
   function renderInfra() {
     $('infra').innerHTML = LAYERS.map(function (l) {
       var on = l.id === S.layer;
-      return '<button type="button" data-layer="' + l.id + '" aria-pressed="' + on + '" style="flex: 1 1 170px; min-height: 44px; text-align: left; padding: 18px; border-radius: 14px; border: 1px solid ' + (on ? 'var(--accent)' : '#2C4743') + '; background: ' + (on ? '#183D38' : '#1B302D') + '; color: ' + (on ? '#FFFFFF' : '#E6EFEC') + '; cursor: pointer; display: flex; flex-direction: column; gap: 6px"><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: ' + (on ? '#7DD3C0' : '#9DB2AE') + '">' + esc(l.tag) + '</span><span style="font-weight: 600; font-size: 16px">' + esc(l.name) + '</span></button>';
+      var badge = on
+        ? '<span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center; font-family: \'JetBrains Mono\', monospace; font-size: 12px; font-weight: 500">' + l.num + '</span>'
+        : '<span style="width: 28px; height: 28px; border-radius: 50%; border: 1px solid #42585A; color: #B4C6C2; display: grid; place-items: center; font-family: \'JetBrains Mono\', monospace; font-size: 12px">' + l.num + '</span>';
+      return '<button type="button" data-layer="' + l.id + '" aria-pressed="' + on + '" style="min-height: 44px; text-align: left; padding: 18px; border-radius: 16px; border: 1px solid ' + (on ? 'var(--accent)' : '#2C4743') + '; background: ' + (on ? '#183D38' : '#1B302D') + '; color: ' + (on ? '#FFFFFF' : '#E6EFEC') + '; cursor: pointer; display: flex; flex-direction: column; gap: 10px">' +
+        '<span style="display: flex; align-items: center; gap: 10px">' + badge + '<span style="font-weight: 600; font-size: 17px">' + esc(l.name) + '</span></span>' +
+        '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: ' + (on ? '#7DD3C0' : '#9DB2AE') + '">' + esc(l.tag) + '</span></button>';
     }).join('');
     var cur = LAYERS.filter(function (l) { return l.id === S.layer; })[0];
-    ['infraTag', 'infraText'].forEach(function (id, k) {
-      var el = $(id); el.textContent = k ? cur.text : cur.tag;
+    [['infraNum', cur.num], ['infraName', cur.name], ['infraWhat', cur.what], ['infraWhy', cur.why]].forEach(function (p) {
+      var el = $(p[0]); el.textContent = p[1];
       el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap');
     });
   }
