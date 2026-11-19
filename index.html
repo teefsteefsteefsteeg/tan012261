@@ -1013,12 +1013,12 @@ html{overflow-x:clip}
 
   /* ------------------------------------------------------ magnifier */
   var loupeOn = true, lx = null, ly = null, lgrab = null, lTarget = null;
-  function lsize() { return Math.round(clamp(book.clientWidth * 0.22, 150, 240)); }
+  function lsize() { return Math.round(clamp(book.clientWidth * 0.15, 110, 168)); }
   function syncZoomLayer() {
     zoomInner.textContent = '';
     Array.prototype.forEach.call(book.children, function (ch) { if (!ch.classList.contains('bk-zone')) zoomInner.appendChild(ch.cloneNode(true)); });
   }
-  function restLoupe() { lx = book.clientWidth * 0.93; ly = book.clientHeight * 0.92; placeLoupe(); }
+  function restLoupe() { lx = book.clientWidth * 0.08; ly = book.clientHeight * 0.9; placeLoupe(); }
   function placeLoupe() {
     if (lx === null || !book.clientWidth) return;
     var bw = book.clientWidth, bh = book.clientHeight, R = lsize() / 2;
@@ -1041,7 +1041,7 @@ html{overflow-x:clip}
     if (!loupeOn || lx === null || lgrab) return;
     var bw = book.clientWidth, onTurning = dir === 'next' ? lx > bw * 0.5 : lx < bw * 0.5;
     if (!onTurning || ly > book.clientHeight * 1.02) return;
-    lTarget = { x: bw * (dir === 'next' ? 0.1 : 0.9), y: book.clientHeight * 0.86 }; kick();
+    lTarget = { x: bw * (dir === 'next' ? 0.08 : 0.92), y: book.clientHeight * 0.9 }; kick();
   }
   function loupeEase() {
     if (!lTarget || lgrab) { lTarget = lgrab ? null : lTarget; return false; }
