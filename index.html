@@ -206,6 +206,11 @@ html{overflow-x:clip}
 .slot.filled{outline-color:transparent}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:640px){.hang-band{height:170px}}
+/* ---------- 3D network behind the hero ---------- */
+#top{position:relative}
+#top > *:not(.hero3d){position:relative;z-index:1}
+.hero3d{position:absolute;top:0;bottom:0;left:50%;width:100vw;height:100%;transform:translateX(-50%);z-index:0;pointer-events:none;opacity:0;transition:opacity 1.2s ease}
+.hero3d.on{opacity:var(--o,.9)}
 </style>
 </head>
 <body>
@@ -1365,6 +1370,105 @@ html{overflow-x:clip}
   addEventListener('load', measure);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
   setTimeout(measure, 1500);
+})();
+/* 3D workflow network behind the hero (three.js r170, loaded on demand). */
+(function () {
+  var hero = document.getElementById('top');
+  if (!hero) return;
+  var probe = document.createElement('canvas');
+  var gl = probe.getContext('webgl2') || probe.getContext('webgl');
+  if (!gl) return;                                   /* no WebGL: the page simply has no 3D layer */
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var canvas = document.createElement('canvas');
+  canvas.className = 'hero3d'; canvas.setAttribute('aria-hidden', 'true');
+  hero.style.position = 'relative';
+  hero.insertBefore(canvas, hero.firstChild);
+
+  import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js').then(function (THREE) {
+    var small = innerWidth < 760;
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, small ? 1.5 : 2));
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+    camera.position.set(0, 0, 13);
+    var TEAL = new THREE.Color('#0F766E'), MINT = new THREE.Color('#14B8A6');
+
+    var rig = new THREE.Group(), net = new THREE.Group(); rig.add(net); scene.add(rig);
+    var seed = 11; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var NN = small ? 56 : 84, R = 3.1, nodes = [];
+    for (var i = 0; i < NN; i++) {
+      var y = 1 - (i / (NN - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963;
+      nodes.push(new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r).multiplyScalar(R * (0.86 + rnd() * 0.22)));
+    }
+    var edges = [];
+    nodes.forEach(function (a, i) {
+      nodes.map(function (b, j) { return [a.distanceTo(b), j]; }).filter(function (x) { return x[1] > i; })
+        .sort(function (x, y) { return x[0] - y[0]; }).slice(0, 3).forEach(function (x) { edges.push([i, x[1]]); });
+    });
+    var lp = new Float32Array(edges.length * 6);
+    edges.forEach(function (e, k) { lp.set(nodes[e[0]].toArray().concat(nodes[e[1]].toArray()), k * 6); });
+    var lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(lp, 3));
+    net.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: TEAL, transparent: true, opacity: 0.22 })));
+    var nm = new THREE.InstancedMesh(new THREE.SphereGeometry(0.045, 10, 10), new THREE.MeshBasicMaterial({ color: TEAL, transparent: true, opacity: 0.75 }), NN);
+    var m4 = new THREE.Matrix4();
+    nodes.forEach(function (n, i) { m4.makeTranslation(n.x, n.y, n.z); nm.setMatrixAt(i, m4); });
+    net.add(nm);
+    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1, 1), new THREE.MeshBasicMaterial({ color: TEAL, wireframe: true, transparent: true, opacity: 0.35 }));
+    net.add(core);
+    var pg = new THREE.SphereGeometry(0.065, 8, 8), pmat = new THREE.MeshBasicMaterial({ color: MINT });
+    var pulses = [];
+    for (var k = 0; k < (small ? 18 : 30); k++) {
+      var pm = new THREE.Mesh(pg, pmat); net.add(pm);
+      pulses.push({ m: pm, e: edges[Math.floor(rnd() * edges.length)], sp: 0.25 + rnd() * 0.45, ph: rnd() });
+    }
+
+    function size() {
+      var w = canvas.clientWidth || innerWidth, h = hero.clientHeight;
+      small = innerWidth < 760;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+      /* sit to the right of the copy on wide screens, centred and fainter on phones */
+      var vh = 2 * Math.tan(camera.fov * Math.PI / 360) * camera.position.z, vw = vh * camera.aspect;
+      rig.position.set(small ? 0 : vw * 0.29, small ? vh * 0.08 : -vh * 0.02, 0);
+      var sc = small ? Math.min(1, vw / 7.4) : Math.min(.82, vh / 11); rig.scale.setScalar(sc);
+      canvas.style.setProperty('--o', small ? '0.45' : '0.6');
+    }
+    size(); addEventListener('resize', size);
+
+    var tx = 0, ty = 0, rx = 0, ry = 0;
+    hero.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var r = hero.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 0.6; ty = ((e.clientY - r.top) / r.height - 0.5) * 0.4;
+    }, { passive: true });
+    hero.addEventListener('pointerleave', function () { tx = ty = 0; });
+
+    var running = false, visible = true, last = performance.now(), time = 0;
+    function draw(dt) {
+      time += dt;
+      rx += (ty - rx) * Math.min(1, dt * 3); ry += (tx - ry) * Math.min(1, dt * 3);
+      rig.rotation.set(rx, ry, 0);
+      net.rotation.y = time * 0.12; net.rotation.x = Math.sin(time * 0.15) * 0.12;
+      core.rotation.set(time * 0.2, time * 0.27, 0);
+      pulses.forEach(function (p) { var u = (time * p.sp + p.ph) % 1; p.m.position.lerpVectors(nodes[p.e[0]], nodes[p.e[1]], u); });
+      renderer.render(scene, camera);
+    }
+    function loop(now) {
+      if (!running) return;
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      draw(dt); requestAnimationFrame(loop);
+    }
+    function setRunning(on) {
+      if (REDUCED) { draw(0); return; }               /* one still frame, no motion */
+      if (on && !running) { running = true; last = performance.now(); requestAnimationFrame(loop); }
+      else if (!on) running = false;
+    }
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
+    document.addEventListener('visibilitychange', function () { setRunning(visible && !document.hidden); });
+    canvas.classList.add('on');
+    setRunning(true);
+  }).catch(function () { canvas.remove(); });
 })();
 </script>
 </body>
