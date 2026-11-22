@@ -12,20 +12,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap">
 <style>
-body{margin:0;background:#F2F6F4}
-a{color:#172A28}a:hover{color:#0F766E}
+body{margin:0;background:#F7F7FB}
+a{color:#14142B}a:hover{color:#4F46E5}
 button{font:inherit}
 @keyframes dcPulse{0%,100%{opacity:.25}50%{opacity:1}}
 </style>
 <style>
-:root{--accent:#0F766E}
+:root{--accent:#4F46E5;--accent2:#F97361}
 html{scroll-behavior:smooth}
 img{max-width:100%}
 /* ---------- motion layer ---------- */
 :root{--ease:cubic-bezier(.2,.7,.2,1)}
-#progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:60;pointer-events:none}
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:60;pointer-events:none}
 header{position:sticky;top:0;z-index:50;transition:background .3s,box-shadow .3s}
-header.scrolled{background:rgba(242,246,244,.82)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 #D5E0DC,0 10px 30px -12px rgba(23,42,40,.18)}
+header.scrolled{background:rgba(247,247,251,.82)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 #E2E2EE,0 10px 30px -12px rgba(20,20,43,.18)}
 
 /* scroll reveal */
 .rv{opacity:0;transform:translateY(20px);transition:opacity .45s var(--ease) var(--d,0ms),transform .45s var(--ease) var(--d,0ms)}
@@ -42,7 +42,7 @@ h1 .w{display:inline-block;opacity:0;transform:translateY(.45em) rotate(2deg);an
 
 /* buttons */
 a[style*="999px"],button{transition:transform .15s var(--ease),box-shadow .15s var(--ease),background-color .15s,border-color .15s}
-a[style*="999px"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(23,42,40,.55)}
+a[style*="999px"]:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(20,20,43,.55)}
 a[style*="999px"]:active,button:active{transform:translateY(0) scale(.98)}
 a svg{transition:transform .25s var(--ease)}
 a:hover svg{transform:translateX(3px)}
@@ -51,9 +51,9 @@ button[data-intent]:hover,button[data-filter]:hover,button[data-layer]:hover{tra
 
 /* cards */
 .lift{transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s}
-.lift:hover{transform:translateY(-6px);box-shadow:0 22px 44px -22px rgba(23,42,40,.38)}
+.lift:hover{transform:translateY(-6px);box-shadow:0 22px 44px -22px rgba(20,20,43,.38)}
 #flowGrid article{transition:transform .4s var(--ease),box-shadow .4s var(--ease);animation:cardIn .55s var(--ease) both}
-#flowGrid article:hover{transform:translateY(-6px);box-shadow:0 22px 44px -22px rgba(23,42,40,.38)}
+#flowGrid article:hover{transform:translateY(-6px);box-shadow:0 22px 44px -22px rgba(20,20,43,.38)}
 #flowGrid article img{transition:transform .8s var(--ease)}
 #flowGrid article:hover img{transform:scale(1.05)}
 #flowGrid article:nth-child(2){animation-delay:60ms}#flowGrid article:nth-child(3){animation-delay:120ms}
@@ -67,7 +67,7 @@ button[data-intent]:hover,button[data-filter]:hover,button[data-layer]:hover{tra
 @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.95)}}
 #nodes>div{transition:background .4s,border-color .4s}
 #nodes>div[data-new]{animation:glow .8s var(--ease)}
-@keyframes glow{0%{transform:translateX(-6px);box-shadow:0 0 0 0 rgba(15,118,110,0)}35%{transform:none;box-shadow:0 0 0 6px rgba(15,118,110,.28)}100%{box-shadow:0 0 0 0 rgba(15,118,110,0)}}
+@keyframes glow{0%{transform:translateX(-6px);box-shadow:0 0 0 0 rgba(79,70,229,0)}35%{transform:none;box-shadow:0 0 0 6px rgba(79,70,229,.28)}100%{box-shadow:0 0 0 0 rgba(79,70,229,0)}}
 #infraNum.swap,#infraName.swap,#infraWhat.swap,#infraWhy.swap{display:inline-block;animation:fadeSwap .25s var(--ease)}
 @keyframes fadeSwap{from{opacity:0;transform:translateY(6px)}}
 
@@ -87,13 +87,13 @@ html{overflow-x:clip}
 .bk,.bk *{-webkit-user-select:none;user-select:none}
 .bk img{-webkit-user-drag:none}
 .bk-stage{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;touch-action:pan-y}
-.bk-arrow{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:64px;border:0;background:transparent;color:#5C7275;cursor:pointer;border-radius:12px;z-index:8;transition:color .2s,background-color .2s}
-.bk-arrow:hover{color:#172A28;background:rgba(23,42,40,.05)}
+.bk-arrow{flex:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:64px;border:0;background:transparent;color:#5E5F78;cursor:pointer;border-radius:12px;z-index:8;transition:color .2s,background-color .2s}
+.bk-arrow:hover{color:#14142B;background:rgba(20,20,43,.05)}
 .bk-3d{position:relative;flex:1 1 auto;min-width:0;max-width:1080px;perspective:1900px;perspective-origin:50% 45%}
 .bk-tilt{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--zoom,1));will-change:transform}
 .bk-book{position:relative;width:100%;aspect-ratio:1.6;transform-style:preserve-3d;z-index:1}
 .bk-cast{position:absolute;left:4%;right:4%;top:12%;bottom:-6%;pointer-events:none;z-index:0;
-  background:radial-gradient(50% 50% at 50% 60%,rgba(23,42,40,.32),rgba(23,42,40,.12) 45%,rgba(23,42,40,0) 75%);
+  background:radial-gradient(50% 50% at 50% 60%,rgba(20,20,43,.32),rgba(20,20,43,.12) 45%,rgba(20,20,43,0) 75%);
   filter:blur(22px);opacity:calc(1 - var(--shade,0) * .4)}
 .bk-full{position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:6px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
 .bk-half{position:absolute;top:0;bottom:0;width:50%;overflow:hidden}
@@ -102,8 +102,8 @@ html{overflow-x:clip}
 .bk-half img{display:block;width:200%;max-width:none;height:100%}
 .bk-half.r img{margin-left:-100%}
 .bk-gshade{position:absolute;top:0;bottom:0;width:60%;pointer-events:none;opacity:calc(var(--shade,0) * .7)}
-.bk-half.l .bk-gshade{right:0;background:linear-gradient(270deg,rgba(22,44,40,.30),rgba(22,44,40,0))}
-.bk-half.r .bk-gshade{left:0;background:linear-gradient(90deg,rgba(22,44,40,.26),rgba(22,44,40,0))}
+.bk-half.l .bk-gshade{right:0;background:linear-gradient(270deg,rgba(20,20,45,.30),rgba(20,20,45,0))}
+.bk-half.r .bk-gshade{left:0;background:linear-gradient(90deg,rgba(20,20,45,.26),rgba(20,20,45,0))}
 
 /* the turning leaf: a chain of nested strips */
 .bk-curl{position:absolute;top:0;height:100%;width:calc(var(--bw,0px) * .5);transform-style:preserve-3d;z-index:6}
@@ -120,8 +120,8 @@ html{overflow-x:clip}
   background-repeat:no-repeat;background-size:var(--bw,0px) 100%}
 .bk-face.back{transform:rotateY(180deg)}
 .bk-face i{position:absolute;inset:0;pointer-events:none}
-.bk-curl.next .bk-face.front i,.bk-curl.prev .bk-face.back i{background:linear-gradient(90deg,rgba(22,44,40,var(--a1,0)),rgba(22,44,40,var(--a2,0)))}
-.bk-curl.next .bk-face.back i,.bk-curl.prev .bk-face.front i{background:linear-gradient(90deg,rgba(22,44,40,var(--a2,0)),rgba(22,44,40,var(--a1,0)))}
+.bk-curl.next .bk-face.front i,.bk-curl.prev .bk-face.back i{background:linear-gradient(90deg,rgba(20,20,45,var(--a1,0)),rgba(20,20,45,var(--a2,0)))}
+.bk-curl.next .bk-face.back i,.bk-curl.prev .bk-face.front i{background:linear-gradient(90deg,rgba(20,20,45,var(--a2,0)),rgba(20,20,45,var(--a1,0)))}
 .bk-face b{position:absolute;inset:0;pointer-events:none;background:#fffaf0;opacity:calc(var(--shade,0) * var(--lit,1) * var(--lit,1) * .18)}
 
 .bk-zone{position:absolute;top:0;bottom:0;width:50%;border:0;background:transparent;cursor:grab;z-index:60;padding:0}
@@ -136,46 +136,46 @@ html{overflow-x:clip}
 .bk-loupe{position:absolute;left:0;top:0;width:var(--lr,220px);height:var(--lr,220px);pointer-events:none;z-index:80;opacity:0;transition:opacity .25s;will-change:transform}
 .bk-loupe.on{opacity:1}
 .bk-loupe .ring{position:absolute;inset:0;border-radius:50%;pointer-events:auto;cursor:grab;
-  box-shadow:0 2px 3px rgba(23,42,40,.3),0 14px 26px rgba(23,42,40,.25),0 34px 54px rgba(23,42,40,.18)}
+  box-shadow:0 2px 3px rgba(20,20,43,.3),0 14px 26px rgba(20,20,43,.25),0 34px 54px rgba(20,20,43,.18)}
 .bk-loupe .ring:before{content:"";position:absolute;inset:0;border-radius:50%;
   background:linear-gradient(140deg,#f4f5f8 0%,#c9ccd4 18%,#7c818c 40%,#2c2f36 58%,#9da2ad 76%,#eef0f4 90%,#5b606a 100%);
   -webkit-mask-image:radial-gradient(circle closest-side,transparent 0 88%,#000 89.5%);mask-image:radial-gradient(circle closest-side,transparent 0 88%,#000 89.5%)}
 .bk-loupe .lens{position:absolute;inset:6%;border-radius:50%;overflow:hidden;
-  box-shadow:inset 0 0 0 1px rgba(23,42,40,.5),inset 0 4px 14px rgba(23,42,40,.25)}
+  box-shadow:inset 0 0 0 1px rgba(20,20,43,.5),inset 0 4px 14px rgba(20,20,43,.25)}
 .bk-loupe .lens:after{content:"";position:absolute;inset:0;border-radius:50%;
-  background:radial-gradient(34% 24% at 30% 20%,rgba(255,255,255,.34),transparent 76%),radial-gradient(circle,transparent 58%,rgba(23,42,40,.18) 100%)}
+  background:radial-gradient(34% 24% at 30% 20%,rgba(255,255,255,.34),transparent 76%),radial-gradient(circle,transparent 58%,rgba(20,20,43,.18) 100%)}
 .bk-loupe .grip{position:absolute;left:50%;top:50%;width:calc(var(--lr,220px) * .72);height:calc(var(--lr,220px) * .13);
   transform-origin:0 50%;transform:rotate(40deg) translate(calc(var(--lr,220px) * .34),-50%);border-radius:999px;pointer-events:auto;cursor:grab;
-  background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%,rgba(0,0,0,.3)),linear-gradient(90deg,#9da2ad 0 14%,#172A28 14%);
-  box-shadow:0 10px 18px rgba(23,42,40,.28)}
+  background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%,rgba(0,0,0,.3)),linear-gradient(90deg,#9da2ad 0 14%,#14142B 14%);
+  box-shadow:0 10px 18px rgba(20,20,43,.28)}
 .bk-loupe.held .ring,.bk-loupe.held .grip{cursor:grabbing}
 @media (pointer:coarse){.bk-loupe,.bk-zoomwrap,#bkLoupeBtn,#bkLoupeSep{display:none!important}}
 
 /* controls */
-.bk-cap{margin:0;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:#42585A;text-align:center;min-height:1.4em}
-.bk-cap strong{color:#172A28;font-weight:500}
-.bk-tools{display:flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #D5E0DC;border-radius:999px;background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.bk-tool{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:transparent;color:#42585A;cursor:pointer;transition:background-color .18s,color .18s}
-.bk-tool:hover{background:#F2F6F4;color:#172A28}
-.bk-tool[aria-pressed="true"]{background:rgba(15,118,110,.12);color:var(--accent)}
+.bk-cap{margin:0;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:#45465E;text-align:center;min-height:1.4em}
+.bk-cap strong{color:#14142B;font-weight:500}
+.bk-tools{display:flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #E2E2EE;border-radius:999px;background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.bk-tool{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:transparent;color:#45465E;cursor:pointer;transition:background-color .18s,color .18s}
+.bk-tool:hover{background:#F7F7FB;color:#14142B}
+.bk-tool[aria-pressed="true"]{background:rgba(79,70,229,.12);color:var(--accent)}
 .bk-tool:disabled{opacity:.3;cursor:default;background:transparent}
 .bk-tool svg{width:17px;height:17px}
-.bk-read{min-width:44px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#4F6668;font-variant-numeric:tabular-nums}
-.bk-sep{width:1px;height:18px;background:#D5E0DC;margin:0 2px}
-.bk-hint{margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:#4F6668;transition:opacity .4s}
+.bk-read{min-width:44px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#52536B;font-variant-numeric:tabular-nums}
+.bk-sep{width:1px;height:18px;background:#E2E2EE;margin:0 2px}
+.bk-hint{margin:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:#52536B;transition:opacity .4s}
 .bk-hint.gone{opacity:0}
 
 /* index */
-.bk-index{list-style:none;margin:18px 0 0;padding:0;width:100%;border-top:1px solid #D5E0DC}
-.bk-row{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;width:100%;padding:16px 6px;border:0;border-bottom:1px solid #D5E0DC;background:transparent;text-align:left;cursor:pointer;color:#172A28;transition:background-color .22s,padding-left .22s}
+.bk-index{list-style:none;margin:18px 0 0;padding:0;width:100%;border-top:1px solid #E2E2EE}
+.bk-row{display:grid;grid-template-columns:3em minmax(0,1fr) auto;gap:16px;align-items:baseline;width:100%;padding:16px 6px;border:0;border-bottom:1px solid #E2E2EE;background:transparent;text-align:left;cursor:pointer;color:#14142B;transition:background-color .22s,padding-left .22s}
 .bk-row:hover,.bk-row[aria-current="true"]{background:rgba(255,255,255,.7);padding-left:16px}
-.bk-row .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4F6668}
+.bk-row .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:#52536B}
 .bk-row .t{font-family:'Space Grotesk',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:600;letter-spacing:-.01em}
-.bk-row .c{font-family:'JetBrains Mono',monospace;font-size:12px;color:#4F6668;text-align:right}
+.bk-row .c{font-family:'JetBrains Mono',monospace;font-size:12px;color:#52536B;text-align:right}
 .bk-row[aria-current="true"] .c,.bk-row[aria-current="true"] .n{color:var(--accent)}
 @media (max-width:640px){
   .bk-stage{gap:0}
-  .bk-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:56px;background:rgba(242,246,244,.8)}
+  .bk-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:56px;background:rgba(247,247,251,.8)}
   .bk-arrow.l{left:-6px}.bk-arrow.r{right:-6px}
   .bk-row{grid-template-columns:2.4em minmax(0,1fr)}
   .bk-row .c{display:none}
@@ -185,10 +185,10 @@ html{overflow-x:clip}
 .hang-band{height:clamp(250px,36vh,360px);margin:-40px 0 -24px}
 #dropLayer{position:absolute;left:0;top:0;width:100%;height:0;z-index:20;pointer-events:none}
 .d-str{position:absolute;width:2px;margin-left:-1px;transform-origin:50% 0;
-  background:linear-gradient(180deg,rgba(23,42,40,0),rgba(23,42,40,.35) 18%,rgba(23,42,40,.45));border-radius:2px}
+  background:linear-gradient(180deg,rgba(20,20,43,0),rgba(20,20,43,.35) 18%,rgba(20,20,43,.45));border-radius:2px}
 .d-tile{position:absolute;left:0;top:0;width:var(--S,88px);height:var(--S,88px);border-radius:26%;
   background:var(--c);transform-origin:50% 50%;will-change:transform;
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -6px 12px rgba(0,0,0,.18),0 10px 22px -8px rgba(23,42,40,.45),0 3px 6px rgba(23,42,40,.18)}
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -6px 12px rgba(0,0,0,.18),0 10px 22px -8px rgba(20,20,43,.45),0 3px 6px rgba(20,20,43,.18)}
 .d-tile:before{content:"";position:absolute;inset:0;border-radius:inherit;
   background:linear-gradient(160deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.08) 38%,rgba(255,255,255,0) 60%,rgba(0,0,0,.12) 100%)}
 .d-tile i{position:absolute;inset:22%;background:#fff;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;
@@ -196,13 +196,13 @@ html{overflow-x:clip}
 .d-tile.light{background:#fff}
 .d-tile.light i{background:var(--c)}
 .d-tile:after{content:"";position:absolute;left:50%;top:-5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;
-  border:2px solid rgba(23,42,40,.45);background:#F2F6F4;opacity:var(--ring,1)}
+  border:2px solid rgba(20,20,43,.45);background:#F7F7FB;opacity:var(--ring,1)}
 
 .connect{max-width:1080px;margin:0 auto;padding:clamp(40px,8vh,96px) 24px clamp(64px,12vh,140px);text-align:center}
-.connect p{margin:0;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,56px);line-height:1.32;letter-spacing:-.02em;color:#172A28;text-wrap:balance}
-.connect .mute{color:#5C7275}
+.connect p{margin:0;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(28px,4.2vw,56px);line-height:1.32;letter-spacing:-.02em;color:#14142B;text-wrap:balance}
+.connect .mute{color:#5E5F78}
 .slot{display:inline-block;width:1.12em;height:1.12em;vertical-align:-.2em;margin:0 .08em;border-radius:26%;
-  outline:2px dashed rgba(23,42,40,.12);outline-offset:-2px;transition:outline-color .3s}
+  outline:2px dashed rgba(20,20,43,.12);outline-offset:-2px;transition:outline-color .3s}
 .slot.filled{outline-color:transparent}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:640px){.hang-band{height:170px}}
@@ -214,21 +214,21 @@ html{overflow-x:clip}
 </style>
 </head>
 <body>
-<div style="font-family: Inter, system-ui, sans-serif; color: #172A28; background: #F2F6F4; min-height: 100vh">
+<div style="font-family: Inter, system-ui, sans-serif; color: #14142B; background: #F7F7FB; min-height: 100vh">
 
 <!-- NAV -->
-<header style="border-bottom: 1px solid #D5E0DC; background: #F2F6F4">
+<header style="border-bottom: 1px solid #E2E2EE; background: #F7F7FB">
 <div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
-<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #172A28; min-height: 44px">
-<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #172A28; color: #F2F6F4; display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px">NT</span>
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #14142B; min-height: 44px">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 8px; background: #14142B; color: #F7F7FB; display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 15px">NT</span>
 <span style="font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px">Ngoc Tan</span>
 </a>
 <nav aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 2px">
-<a href="#whatsapp" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #42585A">WhatsApp agent</a>
-<a href="#apps" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #42585A">Apps</a>
-<a href="#infrastructure" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #42585A">Infrastructure</a>
-<a href="#flows" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #42585A">Flows</a>
-<a href="#contact" style="margin-left: 8px; padding: 12px 18px; border-radius: 999px; background: #172A28; color: #F2F6F4; font-size: 14px; font-weight: 500; text-decoration: none">Get in touch</a>
+<a href="#whatsapp" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #45465E">WhatsApp agent</a>
+<a href="#apps" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #45465E">Apps</a>
+<a href="#infrastructure" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #45465E">Infrastructure</a>
+<a href="#flows" style="padding: 12px 12px; font-size: 14px; text-decoration: none; color: #45465E">Flows</a>
+<a href="#contact" style="margin-left: 8px; padding: 12px 18px; border-radius: 999px; background: #14142B; color: #F7F7FB; font-size: 14px; font-weight: 500; text-decoration: none">Get in touch</a>
 </nav>
 </div>
 </header>
@@ -236,39 +236,39 @@ html{overflow-x:clip}
 <!-- HERO -->
 <section id="top" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 80px; display: flex; flex-direction: column; gap: 56px">
 <div style="display: flex; flex-direction: column; gap: 28px; max-width: 980px">
-<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid #D5E0DC; border-radius: 999px; background: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #2C6E3F">
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid #E2E2EE; border-radius: 999px; background: #FFFFFF; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #2C6E3F">
 <span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #2C9A55"></span>Available for projects</span>
-<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(46px, 7.4vw, 104px); line-height: 0.98; letter-spacing: -0.04em">AI agents, automations &amp; <span style="color: var(--accent)">apps that actually ship.</span></h1>
-<p style="margin: 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #42585A">I'm Ngoc Tan, an AI Automation Developer. I build WhatsApp and voice agents, self-hosted <strong style="color: #172A28; font-weight: 600">workflow automation</strong> systems and vibe-coded web apps — with <strong style="color: #172A28; font-weight: 600">Zapier</strong>, <strong style="color: #172A28; font-weight: 600">REST APIs</strong> and <strong style="color: #172A28; font-weight: 600">Python</strong> wherever they fit.</p>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(46px, 7.4vw, 104px); line-height: 0.98; letter-spacing: -0.04em">AI agents, automations &amp; <span class="grad" style="color: var(--accent)">apps that actually ship.</span></h1>
+<p style="margin: 0; max-width: 640px; font-size: 19px; line-height: 1.6; color: #45465E">I'm Ngoc Tan, an AI Automation Developer. I build WhatsApp and voice agents, self-hosted <strong style="color: #14142B; font-weight: 600">workflow automation</strong> systems and vibe-coded web apps — with <strong style="color: #14142B; font-weight: 600">Zapier</strong>, <strong style="color: #14142B; font-weight: 600">REST APIs</strong> and <strong style="color: #14142B; font-weight: 600">Python</strong> wherever they fit.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <a href="#whatsapp" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none">Try the live WhatsApp agent
 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></a>
-<a href="#flows" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; border: 1px solid #BCCBC6; background: #FFFFFF; color: #172A28; font-weight: 600; font-size: 15px; text-decoration: none">View my work</a>
+<a href="#flows" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 24px; border-radius: 999px; border: 1px solid #CBCBDC; background: #FFFFFF; color: #14142B; font-weight: 600; font-size: 15px; text-decoration: none">View my work</a>
 </div>
 </div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: #D5E0DC; border: 1px solid #D5E0DC; border-radius: 16px; overflow: hidden">
-<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">experience</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">4+ years</span></div>
-<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">specialty</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">Workflow automation</span></div>
-<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">agents</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">WhatsApp · Voice · Chat</span></div>
-<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">hosting</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">Self-hosted first</span></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: #E2E2EE; border: 1px solid #E2E2EE; border-radius: 16px; overflow: hidden">
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">experience</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">4+ years</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">specialty</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">Workflow automation</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">agents</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">WhatsApp · Voice · Chat</span></div>
+<div style="padding: 22px 24px; background: #FFFFFF; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">hosting</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 600">Self-hosted first</span></div>
 </div>
 </section>
 
 <!-- WHATSAPP AGENT (interactive) -->
-<section id="whatsapp" style="background: #172A28; color: #F2F6F4">
+<section id="whatsapp" style="background: #14142B; color: #F7F7FB">
 <div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
 <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
 <div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7DD3C0">// whatsapp ai agent · live demo</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FDA48F">// whatsapp ai agent · live demo</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.02em">A concierge that answers, books and follows up — 24/7.</h2>
 </div>
-<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B4C6C2">Pick a message below and watch the agent handle it. On the right, the workflow steps it runs light up step by step — the same five flows I deploy for real businesses.</p>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #BEBED4">Pick a message below and watch the agent handle it. On the right, the workflow steps it runs light up step by step — the same five flows I deploy for real businesses.</p>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: stretch">
 
 <!-- phone -->
-<div style="flex: 1 1 380px; min-width: 0; max-width: 460px; border-radius: 28px; background: #0B0D10; border: 1px solid #2C4743; padding: 12px; display: flex; flex-direction: column">
+<div style="flex: 1 1 380px; min-width: 0; max-width: 460px; border-radius: 28px; background: #0B0D10; border: 1px solid #2E2E52; padding: 12px; display: flex; flex-direction: column">
 <div style="border-radius: 20px; overflow: hidden; background: #ECE5DA; display: flex; flex-direction: column; height: 560px">
 <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #1F2C34; color: #FFFFFF">
 <span aria-hidden="true" style="width: 38px; height: 38px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 14px">AI</span>
@@ -282,26 +282,26 @@ html{overflow-x:clip}
 
 <!-- node trace -->
 <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<div style="flex: 1 1 auto; border: 1px solid #2C4743; border-radius: 20px; padding: 24px; background-image: radial-gradient(#244038 1px, transparent 1px); background-size: 18px 18px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #9DB2AE; padding-bottom: 6px">
+<div style="flex: 1 1 auto; border: 1px solid #2E2E52; border-radius: 20px; padding: 24px; background-image: radial-gradient(#232346 1px, transparent 1px); background-size: 18px 18px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #A4A4C0; padding-bottom: 6px">
 <span>// workflow execution trace</span><span id="traceLabel">waiting for message</span>
 </div>
 <div id="nodes" style="display: flex; flex-direction: column; gap: 10px"></div>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
-<div style="padding: 16px; border-radius: 14px; background: #1E3633; border: 1px solid #2C4743; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9DB2AE">CHANNEL</span><span style="font-weight: 600; font-size: 14px">Evolution API / WAHA</span></div>
-<div style="padding: 16px; border-radius: 14px; background: #1E3633; border: 1px solid #2C4743; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9DB2AE">BRAIN</span><span style="font-weight: 600; font-size: 14px">LLM agent + workflows</span></div>
-<div style="padding: 16px; border-radius: 14px; background: #1E3633; border: 1px solid #2C4743; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #9DB2AE">MEMORY</span><span style="font-weight: 600; font-size: 14px">PostgreSQL + CRM</span></div>
+<div style="padding: 16px; border-radius: 14px; background: #1C1C3A; border: 1px solid #2E2E52; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A4A4C0">CHANNEL</span><span style="font-weight: 600; font-size: 14px">Evolution API / WAHA</span></div>
+<div style="padding: 16px; border-radius: 14px; background: #1C1C3A; border: 1px solid #2E2E52; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A4A4C0">BRAIN</span><span style="font-weight: 600; font-size: 14px">LLM agent + workflows</span></div>
+<div style="padding: 16px; border-radius: 14px; background: #1C1C3A; border: 1px solid #2E2E52; display: flex; flex-direction: column; gap: 4px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #A4A4C0">MEMORY</span><span style="font-weight: 600; font-size: 14px">PostgreSQL + CRM</span></div>
 </div>
 </div>
 </div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: #2C4743; border: 1px solid #2C4743; border-radius: 16px; overflow: hidden">
-<div style="padding: 22px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">flow 01</span><span style="font-weight: 600; font-size: 16px">FAQ &amp; knowledge base</span><span style="font-size: 14px; line-height: 1.55; color: #B4C6C2">Answers about services, staff and documents.</span></div>
-<div style="padding: 22px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">flow 02</span><span style="font-weight: 600; font-size: 16px">Booking</span><span style="font-size: 14px; line-height: 1.55; color: #B4C6C2">Collects details, checks real availability, books.</span></div>
-<div style="padding: 22px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">flow 03</span><span style="font-weight: 600; font-size: 16px">Reschedule</span><span style="font-size: 14px; line-height: 1.55; color: #B4C6C2">Finds the booking and moves it to a new slot.</span></div>
-<div style="padding: 22px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">flow 04</span><span style="font-weight: 600; font-size: 16px">Cancel</span><span style="font-size: 14px; line-height: 1.55; color: #B4C6C2">Verifies the customer, then cancels cleanly.</span></div>
-<div style="padding: 22px; background: #172A28; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">flow 05</span><span style="font-weight: 600; font-size: 16px">Check booking</span><span style="font-size: 14px; line-height: 1.55; color: #B4C6C2">Looks up upcoming appointments by email.</span></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: #2E2E52; border: 1px solid #2E2E52; border-radius: 16px; overflow: hidden">
+<div style="padding: 22px; background: #14142B; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">flow 01</span><span style="font-weight: 600; font-size: 16px">FAQ &amp; knowledge base</span><span style="font-size: 14px; line-height: 1.55; color: #BEBED4">Answers about services, staff and documents.</span></div>
+<div style="padding: 22px; background: #14142B; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">flow 02</span><span style="font-weight: 600; font-size: 16px">Booking</span><span style="font-size: 14px; line-height: 1.55; color: #BEBED4">Collects details, checks real availability, books.</span></div>
+<div style="padding: 22px; background: #14142B; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">flow 03</span><span style="font-weight: 600; font-size: 16px">Reschedule</span><span style="font-size: 14px; line-height: 1.55; color: #BEBED4">Finds the booking and moves it to a new slot.</span></div>
+<div style="padding: 22px; background: #14142B; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">flow 04</span><span style="font-weight: 600; font-size: 16px">Cancel</span><span style="font-size: 14px; line-height: 1.55; color: #BEBED4">Verifies the customer, then cancels cleanly.</span></div>
+<div style="padding: 22px; background: #14142B; display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">flow 05</span><span style="font-weight: 600; font-size: 16px">Check booking</span><span style="font-size: 14px; line-height: 1.55; color: #BEBED4">Looks up upcoming appointments by email.</span></div>
 </div>
 </div>
 </section>
@@ -313,141 +313,141 @@ html{overflow-x:clip}
 <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// vibe-coded apps</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.02em">From idea to a live product — fast.</h2>
 </div>
-<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #42585A">I build with AI pair-programming for speed, then do the real engineering for production: auth, databases, deployment and monitoring on my own servers.</p>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #45465E">I build with AI pair-programming for speed, then do the real engineering for production: auth, databases, deployment and monitoring on my own servers.</p>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
-<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #D5E0DC">idea</span><span aria-hidden="true" style="color: #5C7275">→</span>
-<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #D5E0DC">prompt &amp; prototype</span><span aria-hidden="true" style="color: #5C7275">→</span>
-<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #D5E0DC">harden: auth · db · tests</span><span aria-hidden="true" style="color: #5C7275">→</span>
-<span style="padding: 10px 14px; border-radius: 10px; background: #172A28; color: #F2F6F4">ship on a VPS</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2EE">idea</span><span aria-hidden="true" style="color: #5E5F78">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2EE">prompt &amp; prototype</span><span aria-hidden="true" style="color: #5E5F78">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E2EE">harden: auth · db · tests</span><span aria-hidden="true" style="color: #5E5F78">→</span>
+<span style="padding: 10px 14px; border-radius: 10px; background: #14142B; color: #F7F7FB">ship on a VPS</span>
 </div>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
-<article style="grid-column: 1 / -1; border: 1px solid #D5E0DC; border-radius: 20px; background: #FFFFFF; overflow: hidden; display: flex; flex-wrap: wrap">
+<article style="grid-column: 1 / -1; border: 1px solid #E2E2EE; border-radius: 20px; background: #FFFFFF; overflow: hidden; display: flex; flex-wrap: wrap">
 <div aria-hidden="true" style="flex: 1 1 420px; min-width: 0; min-height: 300px; background: #EEF1FF; padding: 28px; display: flex; flex-direction: column; gap: 10px">
-<div style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 50%; background: #BCCBC6"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #BCCBC6"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #BCCBC6"></span></div>
+<div style="display: flex; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 50%; background: #CBCBDC"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #CBCBDC"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #CBCBDC"></span></div>
 <div style="flex: 1 1 auto; border-radius: 12px; background: #FFFFFF; border: 1px solid #D6DCF5; display: flex; overflow: hidden">
-<div style="width: 120px; background: #172A28; padding: 14px; display: flex; flex-direction: column; gap: 10px"><span style="height: 8px; border-radius: 4px; background: #42585A"></span><span style="height: 8px; width: 70%; border-radius: 4px; background: var(--accent)"></span><span style="height: 8px; width: 80%; border-radius: 4px; background: #42585A"></span><span style="height: 8px; width: 60%; border-radius: 4px; background: #42585A"></span></div>
+<div style="width: 120px; background: #14142B; padding: 14px; display: flex; flex-direction: column; gap: 10px"><span style="height: 8px; border-radius: 4px; background: #45465E"></span><span style="height: 8px; width: 70%; border-radius: 4px; background: var(--accent)"></span><span style="height: 8px; width: 80%; border-radius: 4px; background: #45465E"></span><span style="height: 8px; width: 60%; border-radius: 4px; background: #45465E"></span></div>
 <div style="flex: 1 1 auto; padding: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
-<div style="border-radius: 8px; background: #F2F6F4; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #4F6668">LEAD</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #D5E0DC"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #D5E0DC"></span></div>
-<div style="border-radius: 8px; background: #F2F6F4; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #4F6668">DEAL</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid var(--accent)"></span></div>
-<div style="border-radius: 8px; background: #F2F6F4; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #4F6668">WON</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #D5E0DC"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #D5E0DC"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #D5E0DC"></span></div>
+<div style="border-radius: 8px; background: #F7F7FB; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #52536B">LEAD</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E2E2EE"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E2E2EE"></span></div>
+<div style="border-radius: 8px; background: #F7F7FB; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #52536B">DEAL</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid var(--accent)"></span></div>
+<div style="border-radius: 8px; background: #F7F7FB; padding: 10px; display: flex; flex-direction: column; gap: 8px"><span style="font: 500 11px 'JetBrains Mono', monospace; color: #52536B">WON</span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E2E2EE"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E2E2EE"></span><span style="height: 28px; border-radius: 6px; background: #FFFFFF; border: 1px solid #E2E2EE"></span></div>
 </div>
 </div>
 </div>
 <div style="flex: 1 1 380px; min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"><span style="padding: 4px 10px; border-radius: 999px; background: #E3F5EA; color: #1E6B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px">● live</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">SaaS · AI CRM</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"><span style="padding: 4px 10px; border-radius: 999px; background: #E3F5EA; color: #1E6B3A; font-family: 'JetBrains Mono', monospace; font-size: 12px">● live</span><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">SaaS · AI CRM</span></div>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.01em">Vagent CRM</h3>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #42585A">An AI-native CRM for Vietnamese sales teams: customers, pipeline and tasks in one workspace — Airtable-style tables with formulas, filters, groups and kanban, plus an AI that replies to customers 24/7 and updates data from plain-language commands.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #42585A"><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">React</span><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">Node.js</span><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">PostgreSQL</span><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">Meta webhooks</span></div>
-<a href="https://vagentai.me" style="align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border-radius: 999px; background: #172A28; color: #F2F6F4; font-weight: 600; font-size: 14px; text-decoration: none">Open vagentai.me
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #45465E">An AI-native CRM for Vietnamese sales teams: customers, pipeline and tasks in one workspace — Airtable-style tables with formulas, filters, groups and kanban, plus an AI that replies to customers 24/7 and updates data from plain-language commands.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #45465E"><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">React</span><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">Node.js</span><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">PostgreSQL</span><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">Meta webhooks</span></div>
+<a href="https://vagentai.me" style="align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border-radius: 999px; background: #14142B; color: #F7F7FB; font-weight: 600; font-size: 14px; text-decoration: none">Open vagentai.me
 <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
 </div>
 </article>
 
-<article style="border: 1px solid #D5E0DC; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">Web app · AI video</span>
+<article style="border: 1px solid #E2E2EE; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">Web app · AI video</span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Presenter Studio</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">A web studio for producing videos with an AI presenter, voiced in Vietnamese.</p>
-<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #42585A"><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">TTS</span></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">A web studio for producing videos with an AI presenter, voiced in Vietnamese.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #45465E"><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">TTS</span></div>
 </article>
 
-<article style="border: 1px solid #D5E0DC; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">Web app · animation</span>
+<article style="border: 1px solid #E2E2EE; border-radius: 20px; background: #FFFFFF; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">Web app · animation</span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Whiteboard Animation Studio</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">A web app for creating whiteboard-style explainer animations.</p>
-<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #42585A"><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F2F6F4">FastAPI</span></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">A web app for creating whiteboard-style explainer animations.</p>
+<div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #45465E"><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">Python</span><span style="padding: 5px 10px; border-radius: 6px; background: #F7F7FB">FastAPI</span></div>
 </article>
 </div>
 </section>
 
 <!-- ABOUT / SERVICES -->
-<section id="about" style="border-top: 1px solid #D5E0DC; background: #FFFFFF">
+<section id="about" style="border-top: 1px solid #E2E2EE; background: #FFFFFF">
 <div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 48px">
 <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
 <div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
 <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// what i do</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">4+ years building automation that scales</h2>
 </div>
-<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #42585A">Reliable business automation with workflow platforms like Make.com and Zapier — robust, scalable and easy for the people who use it every day.</p>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #45465E">Reliable business automation with workflow platforms like Make.com and Zapier — robust, scalable and easy for the people who use it every day.</p>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
-<div style="padding: 28px; border: 1px solid #D5E0DC; border-radius: 16px; background: #F2F6F4; display: flex; flex-direction: column; gap: 14px">
-<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #172A28; color: #F2F6F4; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7zM12 16v5"></path></svg></span>
+<div style="padding: 28px; border: 1px solid #E2E2EE; border-radius: 16px; background: #F7F7FB; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #14142B; color: #F7F7FB; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0V7zM12 16v5"></path></svg></span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Platform Integration</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">Airtable, Facebook API, CRM systems, email platforms and most REST APIs — connected into one flow.</p></div>
-<div style="padding: 28px; border: 1px solid #D5E0DC; border-radius: 16px; background: #F2F6F4; display: flex; flex-direction: column; gap: 14px">
-<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #172A28; color: #F2F6F4; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"></rect><rect x="3" y="13" width="18" height="7" rx="2"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></span>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">Airtable, Facebook API, CRM systems, email platforms and most REST APIs — connected into one flow.</p></div>
+<div style="padding: 28px; border: 1px solid #E2E2EE; border-radius: 16px; background: #F7F7FB; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #14142B; color: #F7F7FB; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"></rect><rect x="3" y="13" width="18" height="7" rx="2"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Self-hosted Infrastructure</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">Docker, Redis and PostgreSQL deployments with full control of your stack.</p></div>
-<div style="padding: 28px; border: 1px solid #D5E0DC; border-radius: 16px; background: #F2F6F4; display: flex; flex-direction: column; gap: 14px">
-<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #172A28; color: #F2F6F4; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"></path></svg></span>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">Docker, Redis and PostgreSQL deployments with full control of your stack.</p></div>
+<div style="padding: 28px; border: 1px solid #E2E2EE; border-radius: 16px; background: #F7F7FB; display: flex; flex-direction: column; gap: 14px">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #14142B; color: #F7F7FB; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"></path></svg></span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">Consulting &amp; Onboarding</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">Team training, clear documentation and a long-term automation strategy.</p></div>
-<div style="padding: 28px; border: 1px solid #D5E0DC; border-radius: 16px; background: #F2F6F4; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">Team training, clear documentation and a long-term automation strategy.</p></div>
+<div style="padding: 28px; border: 1px solid #E2E2EE; border-radius: 16px; background: #F7F7FB; display: flex; flex-direction: column; gap: 14px">
 <span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: var(--accent); color: #FFFFFF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9L18 15z"></path></svg></span>
 <h3 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 600">AI-Powered Solutions</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">AI chatbots, WhatsApp and voice agents, integrated into the workflows you already run.</p></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">AI chatbots, WhatsApp and voice agents, integrated into the workflows you already run.</p></div>
 </div>
 </div>
 </section>
 
 <!-- INFRASTRUCTURE (interactive) -->
-<section id="infrastructure" style="background: #172A28; color: #F2F6F4">
+<section id="infrastructure" style="background: #14142B; color: #F7F7FB">
 <div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 44px">
 <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-end">
 <div style="flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7DD3C0">// self-hosted automation</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #FDA48F">// self-hosted automation</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Your own automation server.<br>No per-task fees.</h2>
 </div>
-<p style="flex: 1 1 380px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #B4C6C2">I install and run a private automation system on a server you own. Your workflows, customer data and API keys stay with you — and you pay <strong style="color: #F2F6F4; font-weight: 600">one flat server bill</strong> instead of paying for every task like on Zapier or Make.</p>
+<p style="flex: 1 1 380px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #BEBED4">I install and run a private automation system on a server you own. Your workflows, customer data and API keys stay with you — and you pay <strong style="color: #F7F7FB; font-weight: 600">one flat server bill</strong> instead of paying for every task like on Zapier or Make.</p>
 </div>
 
 <div style="display: flex; flex-direction: column; gap: 14px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #9DB2AE">HOW A CUSTOMER MESSAGE TRAVELS THROUGH IT — TAP A STEP</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: #A4A4C0">HOW A CUSTOMER MESSAGE TRAVELS THROUGH IT — TAP A STEP</span>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
 <div id="infra" style="display: contents"></div>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 28px; border-radius: 18px; background: #1B302D; border: 1px solid #2C4743">
+<div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 28px; border-radius: 18px; background: #18182F; border: 1px solid #2E2E52">
 <div style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 6px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #7DD3C0">STEP <span id="infraNum"></span> / 05</span>
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #FDA48F">STEP <span id="infraNum"></span> / 05</span>
 <span style="font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 600; letter-spacing: -0.01em"><span id="infraName"></span></span>
 </div>
 <div style="flex: 2 1 380px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px">
-<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHAT IT DOES</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EFEC"><span id="infraWhat"></span></p></div>
-<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHY IT MATTERS</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EFEC"><span id="infraWhy"></span></p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #A4A4C0">WHAT IT DOES</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ECECF5"><span id="infraWhat"></span></p></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #A4A4C0">WHY IT MATTERS</span><p style="margin: 0; font-size: 16px; line-height: 1.6; color: #ECECF5"><span id="infraWhy"></span></p></div>
 </div>
 </div>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
-<div style="flex: 3 1 520px; min-width: 0; border: 1px solid #2C4743; border-radius: 18px; overflow: hidden">
+<div style="flex: 3 1 520px; min-width: 0; border: 1px solid #2E2E52; border-radius: 18px; overflow: hidden">
 <div style="display: grid; grid-template-columns: minmax(110px, 0.8fr) 1fr 1fr; font-size: 15px">
-<span style="padding: 16px 18px; background: #1B302D; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE"></span>
-<span style="padding: 16px 18px; background: #1B302D; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">HOSTED TOOLS (ZAPIER, MAKE)</span>
-<span style="padding: 16px 18px; background: #183D38; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #7DD3C0">YOUR OWN SERVER</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Cost</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Pay per task — the bill grows as you grow</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">One flat monthly server bill</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Your data</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Stored on their servers</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Stays on your server</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Limits</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Task and speed limits set by your plan</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Only limited by your server — add capacity when you need it</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">Integrations</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; color: #B4C6C2">What the platform supports</span>
-<span style="padding: 16px 18px; border-top: 1px solid #2C4743; background: rgba(15,118,110,.08); color: #FFFFFF">Any API, plus custom code and AI agents</span>
+<span style="padding: 16px 18px; background: #18182F; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #A4A4C0"></span>
+<span style="padding: 16px 18px; background: #18182F; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #A4A4C0">HOSTED TOOLS (ZAPIER, MAKE)</span>
+<span style="padding: 16px 18px; background: #26225E; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #FDA48F">YOUR OWN SERVER</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Cost</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Pay per task — the bill grows as you grow</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; background: rgba(79,70,229,.08); color: #FFFFFF">One flat monthly server bill</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Your data</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Stored on their servers</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; background: rgba(79,70,229,.08); color: #FFFFFF">Stays on your server</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Limits</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Task and speed limits set by your plan</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; background: rgba(79,70,229,.08); color: #FFFFFF">Only limited by your server — add capacity when you need it</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">Integrations</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; color: #BEBED4">What the platform supports</span>
+<span style="padding: 16px 18px; border-top: 1px solid #2E2E52; background: rgba(79,70,229,.08); color: #FFFFFF">Any API, plus custom code and AI agents</span>
 </div>
 </div>
-<div style="flex: 2 1 300px; min-width: 0; padding: 28px; border-radius: 18px; background: #1B302D; border: 1px solid #2C4743; display: flex; flex-direction: column; gap: 16px">
-<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #9DB2AE">WHAT YOU GET</span>
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 16px; line-height: 1.5; color: #E6EFEC">
-<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Installed and configured on your own server</span></li>
-<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>HTTPS and safe storage for your API keys</span></li>
-<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Set up to scale when your volume grows</span></li>
-<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #7DD3C0">✓</span><span>Training and documentation for your team</span></li>
+<div style="flex: 2 1 300px; min-width: 0; padding: 28px; border-radius: 18px; background: #18182F; border: 1px solid #2E2E52; display: flex; flex-direction: column; gap: 16px">
+<span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #A4A4C0">WHAT YOU GET</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 16px; line-height: 1.5; color: #ECECF5">
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #FDA48F">✓</span><span>Installed and configured on your own server</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #FDA48F">✓</span><span>HTTPS and safe storage for your API keys</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #FDA48F">✓</span><span>Set up to scale when your volume grows</span></li>
+<li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #FDA48F">✓</span><span>Training and documentation for your team</span></li>
 </ul>
 </div>
 </div>
@@ -461,13 +461,13 @@ html{overflow-x:clip}
 <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">// portfolio</span>
 <h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; letter-spacing: -0.02em">Featured automation workflows</h2>
 </div>
-<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #42585A">From AI chatbots and voice agents to data pipelines and dashboards. Turn the pages, or jump in from the index.</p>
+<p style="flex: 1 1 360px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.65; color: #45465E">From AI chatbots and voice agents to data pipelines and dashboards. Turn the pages, or jump in from the index.</p>
 </div>
 <div id="book"></div>
 
-<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 32px; border: 1px dashed #BCCBC6; border-radius: 16px">
-<p style="flex: 1 1 480px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.6; color: #42585A">Beyond Make, Zapier and other workflow automation platforms, I'm comfortable with <strong style="color: #172A28; font-weight: 600">almost any RESTful API</strong>. Need an integration that doesn't exist yet? <strong style="color: #172A28; font-weight: 600">I can build it from scratch.</strong></p>
-<a href="#contact" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; background: #172A28; color: #F2F6F4; font-weight: 600; font-size: 15px; text-decoration: none">Start a project
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 32px; border: 1px dashed #CBCBDC; border-radius: 16px">
+<p style="flex: 1 1 480px; min-width: 0; margin: 0; font-size: 17px; line-height: 1.6; color: #45465E">Beyond Make, Zapier and other workflow automation platforms, I'm comfortable with <strong style="color: #14142B; font-weight: 600">almost any RESTful API</strong>. Need an integration that doesn't exist yet? <strong style="color: #14142B; font-weight: 600">I can build it from scratch.</strong></p>
+<a href="#contact" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; background: #14142B; color: #F7F7FB; font-weight: 600; font-size: 15px; text-decoration: none">Start a project
 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
 </div>
 </section>
@@ -481,20 +481,20 @@ html{overflow-x:clip}
 <p style="margin: 0; max-width: 520px; font-size: 18px; line-height: 1.6; color: #FFFFFF">An agent, an automation or a whole app — tell me about your workflow and let's find what to take off your team's plate.</p>
 </div>
 <div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
-<a href="mailto:tan012261@gmail.com" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #172A28; text-decoration: none">
-<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #172A28; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
-<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">Email</span><span style="font-weight: 600; font-size: 17px">tan012261@gmail.com</span></span></a>
-<a href="https://wa.me/84776114333" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #172A28; text-decoration: none">
-<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #172A28; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path></svg></span>
-<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4F6668">WhatsApp · Zalo · Phone</span><span style="font-weight: 600; font-size: 17px">+84 776 114 333</span></span></a>
+<a href="mailto:tan012261@gmail.com" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #14142B; text-decoration: none">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #14142B; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">Email</span><span style="font-weight: 600; font-size: 17px">tan012261@gmail.com</span></span></a>
+<a href="https://wa.me/84776114333" style="display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 14px; background: #FFFFFF; color: #14142B; text-decoration: none">
+<span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 10px; background: #14142B; color: #FFFFFF; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #52536B">WhatsApp · Zalo · Phone</span><span style="font-weight: 600; font-size: 17px">+84 776 114 333</span></span></a>
 </div>
 </div>
 </section>
 
-<footer style="background: #172A28; color: #9DB2AE">
+<footer style="background: #14142B; color: #A4A4C0">
 <div style="max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
 <span>Built with care by Ngoc Tan · AI Automation Developer</span>
-<a href="#top" style="color: #E6EFEC; text-decoration: none; padding: 4px 0">Back to top ↑</a>
+<a href="#top" style="color: #ECECF5; text-decoration: none; padding: 4px 0">Back to top ↑</a>
 </div>
 </footer>
 
@@ -591,8 +591,8 @@ html{overflow-x:clip}
     prevLit = lit.length;
     $('nodes').innerHTML = NODES.map(function (n) {
       return lit.indexOf(n.id) !== -1
-        ? '<div' + (n.id === newest ? ' data-new="1"' : '') + ' style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--accent); background: #183D38"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #6FD49A; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #7DD3C0; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 600; font-size: 15px; color: #FFFFFF">' + esc(n.label) + '</span><span style="margin-left: auto; font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #6FD49A">done</span></div>'
-        : '<div style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid #2A423F; background: #1B302D"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #35504C; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #5C7275; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 500; font-size: 15px; color: #5C7275">' + esc(n.label) + '</span></div>';
+        ? '<div' + (n.id === newest ? ' data-new="1"' : '') + ' style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid var(--accent); background: #26225E"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #6FD49A; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #FDA48F; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 600; font-size: 15px; color: #FFFFFF">' + esc(n.label) + '</span><span style="margin-left: auto; font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #6FD49A">done</span></div>'
+        : '<div style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 12px; border: 1px solid #2A2A4E; background: #18182F"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 50%; background: #37375F; flex: none"></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: #5E5F78; width: 70px; flex: none">' + esc(n.kind) + '</span><span style="font-weight: 500; font-size: 15px; color: #5E5F78">' + esc(n.label) + '</span></div>';
     }).join('');
     $('traceLabel').textContent = cur ? (S.revealed >= total ? 'finished' : 'running…') : 'waiting for message';
   }
@@ -611,10 +611,10 @@ html{overflow-x:clip}
       var on = l.id === S.layer;
       var badge = on
         ? '<span style="width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center; font-family: \'JetBrains Mono\', monospace; font-size: 12px; font-weight: 500">' + l.num + '</span>'
-        : '<span style="width: 28px; height: 28px; border-radius: 50%; border: 1px solid #42585A; color: #B4C6C2; display: grid; place-items: center; font-family: \'JetBrains Mono\', monospace; font-size: 12px">' + l.num + '</span>';
-      return '<button type="button" data-layer="' + l.id + '" aria-pressed="' + on + '" style="min-height: 44px; text-align: left; padding: 18px; border-radius: 16px; border: 1px solid ' + (on ? 'var(--accent)' : '#2C4743') + '; background: ' + (on ? '#183D38' : '#1B302D') + '; color: ' + (on ? '#FFFFFF' : '#E6EFEC') + '; cursor: pointer; display: flex; flex-direction: column; gap: 10px">' +
+        : '<span style="width: 28px; height: 28px; border-radius: 50%; border: 1px solid #45465E; color: #BEBED4; display: grid; place-items: center; font-family: \'JetBrains Mono\', monospace; font-size: 12px">' + l.num + '</span>';
+      return '<button type="button" data-layer="' + l.id + '" aria-pressed="' + on + '" style="min-height: 44px; text-align: left; padding: 18px; border-radius: 16px; border: 1px solid ' + (on ? 'var(--accent)' : '#2E2E52') + '; background: ' + (on ? '#26225E' : '#18182F') + '; color: ' + (on ? '#FFFFFF' : '#ECECF5') + '; cursor: pointer; display: flex; flex-direction: column; gap: 10px">' +
         '<span style="display: flex; align-items: center; gap: 10px">' + badge + '<span style="font-weight: 600; font-size: 17px">' + esc(l.name) + '</span></span>' +
-        '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: ' + (on ? '#7DD3C0' : '#9DB2AE') + '">' + esc(l.tag) + '</span></button>';
+        '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 11px; color: ' + (on ? '#FDA48F' : '#A4A4C0') + '">' + esc(l.tag) + '</span></button>';
     }).join('');
     var cur = LAYERS.filter(function (l) { return l.id === S.layer; })[0];
     [['infraNum', cur.num], ['infraName', cur.name], ['infraWhat', cur.what], ['infraWhy', cur.why]].forEach(function (p) {
@@ -631,20 +631,20 @@ html{overflow-x:clip}
     $('filters').innerHTML = GROUPS.map(function (g) {
       var on = S.filter === g[0];
       var count = g[0] === 'all' ? FLOWS.length : FLOWS.filter(function (x) { return x.g === g[0]; }).length;
-      return '<button type="button" data-filter="' + g[0] + '" aria-pressed="' + on + '" style="min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1px solid ' + (on ? '#172A28' : '#BCCBC6') + '; background: ' + (on ? '#172A28' : '#FFFFFF') + '; color: ' + (on ? '#F2F6F4' : '#172A28') + '; font-size: 14px; font-weight: ' + (on ? 600 : 500) + '; cursor: pointer">' + esc(g[1]) + ' <span style="font-family: \'JetBrains Mono\', monospace; font-weight: 400; color: ' + (on ? '#9DB2AE' : '#4F6668') + '">' + count + '</span></button>';
+      return '<button type="button" data-filter="' + g[0] + '" aria-pressed="' + on + '" style="min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1px solid ' + (on ? '#14142B' : '#CBCBDC') + '; background: ' + (on ? '#14142B' : '#FFFFFF') + '; color: ' + (on ? '#F7F7FB' : '#14142B') + '; font-size: 14px; font-weight: ' + (on ? 600 : 500) + '; cursor: pointer">' + esc(g[1]) + ' <span style="font-family: \'JetBrains Mono\', monospace; font-weight: 400; color: ' + (on ? '#A4A4C0' : '#52536B') + '">' + count + '</span></button>';
     }).join('');
     var list = S.filter === 'all' ? FLOWS : FLOWS.filter(function (x) { return x.g === S.filter; });
     $('flowGrid').innerHTML = list.map(function (c) {
       var media = c.img
-        ? '<div style="aspect-ratio: 16 / 10; background: #E9E7E0; border-bottom: 1px solid #D5E0DC; overflow: hidden"><img src="' + c.img + '" alt="Screenshot of the ' + esc(c.title) + ' workflow" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block"></div>'
+        ? '<div style="aspect-ratio: 16 / 10; background: #E9E7E0; border-bottom: 1px solid #E2E2EE; overflow: hidden"><img src="' + c.img + '" alt="Screenshot of the ' + esc(c.title) + ' workflow" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block"></div>'
         : c.nodes
-        ? '<div aria-hidden="true" style="aspect-ratio: 16 / 10; background: #172A28; background-image: radial-gradient(#274140 1px, transparent 1px); background-size: 16px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 10px; padding: 20px; font-family: \'JetBrains Mono\', monospace; font-size: 13px; color: #E6EFEC">' + c.nodes.map(function (t, k) { return (k ? '<span style="color: #5C7275">→</span>' : '') + '<span style="padding: 10px 14px; border: 1px solid ' + (k === 1 ? 'var(--accent)' : '#2C4743') + '; border-radius: 10px; background: #1E3633">' + esc(t) + '</span>'; }).join('') + '</div>'
-        : '<a href="' + DEMO_VIDEO + '" target="_blank" rel="noopener" style="aspect-ratio: 16 / 10; background: #172A28; background-image: radial-gradient(#274140 1px, transparent 1px); background-size: 16px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #F2F6F4; text-decoration: none"><span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 13px">Watch the demo video ↗</span></a>';
-      return '<article style="border: 1px solid #D5E0DC; border-radius: 16px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column">' + media +
-        '<div style="padding: 24px; display: flex; flex-direction: column; gap: 10px"><div style="display: flex; justify-content: space-between; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #4F6668"><span>' + esc(c.cat) + '</span><span>' + c.num + '</span></div>' +
+        ? '<div aria-hidden="true" style="aspect-ratio: 16 / 10; background: #14142B; background-image: radial-gradient(#27274B 1px, transparent 1px); background-size: 16px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 10px; padding: 20px; font-family: \'JetBrains Mono\', monospace; font-size: 13px; color: #ECECF5">' + c.nodes.map(function (t, k) { return (k ? '<span style="color: #5E5F78">→</span>' : '') + '<span style="padding: 10px 14px; border: 1px solid ' + (k === 1 ? 'var(--accent)' : '#2E2E52') + '; border-radius: 10px; background: #1C1C3A">' + esc(t) + '</span>'; }).join('') + '</div>'
+        : '<a href="' + DEMO_VIDEO + '" target="_blank" rel="noopener" style="aspect-ratio: 16 / 10; background: #14142B; background-image: radial-gradient(#27274B 1px, transparent 1px); background-size: 16px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #F7F7FB; text-decoration: none"><span aria-hidden="true" style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg></span><span style="font-family: \'JetBrains Mono\', monospace; font-size: 13px">Watch the demo video ↗</span></a>';
+      return '<article style="border: 1px solid #E2E2EE; border-radius: 16px; background: #FFFFFF; overflow: hidden; display: flex; flex-direction: column">' + media +
+        '<div style="padding: 24px; display: flex; flex-direction: column; gap: 10px"><div style="display: flex; justify-content: space-between; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #52536B"><span>' + esc(c.cat) + '</span><span>' + c.num + '</span></div>' +
         '<h3 style="margin: 0; font-family: \'Space Grotesk\', sans-serif; font-size: 20px; font-weight: 600">' + esc(c.title) + '</h3>' +
-        '<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #42585A">' + esc(c.desc) + '</p>' +
-        '<span style="margin-top: 4px; padding-top: 12px; border-top: 1px solid #E3ECE8; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #4F6668">' + esc(c.chain) + '</span></div></article>';
+        '<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #45465E">' + esc(c.desc) + '</p>' +
+        '<span style="margin-top: 4px; padding-top: 12px; border-top: 1px solid #ECECF4; font-family: \'JetBrains Mono\', monospace; font-size: 12px; color: #52536B">' + esc(c.chain) + '</span></div></article>';
     }).join('');
   }
 
@@ -755,7 +755,7 @@ html{overflow-x:clip}
   var BRANDS = [
     ['whatsapp', 'WhatsApp', '#25D366'], ['telegram', 'Telegram', '#26A5E4'], ['zalo', 'Zalo', '#0068FF'], ['facebook', 'Facebook', '#0866FF'],
     ['gmail', 'Gmail', '#EA4335'], ['dropbox', 'Dropbox', '#0061FF'], ['airtable', 'Airtable', '#18BFFF'], ['clickup', 'ClickUp', '#7B68EE'],
-    ['claude', 'Claude', '#D97757'], ['vapi', 'Vapi', '#172A28'], ['metabase', 'Metabase', '#509EE3'], ['postgresql', 'PostgreSQL', '#4169E1'],
+    ['claude', 'Claude', '#D97757'], ['vapi', 'Vapi', '#14142B'], ['metabase', 'Metabase', '#509EE3'], ['postgresql', 'PostgreSQL', '#4169E1'],
     ['redis', 'Redis', '#FF4438'], ['docker', 'Docker', '#2496ED']
   ];
   var USES = {
@@ -764,7 +764,7 @@ html{overflow-x:clip}
     '07': ['vapi', 'postgresql'], '08': ['vapi'], '09': ['whatsapp', 'postgresql', 'redis']
   };
   var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ACC = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '').trim() || '#0F766E';
+  var ACC = (getComputedStyle(document.documentElement).getPropertyValue('--accent') || '').trim() || '#4F46E5';
   var W = 2000, H = 1250;               /* spread bitmap size, aspect 1.6 */
   var N = 16, BETA = 0.62;              /* strips in the leaf, peak bend (rad) */
   var MAG = 2.2, ZMIN = 0.9, ZMAX = 1.6;
@@ -779,7 +779,7 @@ html{overflow-x:clip}
       '<div class="bk-stage" id="bkStage">' +
         '<button type="button" class="bk-arrow l" id="bkPrev" aria-label="Previous project">' + ARROW_L + '</button>' +
         '<div class="bk-3d" id="bk3d">' +
-          '<div class="bk-tilt"><div class="bk-cast" aria-hidden="true"></div><div class="bk-book" id="bkBook" style="background:#F6F9F7;border-radius:6px"></div></div>' +
+          '<div class="bk-tilt"><div class="bk-cast" aria-hidden="true"></div><div class="bk-book" id="bkBook" style="background:#FAFAFD;border-radius:6px"></div></div>' +
           '<div class="bk-zoomwrap" aria-hidden="true"><div class="bk-zoominner" id="bkZoom"></div></div>' +
           '<div class="bk-loupe" id="bkLoupe" aria-hidden="true"><span class="grip"></span><span class="ring"><span class="lens"></span></span></div>' +
         '</div>' +
@@ -814,18 +814,18 @@ html{overflow-x:clip}
     return out;
   }
   function paper(c) {
-    c.fillStyle = '#F6F9F7'; rr(c, 0, 0, W, H, 14); c.fill();
+    c.fillStyle = '#FAFAFD'; rr(c, 0, 0, W, H, 14); c.fill();
     var g = c.createLinearGradient(0, 0, W, 0);
-    g.addColorStop(0, 'rgba(60,86,80,.12)'); g.addColorStop(0.03, 'rgba(60,86,80,0)');
-    g.addColorStop(0.43, 'rgba(60,86,80,0)'); g.addColorStop(0.5, 'rgba(32,58,52,.24)'); g.addColorStop(0.57, 'rgba(60,86,80,0)');
-    g.addColorStop(0.97, 'rgba(60,86,80,0)'); g.addColorStop(1, 'rgba(60,86,80,.12)');
+    g.addColorStop(0, 'rgba(72,70,104,.12)'); g.addColorStop(0.03, 'rgba(72,70,104,0)');
+    g.addColorStop(0.43, 'rgba(72,70,104,0)'); g.addColorStop(0.5, 'rgba(36,36,70,.24)'); g.addColorStop(0.57, 'rgba(72,70,104,0)');
+    g.addColorStop(0.97, 'rgba(72,70,104,0)'); g.addColorStop(1, 'rgba(72,70,104,.12)');
     c.fillStyle = g; c.fillRect(0, 0, W, H);
-    c.strokeStyle = 'rgba(60,86,80,.16)'; c.lineWidth = 2;
+    c.strokeStyle = 'rgba(72,70,104,.16)'; c.lineWidth = 2;
     for (var k = 1; k <= 3; k++) {
       c.beginPath(); c.moveTo(k * 5, 26); c.lineTo(k * 5, H - 26); c.stroke();
       c.beginPath(); c.moveTo(W - k * 5, 26); c.lineTo(W - k * 5, H - 26); c.stroke();
     }
-    c.fillStyle = 'rgba(23,42,40,.07)';
+    c.fillStyle = 'rgba(20,20,43,.07)';
     for (var y = 120; y < H - 90; y += 42) for (var x = W / 2 + 96; x < W - 70; x += 42) c.fillRect(x, y, 3, 3);
   }
   function nodeRow(c, items, x, y, maxW, dark) {
@@ -835,15 +835,15 @@ html{overflow-x:clip}
       var w = c.measureText(t).width + pad * 2;
       if (k && cx + arrow + w > x + maxW) { cx = x; cy += hh + 22; }
       else if (k) {
-        c.strokeStyle = dark ? '#5C7275' : '#5C7275'; c.lineWidth = 3; c.beginPath();
+        c.strokeStyle = dark ? '#5E5F78' : '#5E5F78'; c.lineWidth = 3; c.beginPath();
         c.moveTo(cx + 4, cy + hh / 2); c.lineTo(cx + arrow - 8, cy + hh / 2);
         c.moveTo(cx + arrow - 18, cy + hh / 2 - 9); c.lineTo(cx + arrow - 8, cy + hh / 2); c.lineTo(cx + arrow - 18, cy + hh / 2 + 9); c.stroke();
         cx += arrow + gap - 18;
       }
       rr(c, cx, cy, w, hh, 14);
-      c.fillStyle = dark ? '#1E3633' : '#FFFFFF'; c.fill();
-      c.lineWidth = 3; c.strokeStyle = k === 1 ? ACC : (dark ? '#2C4743' : '#CFDBD7'); c.stroke();
-      c.fillStyle = dark ? '#E6EFEC' : '#172A28'; c.textBaseline = 'middle'; c.fillText(t, cx + pad, cy + hh / 2 + 1);
+      c.fillStyle = dark ? '#1C1C3A' : '#FFFFFF'; c.fill();
+      c.lineWidth = 3; c.strokeStyle = k === 1 ? ACC : (dark ? '#2E2E52' : '#DCDCE9'); c.stroke();
+      c.fillStyle = dark ? '#ECECF5' : '#14142B'; c.textBaseline = 'middle'; c.fillText(t, cx + pad, cy + hh / 2 + 1);
       cx += w + gap;
     });
     c.textBaseline = 'alphabetic';
@@ -851,25 +851,25 @@ html{overflow-x:clip}
   }
   function leftPage(c, f, img) {
     var bx = 110, by = 150, bw = W / 2 - 220, bh = H - 330;
-    c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5C7275';
+    c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5E5F78';
     c.fillText('PLATE ' + f.num + ' / ' + NPROJ, bx, 96);
     if (img) {
       var s = Math.min((bw - 40) / img.width, (bh - 40) / img.height);
       var iw = img.width * s, ih = img.height * s, mx = 22;
       c.save(); c.translate(bx + bw / 2, by + bh / 2); c.rotate(-0.014);
-      c.shadowColor = 'rgba(22,44,40,.28)'; c.shadowBlur = 34; c.shadowOffsetY = 14;
+      c.shadowColor = 'rgba(20,20,45,.28)'; c.shadowBlur = 34; c.shadowOffsetY = 14;
       c.fillStyle = '#FFFFFF'; c.fillRect(-iw / 2 - mx, -ih / 2 - mx, iw + mx * 2, ih + mx * 2);
       c.shadowColor = 'transparent';
       c.drawImage(img, -iw / 2, -ih / 2, iw, ih);
-      c.strokeStyle = 'rgba(23,42,40,.08)'; c.lineWidth = 2; c.strokeRect(-iw / 2, -ih / 2, iw, ih);
+      c.strokeStyle = 'rgba(20,20,43,.08)'; c.lineWidth = 2; c.strokeRect(-iw / 2, -ih / 2, iw, ih);
       c.fillStyle = 'rgba(232,222,196,.78)';
       [[-iw / 2 - mx + 30, -ih / 2 - mx - 18, -0.5], [iw / 2 + mx - 30, -ih / 2 - mx - 18, 0.5]].forEach(function (p) {
         c.save(); c.translate(p[0], p[1]); c.rotate(p[2]); c.fillRect(-64, -18, 128, 40); c.restore();
       });
       c.restore();
     } else {
-      c.save(); rr(c, bx, by, bw, bh, 22); c.fillStyle = '#172A28'; c.fill(); c.clip();
-      c.fillStyle = '#274140'; for (var y = by + 20; y < by + bh; y += 30) for (var x = bx + 20; x < bx + bw; x += 30) c.fillRect(x, y, 3, 3);
+      c.save(); rr(c, bx, by, bw, bh, 22); c.fillStyle = '#14142B'; c.fill(); c.clip();
+      c.fillStyle = '#27274B'; for (var y = by + 20; y < by + bh; y += 30) for (var x = bx + 20; x < bx + bw; x += 30) c.fillRect(x, y, 3, 3);
       if (f.nodes) {
         c.font = '500 24px "JetBrains Mono", monospace';
         var total = 0; f.nodes.forEach(function (t) { total += c.measureText(t).width + 44; });
@@ -877,7 +877,7 @@ html{overflow-x:clip}
       } else {
         c.fillStyle = ACC; c.beginPath(); c.arc(bx + bw / 2, by + bh / 2 - 30, 70, 0, Math.PI * 2); c.fill();
         c.fillStyle = '#FFFFFF'; c.beginPath(); c.moveTo(bx + bw / 2 - 22, by + bh / 2 - 66); c.lineTo(bx + bw / 2 + 34, by + bh / 2 - 30); c.lineTo(bx + bw / 2 - 22, by + bh / 2 + 6); c.closePath(); c.fill();
-        c.font = '500 26px "JetBrains Mono", monospace'; c.fillStyle = '#E6EFEC'; c.textAlign = 'center';
+        c.font = '500 26px "JetBrains Mono", monospace'; c.fillStyle = '#ECECF5'; c.textAlign = 'center';
         c.fillText('demo video · link below the book', bx + bw / 2, by + bh / 2 + 110); c.textAlign = 'left';
       }
       c.restore();
@@ -887,15 +887,15 @@ html{overflow-x:clip}
     var x = W / 2 + 120, maxW = W / 2 - 240, y = 196;
     c.font = '500 24px "JetBrains Mono", monospace'; c.fillStyle = ACC;
     c.fillText(f.cat.toUpperCase(), x, y);
-    c.font = '600 84px "Space Grotesk", sans-serif'; c.fillStyle = '#172A28';
+    c.font = '600 84px "Space Grotesk", sans-serif'; c.fillStyle = '#14142B';
     var tl = lines(c, f.title, maxW).slice(0, 3);
     tl.forEach(function (l, k) { c.fillText(l, x, y + 108 + k * 92); });
     y += 108 + tl.length * 92 + 30;
-    c.font = '400 32px Inter, sans-serif'; c.fillStyle = '#42585A';
+    c.font = '400 32px Inter, sans-serif'; c.fillStyle = '#45465E';
     var dl = lines(c, f.desc, maxW).slice(0, 7);
     dl.forEach(function (l, k) { c.fillText(l, x, y + k * 50); });
     if (f.chain) nodeRow(c, f.chain.split(' → '), x, H - 290, maxW, false);
-    c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5C7275';
+    c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5E5F78';
     c.fillText('NGOC TAN · WORKBOOK', x, H - 96);
     c.textAlign = 'right'; c.fillText(f.num, W - 120, H - 96); c.textAlign = 'left';
   }
@@ -915,11 +915,11 @@ html{overflow-x:clip}
       var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
       var c = cv.getContext('2d'); paper(c);
       var bx = 110, cols = 4, colW = (W / 2 - 220) / cols, tile = 138, gy = 360, rowH = 182, pos = {};
-      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5C7275';
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5E5F78';
       c.fillText('PLATE 00 · THE TOOLKIT', bx, 96);
-      c.font = '600 76px "Space Grotesk", sans-serif'; c.fillStyle = '#172A28';
+      c.font = '600 76px "Space Grotesk", sans-serif'; c.fillStyle = '#14142B';
       c.fillText('Platforms I connect', bx, 210);
-      c.font = '400 30px Inter, sans-serif'; c.fillStyle = '#42585A';
+      c.font = '400 30px Inter, sans-serif'; c.fillStyle = '#45465E';
       c.fillText('Every line is a workflow I built.', bx, 266);
       BRANDS.forEach(function (b, k) {
         var x = bx + (k % cols) * colW + (colW - tile) / 2, y = gy + Math.floor(k / cols) * rowH;
@@ -927,7 +927,7 @@ html{overflow-x:clip}
       });
       /* the projects, down the right page */
       var px = W / 2 + 330, py0 = 200, step = 100, pill = {};
-      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5C7275';
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5E5F78';
       c.fillText('WHAT I BUILT WITH THEM', W / 2 + 120, 96);
       FL.forEach(function (f, k) { pill[f.num] = { x: px, y: py0 + k * step + 32 }; });
       /* lines first, so the tiles and pills sit on top of them */
@@ -943,15 +943,15 @@ html{overflow-x:clip}
       });
       BRANDS.forEach(function (b, k) {
         var a = pos[b[0]], x = a.x - tile / 2, y = a.y - tile / 2;
-        c.save(); c.shadowColor = 'rgba(22,44,40,.16)'; c.shadowBlur = 18; c.shadowOffsetY = 6;
+        c.save(); c.shadowColor = 'rgba(20,20,45,.16)'; c.shadowBlur = 18; c.shadowOffsetY = 6;
         rr(c, x, y, tile, tile, 28); c.fillStyle = '#FFFFFF'; c.fill(); c.restore();
-        rr(c, x, y, tile, tile, 28); c.strokeStyle = 'rgba(23,42,40,.08)'; c.lineWidth = 2; c.stroke();
+        rr(c, x, y, tile, tile, 28); c.strokeStyle = 'rgba(20,20,43,.08)'; c.lineWidth = 2; c.stroke();
         if (imgs[k]) c.drawImage(imgs[k], a.x - 30, y + 24, 60, 60);
         else {
           c.fillStyle = b[2]; c.beginPath(); c.arc(a.x, y + 54, 30, 0, Math.PI * 2); c.fill();
           c.fillStyle = '#FFFFFF'; c.font = '700 30px "Space Grotesk", sans-serif'; c.textAlign = 'center'; c.fillText('V', a.x, y + 65); c.textAlign = 'left';
         }
-        c.font = '500 19px "JetBrains Mono", monospace'; c.fillStyle = '#42585A'; c.textAlign = 'center';
+        c.font = '500 19px "JetBrains Mono", monospace'; c.fillStyle = '#45465E'; c.textAlign = 'center';
         c.fillText(b[1], a.x, y + 116); c.textAlign = 'left';
       });
       FL.forEach(function (f) {
@@ -960,11 +960,11 @@ html{overflow-x:clip}
         var label = f.title.length > 30 ? f.title.slice(0, 29) + '…' : f.title;
         var w = c.measureText(label).width + 110;
         rr(c, p.x + 16, p.y - 32, w, 64, 32); c.fillStyle = '#FFFFFF'; c.fill();
-        c.strokeStyle = '#CFDBD7'; c.lineWidth = 2; c.stroke();
+        c.strokeStyle = '#DCDCE9'; c.lineWidth = 2; c.stroke();
         c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = ACC; c.fillText(f.num, p.x + 40, p.y + 8);
-        c.font = '600 30px "Space Grotesk", sans-serif'; c.fillStyle = '#172A28'; c.fillText(label, p.x + 90, p.y + 10);
+        c.font = '600 30px "Space Grotesk", sans-serif'; c.fillStyle = '#14142B'; c.fillText(label, p.x + 90, p.y + 10);
       });
-      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5C7275'; c.textAlign = 'right';
+      c.font = '500 22px "JetBrains Mono", monospace'; c.fillStyle = '#5E5F78'; c.textAlign = 'right';
       c.fillText('TURN THE PAGE →', W - 120, H - 70); c.textAlign = 'left';
       return new Promise(function (res) { cv.toBlob(function (b) { res(URL.createObjectURL(b)); }, 'image/jpeg', 0.92); });
     });
@@ -1454,7 +1454,7 @@ html{overflow-x:clip}
     /* the orb */
     var uni = {
       uTime: { value: 0 }, uAmp: { value: 0.22 }, uHover: { value: 0 }, uPointer: { value: new THREE.Vector3(0, 0, 1) },
-      cDeep: { value: new THREE.Color('#0F766E') }, cMid: { value: new THREE.Color('#2DD4BF') }, cLight: { value: new THREE.Color('#D5FBF2') }
+      cDeep: { value: new THREE.Color('#4F46E5') }, cMid: { value: new THREE.Color('#818CF8') }, cLight: { value: new THREE.Color('#FBC6B8') }
     };
     var orb = new THREE.Mesh(new THREE.IcosahedronGeometry(1, small ? 40 : 72), new THREE.ShaderMaterial({ uniforms: uni, vertexShader: VERT, fragmentShader: FRAG }));
     rig.add(orb);
@@ -1462,7 +1462,7 @@ html{overflow-x:clip}
     /* soft contact shadow under it, so it sits on the page */
     var sh = document.createElement('canvas'); sh.width = sh.height = 128;
     var sx = sh.getContext('2d'), gr = sx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gr.addColorStop(0, 'rgba(15,60,55,.30)'); gr.addColorStop(1, 'rgba(15,60,55,0)'); sx.fillStyle = gr; sx.fillRect(0, 0, 128, 128);
+    gr.addColorStop(0, 'rgba(45,40,120,.30)'); gr.addColorStop(1, 'rgba(45,40,120,0)'); sx.fillStyle = gr; sx.fillRect(0, 0, 128, 128);
     var shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.9), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sh), transparent: true, depthWrite: false }));
     shadow.position.set(0, -1.75, -0.4); rig.add(shadow);
 
@@ -1473,7 +1473,7 @@ html{overflow-x:clip}
     var dot = document.createElement('canvas'); dot.width = dot.height = 32;
     var dx = dot.getContext('2d'), dg = dx.createRadialGradient(16, 16, 0, 16, 16, 16);
     dg.addColorStop(0, 'rgba(255,255,255,1)'); dg.addColorStop(1, 'rgba(255,255,255,0)'); dx.fillStyle = dg; dx.fillRect(0, 0, 32, 32);
-    var ring = new THREE.Points(pg, new THREE.PointsMaterial({ color: '#0F766E', size: small ? 0.07 : 0.065, map: new THREE.CanvasTexture(dot), transparent: true, opacity: 0.6, depthWrite: false }));
+    var ring = new THREE.Points(pg, new THREE.PointsMaterial({ color: '#4F46E5', size: small ? 0.07 : 0.065, map: new THREE.CanvasTexture(dot), transparent: true, opacity: 0.6, depthWrite: false }));
     var ringRig = new THREE.Group(); ringRig.rotation.set(1.15, 0, -0.32); ringRig.add(ring); rig.add(ringRig);
 
     function size() {
@@ -1537,5 +1537,7 @@ html{overflow-x:clip}
   }).catch(function () { canvas.remove(); });
 })();
 </script>
+<style>.grad .w{background-image:linear-gradient(90deg,#4F46E5 0%,#7B4BDB 55%,#E5574A 100%);background-size:var(--gw,100%) 100%;background-position:calc(-1 * var(--gx,0px)) 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}</style>
+<script>(function(){function g(){document.querySelectorAll('.grad').forEach(function(p){var b=(p.closest('h1')||p.parentNode).getBoundingClientRect(),ws=p.querySelectorAll('.w'),x0=1e9,x1=-1e9;ws.forEach(function(w){var r=w.getBoundingClientRect();x0=Math.min(x0,r.left-b.left);x1=Math.max(x1,r.right-b.left)});ws.forEach(function(w){w.style.setProperty('--gw',(x1-x0)+'px');w.style.setProperty('--gx',(w.getBoundingClientRect().left-b.left-x0)+'px')})})}addEventListener('load',g);addEventListener('resize',g);setTimeout(g,600)})();</script>
 </body>
 </html>
