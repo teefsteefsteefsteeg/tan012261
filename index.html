@@ -1371,170 +1371,231 @@ html{overflow-x:clip}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
   setTimeout(measure, 1500);
 })();
-/* Hero "AI orb": a glossy, breathing blob (noise-displaced sphere, custom shader)
-   with a ring of data particles orbiting it. It swells toward the cursor.
-   three.js r170 loads on demand only when WebGL exists. */
+/* Hero "agent hub": customer messages fly in from chat channels, the AI agent core
+   pulses as it thinks, then the reply goes back while the task lands in a tool
+   (calendar, sheet, email). Deterministic loop driven by time; three.js r170 on demand. */
 (function () {
   var hero = document.getElementById('top');
   if (!hero) return;
   var probe = document.createElement('canvas');
   if (!(probe.getContext('webgl2') || probe.getContext('webgl'))) return;
-  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var canvas = document.createElement('canvas');
   canvas.className = 'hero3d'; canvas.setAttribute('aria-hidden', 'true');
   hero.style.position = 'relative';
   hero.insertBefore(canvas, hero.firstChild);
 
-  var NOISE = [
-    'vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}',
-    'vec4 mod289(vec4 x){return x-floor(x*(1.0/289.0))*289.0;}',
-    'vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}',
-    'vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}',
-    'float snoise(vec3 v){const vec2 C=vec2(1.0/6.0,1.0/3.0);const vec4 D=vec4(0.0,0.5,1.0,2.0);',
-    'vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.0-g;',
-    'vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;',
-    'i=mod289(i);vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));',
-    'float n_=0.142857142857;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.0*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.0*x_);',
-    'vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.0-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);',
-    'vec4 s0=floor(b0)*2.0+1.0;vec4 s1=floor(b1)*2.0+1.0;vec4 sh=-step(h,vec4(0.0));',
-    'vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;',
-    'vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);',
-    'vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;',
-    'vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);m=m*m;',
-    'return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}'
-  ].join('\n');
+  /* ---------- 2D icon + label textures ---------- */
+  function tex2d(w, h, paint) { var c = document.createElement('canvas'); c.width = w; c.height = h; paint(c.getContext('2d'), w, h); return c; }
+  function rr(x, X, Y, W, H, R) { x.beginPath(); x.moveTo(X + R, Y); x.arcTo(X + W, Y, X + W, Y + H, R); x.arcTo(X + W, Y + H, X, Y + H, R); x.arcTo(X, Y + H, X, Y, R); x.arcTo(X, Y, X + W, Y, R); x.closePath(); }
+  var GLYPH = {
+    chat: function (x) { x.beginPath(); x.arc(128, 120, 66, 0, 6.2832); x.fill(); x.beginPath(); x.moveTo(78, 160); x.lineTo(62, 206); x.lineTo(112, 182); x.fill();
+      x.fillStyle = '#25D366'; [96, 128, 160].forEach(function (cx) { x.beginPath(); x.arc(cx, 120, 10, 0, 6.2832); x.fill(); }); },
+    plane: function (x) { x.beginPath(); x.moveTo(56, 124); x.lineTo(204, 64); x.lineTo(172, 196); x.lineTo(128, 160); x.lineTo(108, 190); x.lineTo(104, 150); x.closePath(); x.fill();
+      x.strokeStyle = '#26A5E4'; x.lineWidth = 9; x.beginPath(); x.moveTo(104, 150); x.lineTo(184, 88); x.stroke(); },
+    mic: function (x) { rr(x, 100, 52, 56, 100, 28); x.fill(); x.lineWidth = 14; x.lineCap = 'round';
+      x.beginPath(); x.arc(128, 120, 50, 0.15, Math.PI - 0.15); x.stroke(); x.beginPath(); x.moveTo(128, 172); x.lineTo(128, 202); x.moveTo(100, 204); x.lineTo(156, 204); x.stroke(); },
+    cal: function (x) { x.lineWidth = 14; x.lineJoin = 'round'; rr(x, 58, 66, 140, 134, 18); x.stroke(); x.fillRect(58, 66, 140, 36);
+      x.lineCap = 'round'; x.beginPath(); x.moveTo(96, 50); x.lineTo(96, 80); x.moveTo(160, 50); x.lineTo(160, 80); x.stroke();
+      x.beginPath(); x.moveTo(96, 150); x.lineTo(120, 172); x.lineTo(162, 128); x.stroke(); },
+    sheet: function (x) { x.lineWidth = 12; rr(x, 58, 60, 140, 140, 16); x.stroke(); x.fillRect(58, 60, 140, 34);
+      x.beginPath(); x.moveTo(104, 94); x.lineTo(104, 200); x.moveTo(58, 130); x.lineTo(198, 130); x.moveTo(58, 166); x.lineTo(198, 166); x.stroke(); },
+    mail: function (x) { x.lineWidth = 14; x.lineJoin = 'round'; rr(x, 50, 74, 156, 112, 16); x.stroke();
+      x.beginPath(); x.moveTo(56, 84); x.lineTo(128, 140); x.lineTo(200, 84); x.stroke(); }
+  };
+  function iconTex(THREE, name) {
+    var c = tex2d(256, 256, function (x) { x.fillStyle = '#fff'; x.strokeStyle = '#fff'; GLYPH[name](x); });
+    var t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t;
+  }
+  function labelTex(THREE, text, dotColor) {
+    var c = tex2d(512, 112, function (x) {
+      x.font = '600 42px Inter, "Segoe UI", system-ui, sans-serif';
+      var w = Math.min(500, x.measureText(text).width + 112);
+      x.shadowColor = 'rgba(20,20,43,.18)'; x.shadowBlur = 16; x.shadowOffsetY = 5;
+      x.fillStyle = '#FFFFFF'; rr(x, (512 - w) / 2, 14, w, 78, 39); x.fill(); x.shadowColor = 'transparent';
+      x.fillStyle = dotColor; x.beginPath(); x.arc((512 - w) / 2 + 42, 53, 11, 0, 6.2832); x.fill();
+      x.fillStyle = '#14142B'; x.textBaseline = 'middle'; x.fillText(text, (512 - w) / 2 + 66, 55);
+    });
+    var t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  }
 
-  var VERT = NOISE + '\n' + [
-    'uniform float uTime; uniform float uAmp; uniform float uHover; uniform vec3 uPointer;',
-    'varying vec3 vN; varying vec3 vPos; varying float vD;',
-    'float shape(vec3 n){',
-    '  float d = snoise(n*0.85 + vec3(0.0,0.0,uTime*0.2))*0.6 + snoise(n*1.6 - vec3(uTime*0.14))*0.12;',
-    '  float h = smoothstep(1.25, 0.0, distance(n, uPointer));',
-    '  return d*uAmp + uHover*h*(0.28 + 0.06*sin(uTime*6.0 - h*9.0));',
-    '}',
-    'void main(){',
-    '  vec3 n = normalize(position);',
-    '  float d = shape(n); vec3 pos = n*(1.0 + d);',
-    '  vec3 t = normalize(cross(n, abs(n.y) > 0.9 ? vec3(1.0,0.0,0.0) : vec3(0.0,1.0,0.0)));',
-    '  vec3 b = normalize(cross(n, t)); float e = 0.012;',
-    '  vec3 n1 = normalize(n + t*e); vec3 n2 = normalize(n + b*e);',
-    '  vec3 q1 = n1*(1.0 + shape(n1)); vec3 q2 = n2*(1.0 + shape(n2));',
-    '  vec3 nn = normalize(cross(q1 - pos, q2 - pos)); if (dot(nn, n) < 0.0) nn = -nn;',
-    '  vN = normalize(normalMatrix*nn); vec4 mv = modelViewMatrix*vec4(pos,1.0); vPos = mv.xyz; vD = d;',
-    '  gl_Position = projectionMatrix*mv;',
-    '}'
-  ].join('\n');
-
-  var FRAG = [
-    'uniform vec3 cDeep; uniform vec3 cMid; uniform vec3 cLight; uniform float uTime;',
-    'varying vec3 vN; varying vec3 vPos; varying float vD;',
-    'void main(){',
-    '  vec3 N = normalize(vN); vec3 V = normalize(-vPos);',
-    '  float fr = pow(1.0 - max(dot(N, V), 0.0), 2.4);',
-    '  vec3 L1 = normalize(vec3(-0.45, 0.85, 0.65)); vec3 L2 = normalize(vec3(0.8, -0.35, 0.45));',
-    '  float dif = max(dot(N, L1), 0.0)*0.75 + max(dot(N, L2), 0.0)*0.3;',
-    '  vec3 base = mix(cDeep, cMid, clamp(vD*1.4 + 0.55, 0.0, 1.0));',
-    '  base = mix(base, cLight, clamp(N.y*0.55 + 0.35, 0.0, 1.0)*0.55);',
-    '  float spec = pow(max(dot(reflect(-L1, N), V), 0.0), 48.0);',
-    '  vec3 irid = 0.5 + 0.5*cos(6.2831*(vec3(0.0, 0.33, 0.67) + fr*1.4 + vD*1.6 + uTime*0.05));',
-    '  vec3 col = base*(0.62 + 0.55*dif) + spec*1.1 + fr*mix(vec3(0.9,1.0,0.98), irid, 0.55)*1.05;',
-    '  gl_FragColor = vec4(col, 1.0);',
-    '}'
-  ].join('\n');
+  /* ---------- easing ---------- */
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function inOut(v) { v = clamp01(v); return v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; }
+  function outBack(v) { v = clamp01(v); var c = 1.70158; return 1 + (c + 1) * Math.pow(v - 1, 3) + c * Math.pow(v - 1, 2); }
+  function bump(t, a, len) { var u = (t - a) / len; return u <= 0 || u >= 1 ? 0 : Math.sin(u * Math.PI); }
 
   import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js').then(function (THREE) {
     var small = innerWidth < 760;
     var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, small ? 1.5 : 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100); camera.position.set(0, 0, 9);
+    var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100); camera.position.set(0, 0, 13);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xC9C6F0, 1.6));
+    var key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-3, 5, 6); scene.add(key);
+    var rim = new THREE.DirectionalLight(0xFBC6B8, 1.2); rim.position.set(4, -2, -3); scene.add(rim);
     var rig = new THREE.Group(); scene.add(rig);
 
-    /* the orb */
-    var uni = {
-      uTime: { value: 0 }, uAmp: { value: 0.22 }, uHover: { value: 0 }, uPointer: { value: new THREE.Vector3(0, 0, 1) },
-      cDeep: { value: new THREE.Color('#4F46E5') }, cMid: { value: new THREE.Color('#818CF8') }, cLight: { value: new THREE.Color('#FBC6B8') }
-    };
-    var orb = new THREE.Mesh(new THREE.IcosahedronGeometry(1, small ? 40 : 72), new THREE.ShaderMaterial({ uniforms: uni, vertexShader: VERT, fragmentShader: FRAG }));
-    rig.add(orb);
+    /* ---------- the agent core: glossy sphere inside two gyroscope rings ---------- */
+    var core = new THREE.Group(); rig.add(core);
+    var coreMat = new THREE.MeshPhysicalMaterial({ color: 0x4F46E5, roughness: 0.18, metalness: 0.1, clearcoat: 1, clearcoatRoughness: 0.1, emissive: 0x2A1FB8, emissiveIntensity: 0.35 });
+    var ball = new THREE.Mesh(new THREE.SphereGeometry(0.72, 64, 48), coreMat); core.add(ball);
+    var glowC = tex2d(128, 128, function (x) { var g = x.createRadialGradient(64, 64, 0, 64, 64, 64); g.addColorStop(0, 'rgba(129,140,248,.55)'); g.addColorStop(0.5, 'rgba(129,140,248,.16)'); g.addColorStop(1, 'rgba(129,140,248,0)'); x.fillStyle = g; x.fillRect(0, 0, 128, 128); });
+    var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(glowC), transparent: true, depthWrite: false })); glow.scale.setScalar(3.4); core.add(glow);
+    var ringA = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.035, 16, 120), new THREE.MeshStandardMaterial({ color: 0x818CF8, roughness: 0.3, metalness: 0.4 }));
+    var ringB = new THREE.Mesh(new THREE.TorusGeometry(1.22, 0.028, 16, 120), new THREE.MeshStandardMaterial({ color: 0xF97361, roughness: 0.3, metalness: 0.4 }));
+    var gA = new THREE.Group(), gB = new THREE.Group(); gA.add(ringA); gB.add(ringB); core.add(gA); core.add(gB);
+    /* sparkle mark on the core's face */
+    var spark = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(tex2d(128, 128, function (x) {
+      x.fillStyle = '#fff'; x.beginPath(); x.moveTo(64, 14); x.quadraticCurveTo(70, 58, 114, 64); x.quadraticCurveTo(70, 70, 64, 114); x.quadraticCurveTo(58, 70, 14, 64); x.quadraticCurveTo(58, 58, 64, 14); x.fill();
+    })), transparent: true, depthWrite: false })); spark.scale.setScalar(0.62); spark.position.z = 0.75; core.add(spark);
 
-    /* soft contact shadow under it, so it sits on the page */
-    var sh = document.createElement('canvas'); sh.width = sh.height = 128;
-    var sx = sh.getContext('2d'), gr = sx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gr.addColorStop(0, 'rgba(45,40,120,.30)'); gr.addColorStop(1, 'rgba(45,40,120,0)'); sx.fillStyle = gr; sx.fillRect(0, 0, 128, 128);
-    var shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 0.9), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sh), transparent: true, depthWrite: false }));
-    shadow.position.set(0, -1.75, -0.4); rig.add(shadow);
+    /* ---------- channel + tool tiles ---------- */
+    var shape = new THREE.Shape(); (function () { var s = 0.86, r = 0.24, h = s / 2; shape.moveTo(-h + r, -h); shape.lineTo(h - r, -h); shape.quadraticCurveTo(h, -h, h, -h + r); shape.lineTo(h, h - r); shape.quadraticCurveTo(h, h, h - r, h); shape.lineTo(-h + r, h); shape.quadraticCurveTo(-h, h, -h, h - r); shape.lineTo(-h, -h + r); shape.quadraticCurveTo(-h, -h, -h + r, -h); })();
+    var tileGeo = new THREE.ExtrudeGeometry(shape, { depth: 0.16, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 4, curveSegments: 10 }); tileGeo.translate(0, 0, -0.11);
+    var faceGeo = new THREE.PlaneGeometry(0.62, 0.62);
+    function tile(color, glyph, x, y) {
+      var g = new THREE.Group(); g.position.set(x, y, 0);
+      var body = new THREE.Mesh(tileGeo, new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.32, clearcoat: 0.8, clearcoatRoughness: 0.2 }));
+      var face = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ map: iconTex(THREE, glyph), transparent: true, depthWrite: false })); face.position.z = 0.13;
+      g.add(body); g.add(face); rig.add(g); g.userData.home = new THREE.Vector3(x, y, 0); return g;
+    }
+    var IX = -2.45, OX = 2.45;
+    var ins = [tile(0x25D366, 'chat', IX, 1.45), tile(0x26A5E4, 'plane', IX - 0.35, 0), tile(0xF97361, 'mic', IX, -1.45)];
+    var outs = [tile(0x4F46E5, 'cal', OX, 1.45), tile(0x1E9E5A, 'sheet', OX + 0.35, 0), tile(0xEA4335, 'mail', OX, -1.45)];
 
-    /* data ring: particles orbiting on a tilted band with a gentle wave */
-    var PN = small ? 600 : 1100, pa = new Float32Array(PN * 3), seeds = new Float32Array(PN * 3);
-    for (var i = 0; i < PN; i++) { seeds[i * 3] = Math.random() * 6.2832; seeds[i * 3 + 1] = 1.6 + Math.random() * 0.45; seeds[i * 3 + 2] = Math.random(); }
-    var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pa, 3));
-    var dot = document.createElement('canvas'); dot.width = dot.height = 32;
-    var dx = dot.getContext('2d'), dg = dx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    dg.addColorStop(0, 'rgba(255,255,255,1)'); dg.addColorStop(1, 'rgba(255,255,255,0)'); dx.fillStyle = dg; dx.fillRect(0, 0, 32, 32);
-    var ring = new THREE.Points(pg, new THREE.PointsMaterial({ color: '#4F46E5', size: small ? 0.07 : 0.065, map: new THREE.CanvasTexture(dot), transparent: true, opacity: 0.6, depthWrite: false }));
-    var ringRig = new THREE.Group(); ringRig.rotation.set(1.15, 0, -0.32); ringRig.add(ring); rig.add(ringRig);
+    /* ---------- flowing wires: dashes run from channel -> core -> tool ---------- */
+    var WIRE_V = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }';
+    var WIRE_F = 'uniform float uTime; uniform vec3 uCol; uniform float uDir; varying vec2 vUv;' +
+      'void main(){ float s = fract(vUv.x*10.0 - uTime*0.9*uDir); float d = smoothstep(0.0,0.08,s)*(1.0-smoothstep(0.42,0.5,s));' +
+      ' float edge = smoothstep(0.0,0.08,vUv.x)*(1.0-smoothstep(0.92,1.0,vUv.x)); gl_FragColor = vec4(uCol, (0.22 + 0.5*d)*edge); }';
+    var wireU = { uTime: { value: 0 } };
+    function wire(a, b, bow, col) {
+      var mid = a.clone().lerp(b, 0.5); mid.y += bow; mid.z += 0.9;
+      var curve = new THREE.QuadraticBezierCurve3(a.clone(), mid, b.clone());
+      var m = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, 0.022, 6, false), new THREE.ShaderMaterial({ uniforms: { uTime: wireU.uTime, uCol: { value: new THREE.Color(col) }, uDir: { value: 1 } }, vertexShader: WIRE_V, fragmentShader: WIRE_F, transparent: true, depthWrite: false }));
+      rig.add(m); return curve;
+    }
+    var C0 = new THREE.Vector3(0, 0, 0);
+    var inCurves = ins.map(function (t, i) { return wire(t.userData.home.clone().add(new THREE.Vector3(0.5, 0, 0)), C0.clone().add(new THREE.Vector3(-0.8, 0, 0)), (1 - i) * -0.35, '#8B8FF0'); });
+    var outCurves = outs.map(function (t, i) { return wire(C0.clone().add(new THREE.Vector3(0.8, 0, 0)), t.userData.home.clone().add(new THREE.Vector3(-0.5, 0, 0)), (1 - i) * -0.35, '#F79A86'); });
+
+    /* ---------- packets with short trails ---------- */
+    var dotC = tex2d(64, 64, function (x) { var g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.35, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, 64, 64); });
+    var dotT = new THREE.CanvasTexture(dotC);
+    function packet(color) {
+      var g = new THREE.Group(), parts = [];
+      for (var k = 0; k < 7; k++) { var s = new THREE.Sprite(new THREE.SpriteMaterial({ map: dotT, color: color, transparent: true, depthWrite: false })); s.scale.setScalar(0.5 * (1 - k * 0.1)); g.add(s); parts.push(s); }
+      g.visible = false; rig.add(g); g.userData.parts = parts; return g;
+    }
+    function placePacket(p, curve, u, alpha, reverse) {
+      p.visible = alpha > 0.01;
+      p.userData.parts.forEach(function (s, k) { var v = clamp01(u - k * 0.028); if (reverse) v = 1 - v; curve.getPointAt(v, s.position); s.material.opacity = alpha * (1 - k / 7); });
+    }
+    function label(text, dot) {
+      var s = new THREE.Sprite(new THREE.SpriteMaterial({ map: labelTex(THREE, text, dot), transparent: true, depthWrite: false, depthTest: false }));
+      s.scale.set(2.3, 0.5, 1); s.material.opacity = 0; rig.add(s); return s;
+    }
+
+    /* scenarios: channel -> tool, with the label the tool shows */
+    var STORY = [
+      { i: 0, o: 0, txt: 'Appointment booked' },
+      { i: 1, o: 1, txt: 'CRM row added' },
+      { i: 2, o: 2, txt: 'Follow-up email sent' },
+      { i: 0, o: 1, txt: 'Lead saved' },
+      { i: 1, o: 0, txt: 'Meeting scheduled' },
+      { i: 2, o: 0, txt: 'Call booked' }
+    ];
+    var SLOTS = 2, PERIOD = 2.1, LIFE = 3.9;
+    var pool = []; for (var q = 0; q < SLOTS; q++) pool.push({ pin: packet(0xFF9C86), pre: packet(0x818CF8), pout: packet(0x6366F1), labs: STORY.map(function (s) { return label(s.txt, '#22C55E'); }), rep: label('Replied in 2s', '#818CF8') });
 
     function size() {
       var w = canvas.clientWidth || innerWidth, h = hero.clientHeight;
       small = innerWidth < 760;
       renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
       var vh = 2 * Math.tan(camera.fov * Math.PI / 360) * camera.position.z, vw = vh * camera.aspect;
-      /* right of the copy on wide screens; behind it, smaller and faint, on phones */
-      rig.position.set(small ? vw * 0.18 : vw * 0.335, small ? vh * 0.12 : vh * 0.0, 0);
-      rig.scale.setScalar(small ? Math.min(0.9, vw / 6) : Math.min(1.0, vh / 8));
-      canvas.style.setProperty('--o', small ? '0.25' : '1');
+      /* sit in the free space right of the headline; if there is not enough, go faint behind the copy */
+      var cr = canvas.getBoundingClientRect(), right = 0;
+      hero.querySelectorAll('h1 .w, h1').forEach(function (el) { var r = el.getBoundingClientRect(); if (r.width) right = Math.max(right, r.right); });
+      var x0 = right - cr.left + 28, x1 = Math.min(w - 24, x0 + 640), free = x1 - x0;
+      if (small || free < 300) { var phone = small; small = true; rig.position.set(phone ? vw * 0.12 : vw * 0.3, phone ? vh * 0.14 : -vh * 0.12, 0); rig.scale.setScalar(phone ? Math.min(vh / 11, vw * 0.9 / 7.4) : Math.min(vh / 10, vw * 0.38 / 7.4)); canvas.style.setProperty('--o', phone ? '0.2' : '0.3'); return; }
+      var cx = (x0 + x1) / 2 / w - 0.5;
+      rig.position.set(cx * vw, vh * 0.02, 0);
+      rig.scale.setScalar(Math.min(vh / 9.5, free / w * vw / 7.6));
+      canvas.style.setProperty('--o', '1');
     }
-    size(); addEventListener('resize', size);
+    size(); addEventListener('resize', size); addEventListener('load', size); if (document.fonts) document.fonts.ready.then(size); setTimeout(size, 1500);
 
-    /* pointer: where it points on the orb, and how close it is */
-    var hoverT = 0, ptr = new THREE.Vector3(0, 0, 1), ptrT = new THREE.Vector3(0, 0, 1), tilt = { x: 0, y: 0, tx: 0, ty: 0 };
-    var orbScreen = new THREE.Vector3(), UP = new THREE.Vector3(0, 1, 0);
+    var tilt = { x: 0, y: 0, tx: 0, ty: 0 };
     hero.addEventListener('pointermove', function (e) {
       if (e.pointerType === 'touch') return;
       var r = canvas.getBoundingClientRect();
-      orbScreen.setFromMatrixPosition(orb.matrixWorld).project(camera);
-      var cx = r.left + (orbScreen.x + 1) / 2 * r.width, cy = r.top + (1 - orbScreen.y) / 2 * r.height;
-      var dxp = (e.clientX - cx) / (r.height * 0.35), dyp = -(e.clientY - cy) / (r.height * 0.35);
-      ptrT.set(dxp, dyp, 1).normalize();
-      hoverT = Math.max(0, 1 - Math.hypot(dxp, dyp) / 2.6);
-      tilt.tx = dyp * -0.12; tilt.ty = dxp * 0.18;
+      tilt.tx = ((e.clientY - r.top) / r.height - 0.5) * 0.22; tilt.ty = ((e.clientX - r.left) / r.width - 0.5) * 0.35;
     }, { passive: true });
-    hero.addEventListener('pointerleave', function () { hoverT = 0; tilt.tx = tilt.ty = 0; });
+    hero.addEventListener('pointerleave', function () { tilt.tx = tilt.ty = 0; });
 
-    var running = false, visible = true, last = performance.now(), time = 0;
-    function draw(dt) {
-      time += dt;
-      var k = Math.min(1, dt * 4);
-      uni.uTime.value = time;
-      uni.uHover.value += (hoverT - uni.uHover.value) * k;
-      ptr.lerp(ptrT, k);
-      /* the pointer direction lives in the orb's own space, so undo its spin */
-      uni.uPointer.value.copy(ptr).applyAxisAngle(UP, -orb.rotation.y);
-      uni.uAmp.value = 0.22 + Math.sin(time * 0.8) * 0.04;
-      orb.rotation.y = time * 0.12;
+    var tmp = new THREE.Vector3();
+    function draw(t, dt) {
+      wireU.uTime.value = t;
+      var k = Math.min(1, dt * 3);
       tilt.x += (tilt.tx - tilt.x) * k; tilt.y += (tilt.ty - tilt.y) * k;
-      rig.rotation.set(tilt.x, tilt.y, 0);
-      orb.position.y = Math.sin(time * 0.9) * 0.08; shadow.scale.x = 1 - Math.sin(time * 0.9) * 0.05;
-      for (var i = 0; i < PN; i++) {
-        var a = seeds[i * 3] + time * (0.18 + seeds[i * 3 + 2] * 0.22), rr = seeds[i * 3 + 1] + Math.sin(a * 3 + time) * 0.05;
-        pa[i * 3] = Math.cos(a) * rr; pa[i * 3 + 1] = Math.sin(a * 2 + seeds[i * 3 + 2] * 6) * 0.08; pa[i * 3 + 2] = Math.sin(a) * rr;
+      rig.rotation.set(tilt.x + Math.sin(t * 0.35) * 0.04, tilt.y + Math.sin(t * 0.25) * 0.12, 0);
+
+      /* idle life */
+      ins.concat(outs).forEach(function (g, n) { var h = g.userData.home; g.position.set(h.x, h.y + Math.sin(t * 1.1 + n * 1.3) * 0.07, h.z); g.rotation.set(Math.sin(t * 0.7 + n) * 0.08, Math.sin(t * 0.6 + n * 2) * 0.16, 0); g.scale.setScalar(1); });
+      var pulse = 0, think = 0;
+
+      var kNow = Math.floor(t / PERIOD);
+      pool.forEach(function (sl) { sl.pin.visible = sl.pre.visible = sl.pout.visible = false; sl.labs.forEach(function (l) { l.material.opacity = 0; }); sl.rep.material.opacity = 0; });
+      for (var ev = kNow - 1; ev <= kNow; ev++) {
+        if (ev < 0) continue;
+        var a = t - ev * PERIOD; if (a > LIFE) continue;
+        var st = STORY[ev % STORY.length], sl = pool[ev % SLOTS];
+        /* 1) message travels in (0 - 0.95s) */
+        if (a < 1.05) placePacket(sl.pin, inCurves[st.i], inOut(a / 0.95) * 1.2, 1 - clamp01((a - 0.95) / 0.1), false);
+        /* the channel tile nudges as it sends */
+        var ti = ins[st.i]; ti.scale.setScalar(1 + bump(a, 0, 0.35) * 0.12);
+        /* 2) core thinks (0.9 - 1.5s) */
+        pulse = Math.max(pulse, bump(a, 0.9, 0.6)); think = Math.max(think, clamp01(1 - Math.abs(a - 1.2) / 0.6));
+        /* 3) reply back to the channel + task out to the tool (1.4 - 2.3s) */
+        if (a > 1.4 && a < 2.45) { var u = inOut((a - 1.4) / 0.9) * 1.2; placePacket(sl.pre, inCurves[st.i], u, 1 - clamp01((a - 2.3) / 0.15), true); placePacket(sl.pout, outCurves[st.o], u, 1 - clamp01((a - 2.3) / 0.15), false); }
+        /* 4) tool pops, label rises (2.25s+) */
+        var to = outs[st.o]; var pop = a > 2.25 ? outBack((a - 2.25) / 0.45) : 0;
+        to.scale.setScalar(1 + bump(a, 2.25, 0.5) * 0.18);
+        var lab = sl.labs[ev % STORY.length], la = clamp01((a - 2.3) / 0.25) * (1 - clamp01((a - 3.55) / 0.35));
+        lab.material.opacity = small ? 0 : la; lab.position.copy(to.position).add(tmp.set(-0.55, 0.8 + pop * 0.1 + (a - 2.3) * 0.05, 0.6));
+        ti.scale.setScalar(Math.max(ti.scale.x, 1 + bump(a, 2.25, 0.4) * 0.1));
+        sl.rep.material.opacity = small ? 0 : clamp01((a - 2.3) / 0.25) * (1 - clamp01((a - 3.4) / 0.35)) * 0.95;
+        sl.rep.position.copy(ti.position).add(tmp.set(0.45, 0.8 + (a - 2.3) * 0.05, 0.6));
       }
-      pg.attributes.position.needsUpdate = true;
+
+      /* core: breathing, pulse on each message, rings spin faster while thinking */
+      var cs = 1 + Math.sin(t * 1.6) * 0.025 + pulse * 0.1;
+      ball.scale.setScalar(cs); spark.scale.setScalar(0.62 * (1 + pulse * 0.25)); spark.material.rotation = t * 0.4 + think * 1.5;
+      coreMat.emissiveIntensity = 0.35 + pulse * 0.6;
+      glow.material.opacity = 0.75 + pulse * 0.25; glow.scale.setScalar(3.4 * (1 + pulse * 0.18));
+      gA.rotation.set(1.1 + Math.sin(t * 0.3) * 0.2, t * (0.6 + think * 1.6), 0);
+      gB.rotation.set(-0.6, 0, t * (0.45 + think * 1.4)); ringB.rotation.x = 1.3;
+      core.position.y = Math.sin(t * 0.9) * 0.06;
       renderer.render(scene, camera);
     }
-    function loop(now) { if (!running) return; var dt = Math.min(0.05, (now - last) / 1000); last = now; draw(dt); requestAnimationFrame(loop); }
+
+    /* always animates: it is the hero's subject (the user asked for motion), so it keeps playing */
+    window.__heroHubPause = function () { running = false; };
+    var running = false, visible = true, last = performance.now(), time = 0;
+    function loop(now) { if (!running) return; var dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt; draw(time, dt); requestAnimationFrame(loop); }
     function setRunning(on) {
-      if (REDUCED) { draw(0.016); return; }
       if (on && !running) { running = true; last = performance.now(); requestAnimationFrame(loop); }
       else if (!on) running = false;
     }
     new IntersectionObserver(function (es) { visible = es[0].isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
     document.addEventListener('visibilitychange', function () { setRunning(visible && !document.hidden); });
+    window.__heroHubDraw = draw;
     canvas.classList.add('on');
+    draw(0, 0.016);
     setRunning(true);
-  }).catch(function () { canvas.remove(); });
+  }).catch(function (e) { console.error(e); canvas.remove(); });
 })();
 </script>
 <style>.grad .w{background-image:linear-gradient(90deg,#4F46E5 0%,#7B4BDB 55%,#E5574A 100%);background-size:var(--gw,100%) 100%;background-position:calc(-1 * var(--gx,0px)) 0;background-repeat:no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}</style>
